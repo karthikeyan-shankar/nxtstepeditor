@@ -1,0 +1,340 @@
+{
+ "captured": "2026-11-10T09:36:04.335Z",
+ "site": "https://nextstep4u.in",
+ "website": [
+  {
+   "id": "about",
+   "title": "About Nextstep4u — your next step in TNPSC preparation",
+   "file": "website/about.png",
+   "full": "website/full/about.jpg",
+   "url": "https://nextstep4u.in/about.html"
+  },
+  {
+   "id": "account",
+   "title": "Log in — Nextstep4u",
+   "file": "website/account.png",
+   "full": "website/full/account.jpg",
+   "url": "https://nextstep4u.in/login.html"
+  },
+  {
+   "id": "attempt",
+   "title": "Test — Nextstep4u",
+   "file": "website/attempt.png",
+   "full": "website/full/attempt.jpg",
+   "url": "https://nextstep4u.in/attempt.html"
+  },
+  {
+   "id": "batch",
+   "title": "TNPSC Group 4 mock tests with AI analysis — Nextstep4u",
+   "file": "website/batch.png",
+   "full": "website/full/batch.jpg",
+   "url": "https://nextstep4u.in/#pricing"
+  },
+  {
+   "id": "contact",
+   "title": "Contact Nextstep4u",
+   "file": "website/contact.png",
+   "full": "website/full/contact.jpg",
+   "url": "https://nextstep4u.in/contact.html"
+  },
+  {
+   "id": "daily-challenge",
+   "title": "Daily Challenge: one TNPSC Group 4 test a day with an AI report",
+   "file": "website/daily-challenge.png",
+   "full": "website/full/daily-challenge.jpg",
+   "url": "https://nextstep4u.in/daily-challenge.html"
+  },
+  {
+   "id": "delete-account",
+   "title": "Delete your account — Nextstep4u",
+   "file": "website/delete-account.png",
+   "full": "website/full/delete-account.jpg",
+   "url": "https://nextstep4u.in/delete-account.html"
+  },
+  {
+   "id": "faq",
+   "title": "Frequently asked questions",
+   "file": "website/faq.png",
+   "full": "website/full/faq.jpg",
+   "url": "https://nextstep4u.in/faq.html"
+  },
+  {
+   "id": "index",
+   "title": "TNPSC Group 4 mock tests with AI analysis — Nextstep4u",
+   "file": "website/index.png",
+   "full": "website/full/index.jpg",
+   "url": "https://nextstep4u.in/"
+  },
+  {
+   "id": "instructions",
+   "title": "Before you begin — Nextstep4u",
+   "file": "website/instructions.png",
+   "full": "website/full/instructions.jpg",
+   "url": "https://nextstep4u.in/instructions.html"
+  },
+  {
+   "id": "job-alerts",
+   "title": "Job alerts on WhatsApp — paused",
+   "file": "website/job-alerts.png",
+   "full": "website/full/job-alerts.jpg",
+   "url": "https://nextstep4u.in/job-alerts.html"
+  },
+  {
+   "id": "login",
+   "title": "Log in — Nextstep4u",
+   "file": "website/login.png",
+   "full": "website/full/login.jpg",
+   "url": "https://nextstep4u.in/login.html"
+  },
+  {
+   "id": "offline",
+   "title": "You are offline — Nextstep4u",
+   "file": "website/offline.png",
+   "full": "website/full/offline.jpg",
+   "url": "https://nextstep4u.in/offline.html"
+  },
+  {
+   "id": "privacy",
+   "title": "Privacy Policy — Nextstep4u",
+   "file": "website/privacy.png",
+   "full": "website/full/privacy.jpg",
+   "url": "https://nextstep4u.in/privacy.html"
+  },
+  {
+   "id": "refund",
+   "title": "Refund and cancellation policy — Nextstep4u",
+   "file": "website/refund.png",
+   "full": "website/full/refund.jpg",
+   "url": "https://nextstep4u.in/refund.html"
+  },
+  {
+   "id": "report",
+   "title": "Log in — Nextstep4u",
+   "file": "website/report.png",
+   "full": "website/full/report.jpg",
+   "url": "https://nextstep4u.in/report.html"
+  },
+  {
+   "id": "result",
+   "title": "Result — Nextstep4u",
+   "file": "website/result.png",
+   "full": "website/full/result.jpg",
+   "url": "https://nextstep4u.in/result.html"
+  },
+  {
+   "id": "sample-report",
+   "title": "A sample AI report — what arrives after every test",
+   "file": "website/sample-report.png",
+   "full": "website/full/sample-report.jpg",
+   "url": "https://nextstep4u.in/sample-report.html"
+  },
+  {
+   "id": "solutions",
+   "title": "Solutions — Nextstep4u",
+   "file": "website/solutions.png",
+   "full": "website/full/solutions.jpg",
+   "url": "https://nextstep4u.in/solutions.html"
+  },
+  {
+   "id": "success",
+   "title": "Your payment — Nextstep4u",
+   "file": "website/success.png",
+   "full": "website/full/success.jpg",
+   "url": "https://nextstep4u.in/success.html"
+  },
+  {
+   "id": "terms",
+   "title": "Terms of Service — Nextstep4u",
+   "file": "website/terms.png",
+   "full": "website/full/terms.jpg",
+   "url": "https://nextstep4u.in/terms.html"
+  },
+  {
+   "id": "tnpsc-group-4-cutoff",
+   "title": "TNPSC Group 4 cut-off marks 2026: minimum 90/300",
+   "file": "website/tnpsc-group-4-cutoff.png",
+   "full": "website/full/tnpsc-group-4-cutoff.jpg",
+   "url": "https://nextstep4u.in/tnpsc-group-4-cutoff.html"
+  },
+  {
+   "id": "tnpsc-group-4-syllabus",
+   "title": "TNPSC Group 4 syllabus 2026: unit-wise questions",
+   "file": "website/tnpsc-group-4-syllabus.png",
+   "full": "website/full/tnpsc-group-4-syllabus.jpg",
+   "url": "https://nextstep4u.in/tnpsc-group-4-syllabus.html"
+  },
+  {
+   "id": "tnpsc",
+   "title": "TNPSC Group 4 mock tests and exam guides",
+   "file": "website/tnpsc.png",
+   "full": "website/full/tnpsc.jpg",
+   "url": "https://nextstep4u.in/tnpsc.html"
+  },
+  {
+   "id": "try",
+   "title": "Try today’s TNPSC Group 4 challenge",
+   "file": "website/try.png",
+   "full": "website/full/try.jpg",
+   "url": "https://nextstep4u.in/try.html"
+  },
+  {
+   "id": "vao-exam-pattern",
+   "title": "VAO exam pattern 2026: same paper as Group 4",
+   "file": "website/vao-exam-pattern.png",
+   "full": "website/full/vao-exam-pattern.jpg",
+   "url": "https://nextstep4u.in/vao-exam-pattern.html"
+  }
+ ],
+ "app": [
+  {
+   "id": "checkout",
+   "file": "app/checkout.png",
+   "screen": "checkout.html"
+  },
+  {
+   "id": "delete-account",
+   "file": "app/delete-account.png",
+   "screen": "delete-account.html"
+  },
+  {
+   "id": "help",
+   "file": "app/help.png",
+   "screen": "help.html"
+  },
+  {
+   "id": "index",
+   "file": "app/index.png",
+   "screen": "index.html"
+  },
+  {
+   "id": "legal",
+   "file": "app/legal.png",
+   "screen": "legal.html"
+  },
+  {
+   "id": "notifications",
+   "file": "app/notifications.png",
+   "screen": "notifications.html"
+  },
+  {
+   "id": "sign-in",
+   "file": "app/sign-in.png",
+   "screen": "sign-in.html"
+  },
+  {
+   "id": "welcome-1",
+   "file": "app/welcome-1.png",
+   "screen": "welcome.html"
+  },
+  {
+   "id": "welcome-2",
+   "file": "app/welcome-2.png",
+   "screen": "welcome.html"
+  },
+  {
+   "id": "welcome-3",
+   "file": "app/welcome-3.png",
+   "screen": "welcome.html"
+  },
+  {
+   "id": "play-1-welcome",
+   "file": "app/play-1-welcome.png",
+   "screen": "Play Store screenshot (final build)"
+  },
+  {
+   "id": "play-2-sign-in",
+   "file": "app/play-2-sign-in.png",
+   "screen": "Play Store screenshot (final build)"
+  },
+  {
+   "id": "play-3-choose-exam",
+   "file": "app/play-3-choose-exam.png",
+   "screen": "Play Store screenshot (final build)"
+  },
+  {
+   "id": "play-4-home",
+   "file": "app/play-4-home.png",
+   "screen": "Play Store screenshot (final build)"
+  },
+  {
+   "id": "play-5-tests",
+   "file": "app/play-5-tests.png",
+   "screen": "Play Store screenshot (final build)"
+  }
+ ],
+ "elements": [
+  {
+   "id": "home-hero",
+   "file": "elements/home-hero.png",
+   "from": "index.html"
+  },
+  {
+   "id": "sample-report-card",
+   "file": "elements/sample-report-card.png",
+   "from": "sample-report.html"
+  },
+  {
+   "id": "try-offer-card",
+   "file": "elements/try-offer-card.png",
+   "from": "try.html"
+  }
+ ],
+ "pending": [
+  {
+   "screen": "current-affairs.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  },
+  {
+   "screen": "daily.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  },
+  {
+   "screen": "exam.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  },
+  {
+   "screen": "home.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  },
+  {
+   "screen": "job.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  },
+  {
+   "screen": "jobs.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  },
+  {
+   "screen": "performance.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  },
+  {
+   "screen": "plans.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  },
+  {
+   "screen": "player.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  },
+  {
+   "screen": "profile.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  },
+  {
+   "screen": "result.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  },
+  {
+   "screen": "review.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  },
+  {
+   "screen": "rules.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  },
+  {
+   "screen": "tests.html",
+   "why": "needs a signed-in student and data; capture with APP_URL and the dev sandbox"
+  }
+ ]
+}

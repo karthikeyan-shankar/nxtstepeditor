@@ -1,0 +1,64 @@
+<template>
+  <style>
+    @font-face { font-family: "Meera Inimai"; src: url("assets/fonts/MeeraInimai-Regular.ttf") format("truetype"); font-weight: 400; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #FFFFFF; font-family: "Outfit", sans-serif; color: #0D1420; }
+    #end-world { position: absolute; inset: 0; background: radial-gradient(70% 42% at 50% 32%, #FFFFFF, #F6F8FB 72%); }
+    #end-rings { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .end-orb { position: absolute; left: 0; top: 0; border-radius: 50%; display: grid; place-items: center; font-weight: 700; box-shadow: 0 14px 30px -12px rgba(13,20,32,.3); overflow: hidden; }
+    .end-orb img { width: 100%; height: 100%; display: block; }
+    .end-face { border: 5px solid #FFFFFF; box-shadow: 0 0 0 3px #0265E0, 0 14px 30px -12px rgba(13,20,32,.3); }
+    #end-logo { position: absolute; left: 220px; top: 420px; width: 640px; height: auto; z-index: 5; }
+    #end-words { position: absolute; left: 60px; right: 60px; top: 880px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; z-index: 6; }
+    #end-url { font-size: 96px; font-weight: 700; letter-spacing: -0.035em; }
+    #end-tag { font-family: "Meera Inimai", "Outfit", sans-serif; font-size: 70px; line-height: 1.22; color: #3D4756; }
+    #end-tag .b { color: #0265E0; }
+    #end-btn { display: inline-flex; align-items: center; gap: 22px; height: 112px; padding: 0 46px 0 54px; margin-top: 14px; border-radius: 999px; background: linear-gradient(180deg, #263243, #0D1420); color: #FFFFFF; font-size: 46px; font-weight: 600; box-shadow: 0 24px 50px -16px rgba(13,20,32,.4); }
+    #end-btn svg { width: 42px; height: 42px; }
+  </style>
+  <div id="root" data-composition-id="end" data-width="1080" data-height="1920">
+    <div id="end-world">
+      <svg id="end-rings" viewBox="0 0 1080 1920">
+        <ellipse id="end-ring" cx="540" cy="590" rx="440" ry="230" fill="none" stroke="#C5DAF8" stroke-width="3" stroke-dasharray="6 14"/>
+        <ellipse cx="540" cy="590" rx="300" ry="150" fill="none" stroke="#E2ECFA" stroke-width="3"/>
+      </svg>
+      <div class="end-orb" id="end-o1" style="width:130px;height:130px;background:#FFF7E0;color:#7A5A00;font-family:'Meera Inimai',sans-serif;font-weight:400;font-size:66px">அ</div>
+      <div class="end-orb" id="end-o2" style="width:118px;height:118px;background:#EBF3FE;color:#0265E0;font-size:46px">GS</div>
+      <div class="end-orb" id="end-o3" style="width:110px;height:110px;background:#E4F7F3;color:#00695C;font-size:50px">%</div>
+      <div class="end-orb end-face" id="end-o4" style="width:128px;height:128px"><img src="assets/students/student-3.webp" alt=""/></div>
+      <div class="end-orb end-face" id="end-o5" style="width:116px;height:116px"><img src="assets/students/student-6.webp" alt=""/></div>
+      <div class="end-orb end-face" id="end-o6" style="width:124px;height:124px"><img src="assets/students/student-5.webp" alt=""/></div>
+      <div class="end-orb end-face" id="end-o7" style="width:112px;height:112px"><img src="assets/students/student-9.webp" alt=""/></div>
+    </div>
+    <img id="end-logo" src="assets/logo-big.png" alt="nextstep4u"/>
+    <div id="end-words">
+      <p id="end-url">nextstep4u.in</p>
+      <p id="end-tag">உங்க வெற்றிக்கான<br/><span class="b">அடுத்த step</span></p>
+      <span id="end-btn">Try it for ₹9<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // A slow orbit of the site's Tamil / GS / % chips and aspirants round the logo (3-5 degrees a second feel).
+    const sizes = [130, 118, 110, 128, 116, 124, 112];
+    const orbit = { a: 0 };
+    const place = () => {
+      sizes.forEach((w, i) => {
+        const a = i / sizes.length * Math.PI * 2 + orbit.a, x = 540 + 440 * Math.cos(a), y = 590 + 230 * Math.sin(a);
+        const depth = (Math.sin(a) + 1) / 2, s = 0.74 + 0.3 * depth;
+        const el = document.querySelector("#end-o" + (i + 1));
+        el.style.transform = "translate(" + (x - w / 2).toFixed(1) + "px," + (y - w / 2).toFixed(1) + "px) scale(" + s.toFixed(3) + ")";
+        el.style.zIndex = depth > 0.55 ? 7 : 1;
+      });
+    };
+    tl.fromTo(orbit, { a: 0.2 }, { a: 1.25, duration: 4.25, ease: "none", onUpdate: place }, 0);
+    tl.fromTo(".end-orb", { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.05, ease: "power2.out" }, 0.05);
+    tl.fromTo("#end-ring", { strokeDashoffset: 0 }, { strokeDashoffset: -120, duration: 4.25, ease: "none" }, 0);
+    // The mark lands, then holds still.
+    tl.fromTo("#end-logo", { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out" }, 0.05);
+    tl.fromTo("#end-logo", { scale: 0.82, y: 40 }, { scale: 1, y: 0, duration: 0.7, ease: "back.out(1.4)" }, 0.05);
+    tl.fromTo("#end-url", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, 0.2);
+    tl.fromTo("#end-tag", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 1.8);
+    tl.fromTo("#end-btn", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, 2.1);
+    window.__timelines["end"] = tl;
+  </script>
+</template>

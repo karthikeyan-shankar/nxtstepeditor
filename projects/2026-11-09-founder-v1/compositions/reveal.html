@@ -1,0 +1,32 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0265E0; font-family: "Outfit", sans-serif; }
+    #reveal-ground { position: absolute; inset: 0; background: linear-gradient(170deg, #0150B4 0%, #0265E0 55%, #0D86C9 100%); }
+    #reveal-ribbons { position: absolute; left: -200px; top: 0; width: 1480px; height: 1920px; }
+    #reveal-card { position: absolute; left: 110px; top: 690px; width: 860px; height: 470px; border-radius: 64px; background: #FFFFFF; display: grid; place-items: center; box-shadow: 0 50px 90px -30px rgba(0,0,0,.45); }
+    #reveal-logo { width: 720px; height: auto; }
+  </style>
+  <div id="root" data-composition-id="reveal" data-width="1080" data-height="1920">
+    <div id="reveal-ground"></div>
+    <svg id="reveal-ribbons" viewBox="0 0 1480 1920" preserveAspectRatio="none">
+      <defs><linearGradient id="reveal-g" x1="0" x2="1"><stop offset="0" stop-color="#0150B4"/><stop offset=".5" stop-color="#FFFFFF"/><stop offset="1" stop-color="#00B696"/></linearGradient></defs>
+      <path d="M0 300 C360 160 900 420 1480 240 V340 C900 520 360 260 0 400 Z" fill="url(#reveal-g)" opacity=".14"/>
+      <path d="M0 620 C420 760 980 480 1480 640 V730 C980 580 420 860 0 720 Z" fill="url(#reveal-g)" opacity=".2"/>
+      <path d="M0 1240 C380 1100 940 1380 1480 1200 V1300 C940 1480 380 1200 0 1340 Z" fill="url(#reveal-g)" opacity=".22"/>
+      <path d="M0 1560 C440 1700 960 1420 1480 1580 V1680 C960 1520 440 1800 0 1660 Z" fill="url(#reveal-g)" opacity=".16"/>
+    </svg>
+    <div id="reveal-card"><img id="reveal-logo" src="assets/logo-big.png" alt="nextstep4u"/></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#reveal-ribbons", { x: 0 }, { x: -180, duration: 2.05, ease: "none" }, 0);
+    // The logo card springs in.
+    tl.fromTo("#reveal-card", { opacity: 0 }, { opacity: 1, duration: 0.16, ease: "power2.out" }, 0.12);
+    tl.fromTo("#reveal-card", { y: 90, scale: 0.84 }, { y: 0, scale: 1, duration: 0.65, ease: "back.out(1.4)" }, 0.12);
+    // The card becomes the next world: it grows past the frame and its white is shot 5's page.
+    tl.to("#reveal-logo", { opacity: 0, scale: 0.9, duration: 0.15, ease: "power2.in" }, 1.63);
+    tl.to("#reveal-ribbons", { opacity: 0, filter: "blur(15px)", duration: 0.3, ease: "power2.in" }, 1.65);
+    tl.to("#reveal-card", { scale: 4.6, borderRadius: 0, duration: 0.4, ease: "power2.inOut" }, 1.63);
+    window.__timelines["reveal"] = tl;
+  </script>
+</template>

@@ -1,0 +1,53 @@
+/* Shared look for every scene: the reference's dreamy aurora, glass and typed text, in Nextstep4u's fonts.
+   Loaded once by index.html; scenes use these classes. */
+@font-face { font-family: "Outfit"; src: url("fonts/Outfit.ttf"); font-weight: 100 900; }
+@font-face { font-family: "Meera Inimai"; src: url("fonts/MeeraInimai.ttf"); font-weight: 400; }
+
+.sc { position: absolute; inset: 0; overflow: hidden; font-family: "Outfit", "Meera Inimai", sans-serif; }
+
+/* grounds */
+.sky { position: absolute; inset: 0; }
+.sky.night { background: radial-gradient(70% 45% at 50% 30%, #0C0F1C 0%, #05060B 70%); }
+.sky.dawn { background: linear-gradient(180deg, #F8F5F2 0%, #F3F0F6 40%, #ECE8F8 100%); }
+
+/* the aurora: a band of soft colour fields across the lower middle, heavily blurred, drifting slowly */
+.aur { position: absolute; left: -240px; right: -240px; bottom: -80px; height: 1060px; filter: blur(64px); }
+.aur.night {
+  background:
+    radial-gradient(22% 26% at 14% 58%, rgba(90, 110, 255, .95), rgba(90, 110, 255, 0) 72%),
+    radial-gradient(24% 30% at 34% 48%, rgba(120, 140, 255, .9), rgba(120, 140, 255, 0) 72%),
+    radial-gradient(22% 24% at 54% 56%, rgba(190, 150, 255, .85), rgba(190, 150, 255, 0) 72%),
+    radial-gradient(24% 30% at 74% 46%, rgba(150, 120, 255, .9), rgba(150, 120, 255, 0) 72%),
+    radial-gradient(22% 26% at 92% 58%, rgba(255, 150, 210, .8), rgba(255, 150, 210, 0) 72%),
+    radial-gradient(60% 18% at 50% 66%, rgba(225, 230, 255, .55), rgba(225, 230, 255, 0) 75%),
+    radial-gradient(60% 30% at 50% 92%, rgba(255, 160, 210, .55), rgba(255, 160, 210, 0) 75%);
+}
+.aur.dawn {
+  background:
+    radial-gradient(24% 26% at 14% 58%, rgba(150, 165, 255, .9), rgba(150, 165, 255, 0) 72%),
+    radial-gradient(24% 30% at 36% 48%, rgba(190, 200, 255, .9), rgba(190, 200, 255, 0) 72%),
+    radial-gradient(22% 24% at 56% 56%, rgba(255, 175, 215, .85), rgba(255, 175, 215, 0) 72%),
+    radial-gradient(24% 30% at 76% 46%, rgba(175, 160, 255, .85), rgba(175, 160, 255, 0) 72%),
+    radial-gradient(22% 26% at 92% 58%, rgba(255, 190, 220, .85), rgba(255, 190, 220, 0) 72%),
+    radial-gradient(60% 30% at 50% 90%, rgba(255, 200, 225, .8), rgba(255, 200, 225, 0) 75%);
+}
+/* film grain over everything, very light */
+.grain { position: absolute; inset: 0; opacity: .07; mix-blend-mode: overlay; pointer-events: none; }
+
+/* typed lines */
+.tw { position: absolute; left: 60px; right: 60px; text-align: center; font-weight: 700; letter-spacing: -.01em; line-height: 1.22; }
+.tw.on-night { color: #F4F5FF; text-shadow: 0 0 34px rgba(150, 160, 255, .35); }
+.tw.on-dawn { color: #1E2133; }
+.tw-caret { display: inline-block; width: 6px; height: .95em; margin-left: 8px; vertical-align: -.1em; border-radius: 3px; background: currentColor; }
+.tw .ghost { color: rgba(30, 33, 51, .28); }
+.whisper { position: absolute; left: 0; right: 0; text-align: center; font-weight: 600; letter-spacing: .02em; }
+
+/* glass */
+.glass { border-radius: 999px; border: 2px solid rgba(255, 255, 255, .8);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .62), rgba(255, 255, 255, .24));
+  box-shadow: 0 24px 60px rgba(90, 80, 170, .22), inset 0 2px 0 rgba(255, 255, 255, .95), inset 0 -14px 30px rgba(255, 255, 255, .3);
+  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); }
+.glass.smoke { border-color: rgba(255, 255, 255, .35); background: linear-gradient(180deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .05));
+  box-shadow: 0 0 40px rgba(140, 150, 255, .25), inset 0 1px 0 rgba(255, 255, 255, .5); }
+.card { border-radius: 44px; background: rgba(255, 255, 255, .9); border: 2px solid rgba(255, 255, 255, .95);
+  box-shadow: 0 40px 90px rgba(80, 70, 160, .22), inset 0 2px 0 #fff; color: #0D1420; }

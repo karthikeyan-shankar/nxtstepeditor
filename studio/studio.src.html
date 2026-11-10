@@ -1,0 +1,642 @@
+<title>Nextstep4u Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400..800&family=Meera+Inimai&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+/* Layout: a working studio. Sticky bar; Script, Storyboard and Kit as tabs; on the storyboard a 9:16 player
+   on the left and the render plan plus the picks on the right, stacking on a phone. Product palette only. */
+:root {
+  --bg: #F6F8FB; --surface: #FFFFFF; --ink: #0D1420; --ink-2: #3D4756; --ink-3: #5A6675; --line: #E4E8EE;
+  --accent: #0265E0; --accent-soft: #EBF3FE; --gold: #FBBC04; --gold-soft: #FFF7E0; --ok: #00947C; --ok-soft: #E4F7F3;
+  --warn: #B4232A; --warn-soft: #FDECED; --night: #0D1420; --night-2: #171F2C; --night-ink: #E6EAF0; --night-dim: #8E9AAB;
+  --chip: #F2F5F9; --shadow: 0 1px 2px rgba(13,20,32,.06), 0 12px 32px -18px rgba(13,20,32,.28);
+  --display: "Outfit", "Meera Inimai", system-ui, sans-serif; --body: "Outfit", "Meera Inimai", system-ui, sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0B111B; --surface: #131B27; --ink: #F2F5F9; --ink-2: #C9D1DC; --ink-3: #9AA4B2; --line: #263243;
+  --accent: #5B9BF5; --accent-soft: #14243C; --gold: #FBBC04; --gold-soft: #2A2410; --ok: #2CC7A8; --ok-soft: #0F2A26;
+  --warn: #F07178; --warn-soft: #2C1518; --chip: #1B2533; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -18px rgba(0,0,0,.6); color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0B111B; --surface: #131B27; --ink: #F2F5F9; --ink-2: #C9D1DC; --ink-3: #9AA4B2; --line: #263243;
+  --accent: #5B9BF5; --accent-soft: #14243C; --gold: #FBBC04; --gold-soft: #2A2410; --ok: #2CC7A8; --ok-soft: #0F2A26;
+  --warn: #F07178; --warn-soft: #2C1518; --chip: #1B2533; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -18px rgba(0,0,0,.6); color-scheme: dark }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { background: var(--bg); color: var(--ink); }
+body { font-family: var(--body); font-size: 15px; line-height: 1.45; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* the bar */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+.bar-in { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding-block: 10px; }
+.brand { font-family: var(--display); font-weight: 750; font-size: 18px; letter-spacing: -.01em; margin-right: 6px; white-space: nowrap; }
+.brand b { color: var(--accent); font-weight: 750; }
+.board-pick { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.board-pick select { max-width: 260px; min-width: 0; padding: 7px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 650; letter-spacing: .02em; background: var(--chip); color: var(--ink-2); white-space: nowrap; }
+.pill[data-s="draft"] { background: var(--gold-soft); color: #7A5A00; }
+.pill[data-s="approved"] { background: var(--ok-soft); color: var(--ok); }
+.pill[data-s="rendered"] { background: var(--accent-soft); color: var(--accent); }
+:root[data-theme="dark"] .pill[data-s="draft"] { color: var(--gold); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .pill[data-s="draft"] { color: var(--gold); } }
+.tabs { display: flex; gap: 4px; margin-left: auto; }
+.tabs button { border: 0; background: transparent; padding: 7px 12px; border-radius: 10px; font-weight: 600; color: var(--ink-3); }
+.tabs button[aria-selected="true"] { background: var(--accent-soft); color: var(--accent); }
+.save-note { font-size: 12.5px; color: var(--ink-3); white-space: nowrap; }
+
+main { padding-block: 18px 40px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); }
+h2 { font-family: var(--display); font-size: 22px; font-weight: 750; letter-spacing: -.015em; margin: 0 0 4px; text-wrap: balance; }
+.lede { color: var(--ink-3); margin: 0 0 16px; max-width: 68ch; }
+label.f { display: grid; gap: 5px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+label.f small { font-weight: 500; color: var(--ink-3); }
+input[type=text], textarea, select.f { width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); font-size: 15px; font-weight: 500; }
+textarea { resize: vertical; min-height: 64px; }
+input[type=text]:focus, textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+.btn { border: 1px solid var(--line); background: var(--surface); padding: 9px 15px; border-radius: 11px; font-weight: 650; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+.btn.ok { background: var(--ok); border-color: var(--ok); color: #FFFFFF; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.muted { color: var(--ink-3); }
+.note { font-size: 13.5px; padding: 10px 12px; border-radius: 10px; background: var(--chip); color: var(--ink-2); }
+.note.warn { background: var(--warn-soft); color: var(--warn); }
+.note.ok { background: var(--ok-soft); color: var(--ok); }
+
+/* step 1: the script */
+.script-grid { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .script-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); } }
+.script-grid .panel { padding: 18px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+#script-text { min-height: 280px; font-size: 16px; line-height: 1.6; font-family: var(--body); }
+.steps { margin: 0; padding-left: 20px; color: var(--ink-2); display: grid; gap: 6px; }
+
+/* step 2: the storyboard */
+.board-grid { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 960px) { .board-grid { grid-template-columns: 360px minmax(0, 1fr); } .player { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 72px); align-self: start; } }
+.player { display: grid; gap: 10px; justify-items: center; }
+.screen { position: relative; width: min(100%, 360px); aspect-ratio: 9 / 16; max-width: 100%; border-radius: 22px; overflow: hidden; background: #000000; box-shadow: 0 20px 50px -24px rgba(13,20,32,.6); }
+#stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; overflow: hidden;
+  font-family: "Outfit", sans-serif; font-size: 16px; line-height: normal; color: #0D1420; text-align: left; }
+/* the style's own root reset (its index.html), so the scenes lay out exactly as they render */
+#stage *, #stage *::before, #stage *::after { margin: 0; padding: 0; box-sizing: border-box; }
+#stage .shot { position: absolute; inset: 0; overflow: hidden; }
+.transport { width: min(100%, 360px); display: grid; gap: 8px; }
+.transport .row { justify-content: space-between; }
+#scrub { width: 100%; accent-color: var(--accent); }
+.time { font-variant-numeric: tabular-nums; font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
+.toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-2); }
+.side { display: grid; gap: 16px; min-width: 0; }
+.plan { background: var(--night); color: var(--night-ink); border-radius: 16px; padding: 14px 16px; font-family: var(--mono); font-size: 12.5px; line-height: 1.7; overflow-x: auto; }
+.plan-head { display: flex; justify-content: space-between; gap: 10px; color: var(--night-dim); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 6px; }
+.plan button { all: unset; display: block; width: 100%; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-radius: 6px; padding: 0 6px; margin: 0 -6px; }
+.plan button:hover, .plan button[aria-current="true"] { background: var(--night-2); }
+.plan .t { color: var(--gold); }
+.plan .ok { color: #2CC7A8; }
+.plan .end { color: var(--night-dim); }
+.shots { display: grid; gap: 14px; }
+.shotcard { padding: 16px; display: grid; gap: 12px; }
+.shotcard[aria-current="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow); }
+.shot-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.shot-head .n { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+.shot-head h3 { margin: 0; font-family: var(--display); font-size: 18px; font-weight: 700; letter-spacing: -.01em; }
+.shot-head .tr { font-family: var(--mono); font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.shot-head .btn { margin-left: auto; padding: 5px 11px; font-size: 13px; }
+.job { margin: 0; font-size: 13.5px; color: var(--ink-3); max-width: 70ch; }
+.fields { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr)); }
+.over { color: var(--warn); font-weight: 600; }
+.pickrow { display: grid; gap: 6px; }
+.pickrow > span { font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips button { border: 1px solid var(--line); background: var(--surface); padding: 6px 13px; border-radius: 999px; font-size: 13.5px; font-weight: 600; color: var(--ink-2); }
+.chips button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
+.chips button .star { color: var(--gold); margin-left: 4px; }
+.more { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.approve { padding: 16px; display: grid; gap: 10px; }
+.renders { display: grid; gap: 12px; }
+.renders video { width: min(100%, 300px); border-radius: 14px; background: #000000; }
+
+/* the kit */
+.kit-sec { display: grid; gap: 10px; margin-bottom: 26px; }
+.kit-sec h3 { margin: 0; font-family: var(--display); font-size: 17px; font-weight: 700; }
+.kit-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.kit-item { display: grid; gap: 6px; align-content: start; padding: 8px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); min-width: 0; }
+.kit-item img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; object-position: top; border-radius: 9px; background: var(--chip); cursor: zoom-in; }
+.kit-item b { font-size: 13px; font-weight: 650; overflow-wrap: anywhere; }
+.kit-item code { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); overflow-wrap: anywhere; }
+.kit-item .btn { padding: 5px 9px; font-size: 12.5px; }
+.pending { margin: 0; padding-left: 18px; color: var(--ink-3); columns: 2 180px; }
+.lightbox { position: fixed; inset: 0; z-index: 20; background: rgba(13,20,32,.82); display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.lightbox img { max-height: 92vh; max-width: 100%; border-radius: 12px; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<header class="bar"><div class="bar-in wrap">
+  <div class="brand">nextstep4u <b>Studio</b></div>
+  <div class="board-pick">
+    <select id="board-select" aria-label="Ad"></select>
+    <span id="status" class="pill" data-s="script">Script</span>
+  </div>
+  <span id="save-note" class="save-note">Not saved yet</span>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="script" aria-selected="true">1 · Script</button>
+    <button role="tab" data-tab="board" aria-selected="false">2 · Storyboard</button>
+    <button role="tab" data-tab="kit" aria-selected="false">Kit</button>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <!-- 1 · Script: every ad starts here -->
+  <section id="tab-script">
+    <h2>Start with the script</h2>
+    <p class="lede">Paste the ad's script. Claude turns it into a storyboard in the chosen style: the on-screen line for every shot, the voice line under it, and the picks. You change anything after that, approve it, and Claude builds the whole video.</p>
+    <div class="script-grid">
+      <div class="panel">
+        <label class="f">Ad name <input type="text" id="ad-name" placeholder="Group 4 · 'Improve aagalaya?'"></label>
+        <label class="f">Script <small>Tamil, Tanglish or English, as it will be spoken. One line per thought.</small>
+          <textarea id="script-text" placeholder="Amma: தம்பி… இந்த தடவ வேலை கிடைச்சிருமாப்பா?&#10;Thambi: ராத்திரி முழுக்க படிக்கிறேன் மா… ஆனா எங்க தப்பு பண்றேன்னு தெரியல."></textarea></label>
+        <label class="f">Anything Claude should know <small>Audience, offer, what to avoid.</small>
+          <textarea id="ad-notes" placeholder="Evergreen: no price on screen."></textarea></label>
+      </div>
+      <div class="panel">
+        <label class="f">Style
+          <select class="f" id="ad-style"></select></label>
+        <p class="muted" id="style-about" style="margin:0"></p>
+        <label class="f">On-screen language
+          <select class="f" id="ad-lang">
+            <option value="tanglish">Tanglish, like the founder's ad ★</option>
+            <option value="tamil">Tamil script</option>
+            <option value="english">English</option>
+          </select></label>
+        <div class="row">
+          <button class="btn primary" id="draft-btn" hidden>Draft the storyboard</button>
+          <button class="btn" id="new-btn">Start as a new ad</button>
+          <button class="btn" id="save-script-btn">Save script</button>
+        </div>
+        <div id="draft-out" class="note" hidden></div>
+        <ol class="steps">
+          <li>Write the script here and draft the storyboard.</li>
+          <li>On the storyboard, play it, change any line or pick, and add notes for anything the style can't show yet.</li>
+          <li>Approve. In Claude Code, say: <b>render the approved Studio board</b>.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · Storyboard -->
+  <section id="tab-board" hidden>
+    <div class="board-grid">
+      <div class="player">
+        <div class="screen" id="screen"><div id="stage" aria-label="Preview of the ad"></div></div>
+        <div class="transport">
+          <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="Position">
+          <div class="row">
+            <button class="btn primary" id="play-btn">Play</button>
+            <span class="time" id="time">0:00.0 / 0:00.0</span>
+          </div>
+          <div class="row">
+            <label class="toggle"><input type="checkbox" id="loop-shot"> Loop this shot</label>
+            <label class="toggle"><input type="checkbox" id="music-on"> Music</label>
+          </div>
+          <p class="muted" style="margin:0;font-size:12.5px">Preview quality. The final renders at 1080 × 1920 from the same scenes, with the voice and sound.</p>
+        </div>
+      </div>
+      <div class="side">
+        <div class="plan" aria-label="Render plan">
+          <div class="plan-head"><span id="plan-title">Storyboard</span><span id="plan-style"></span></div>
+          <div id="plan-lines"></div>
+        </div>
+        <div class="shots" id="shots"></div>
+        <div class="panel approve">
+          <h2 style="font-size:19px">Approve</h2>
+          <div id="approve-note" class="note">When every shot reads right, approve the storyboard. Claude then builds the video from it.</div>
+          <div class="row"><button class="btn ok" id="approve-btn">Approve storyboard</button></div>
+          <div class="renders" id="renders"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kit: everything the editor can use -->
+  <section id="tab-kit" hidden>
+    <h2>The kit</h2>
+    <p class="lede" id="kit-lede"></p>
+    <div id="kit"></div>
+  </section>
+</main>
+<div class="lightbox" id="lightbox" hidden><img id="lightbox-img" alt=""></div>
+<audio id="music" src="assets/music/jersey_bgm.mp3" preload="none"></audio>
+
+<!--PICKS_JS-->
+<script type="application/json" id="style-json">/*STYLE_JSON*/</script>
+<script type="application/json" id="shots-json">/*SHOTS_JSON*/</script>
+<script type="application/json" id="scenes-json">/*SCENES_JSON*/</script>
+<script type="application/json" id="kit-json">/*KIT_JSON*/</script>
+<script>
+(function () {
+  "use strict";
+  const $ = (s) => document.querySelector(s);
+  const STYLE = JSON.parse($("#style-json").textContent);
+  const SHOTS = JSON.parse($("#shots-json").textContent);
+  const SCENES = JSON.parse($("#scenes-json").textContent);
+  const KIT = JSON.parse($("#kit-json").textContent);
+  const META = Object.fromEntries(STYLE.shots.map((s) => [s.id, s]));
+  const FIELD = {}; STYLE.shots.forEach((s) => s.fields.forEach((f) => (FIELD[f.key] = f)));
+  const PICK = {}; STYLE.shots.forEach((s) => s.picks.forEach((p) => (PICK[p.key] = p)));
+  const TOTAL = SHOTS.reduce((a, s) => Math.max(a, s.start + s.duration), 0);
+  const fmt = (t) => { const m = Math.floor(t / 60), s = t - m * 60; return m + ":" + (s < 10 ? "0" : "") + s.toFixed(1); };
+  const seg = window.Intl && Intl.Segmenter ? new Intl.Segmenter("ta", { granularity: "grapheme" }) : null;
+  const letters = (t) => { t = String(t).replace(/\*/g, ""); return seg ? Array.from(seg.segment(t)).length : Array.from(t).length; };
+
+  // ---------- the board (one ad) ----------
+  const blank = () => ({ name: "", style: STYLE.id, lang: "tanglish", script: "", notes: "", status: "script",
+    text: {}, pick: {}, vo: {}, shotNotes: {}, renders: [], updatedAt: null, updatedBy: null, approvedAt: null, approvedBy: null });
+  let board = blank(), boardId = null;
+  const val = (key) => (Object.prototype.hasOwnProperty.call(board.text, key) ? board.text[key] : FIELD[key].default);
+  const pickVal = (key) => board.pick[key] || (PICK[key].choices.find((c) => c.star) || PICK[key].choices[0]).value;
+
+  // ---------- the player: the style's own scenes, run here ----------
+  const stage = $("#stage"), mounted = {};
+  window.__timelines = window.__timelines || {};
+  function split(src) {
+    let inner = src.replace(/^[\s\S]*?<template>/, "").replace(/<\/template>[\s\S]*$/, "");
+    const css = []; let code = "";
+    inner = inner.replace(/<style>([\s\S]*?)<\/style>/g, (m, c) => { css.push(c); return ""; });
+    inner = inner.replace(/<script>([\s\S]*?)<\/script>/g, (m, c) => { code += c + "\n"; return ""; });
+    return { css: css.join("\n"), markup: inner, code };
+  }
+  const PARTS = Object.fromEntries(Object.keys(SCENES).map((id) => [id, split(SCENES[id])]));
+  function mount(id) {
+    const old = mounted[id];
+    const p = PARTS[id], sid = "sc-" + id;
+    const styleEl = document.createElement("style");
+    styleEl.textContent = p.css.replace(/#root\b/g, "#" + sid);
+    document.head.appendChild(styleEl);
+    const host = document.createElement("div");
+    host.className = "shot"; host.dataset.shot = id; host.hidden = true;
+    host.innerHTML = p.markup.replace(/id="root"/, 'id="' + sid + '"');
+    if (old) { stage.replaceChild(host, old.host); old.styleEl.remove(); if (old.tl) old.tl.kill(); }
+    else stage.appendChild(host);
+    window.NS_PICKS = { text: Object.assign({}, board.text), pick: Object.assign({}, board.pick) };
+    try { new Function(p.code)(); } catch (e) { console.error("scene " + id, e); }
+    mounted[id] = { host, styleEl, tl: window.__timelines[id] };
+  }
+  SHOTS.forEach((s) => mount(s.id));
+  const remountTimers = {};
+  function remountSoon(id) { clearTimeout(remountTimers[id]); remountTimers[id] = setTimeout(() => { mount(id); seek(t); }, 180); }
+  function remountAll() { SHOTS.forEach((s) => mount(s.id)); seek(t); }
+
+  let t = 0, playing = false, last = 0, loopShot = null, current = null;
+  const shotAt = (x) => SHOTS.find((s) => x >= s.start && x < s.start + s.duration) || SHOTS[SHOTS.length - 1];
+  function seek(x) {
+    t = Math.max(0, Math.min(TOTAL - 0.001, x));
+    const s = shotAt(t);
+    for (const id in mounted) mounted[id].host.hidden = id !== s.id;
+    const m = mounted[s.id];
+    if (m && m.tl) m.tl.seek(t - s.start, false);
+    $("#scrub").value = Math.round((t / TOTAL) * 1000);
+    $("#time").textContent = fmt(t) + " / " + fmt(TOTAL);
+    if (current !== s.id) { current = s.id; markCurrent(); }
+  }
+  const music = $("#music");
+  function frame(ts) {
+    if (!playing) return;
+    const dt = Math.min(0.1, (ts - last) / 1000); last = ts;
+    let nt = t + dt;
+    if (loopShot) { const s = SHOTS.find((x) => x.id === loopShot); if (nt >= s.start + s.duration || nt < s.start) { nt = s.start; syncMusic(true, nt); } }
+    else if (nt >= TOTAL) { nt = 0; syncMusic(true, 0); }
+    seek(nt); syncMusic(false, nt);
+    requestAnimationFrame(frame);
+  }
+  function syncMusic(force, at) {
+    if (!$("#music-on").checked || !playing) { if (!music.paused) music.pause(); return; }
+    if (music.paused) { music.currentTime = at; music.play().catch(() => {}); return; }
+    if (force || Math.abs(music.currentTime - at) > 0.3) music.currentTime = at;
+  }
+  function setPlaying(p) {
+    playing = p; $("#play-btn").textContent = p ? "Pause" : "Play";
+    if (p) { last = performance.now(); requestAnimationFrame(frame); syncMusic(true, t); } else music.pause();
+  }
+  $("#play-btn").onclick = () => setPlaying(!playing);
+  $("#scrub").oninput = (e) => { seek((e.target.value / 1000) * TOTAL); syncMusic(true, t); };
+  $("#loop-shot").onchange = (e) => { loopShot = e.target.checked ? shotAt(t).id : null; };
+  $("#music-on").onchange = () => syncMusic(true, t);
+  new ResizeObserver(() => { const w = $("#screen").clientWidth; stage.style.transform = "scale(" + w / 1080 + ")"; }).observe($("#screen"));
+  function jump(id) { const s = SHOTS.find((x) => x.id === id); if (loopShot) { loopShot = id; } seek(s.start + 0.01); syncMusic(true, t); }
+
+  // ---------- render plan ----------
+  function shotSummary(s) {
+    const m = META[s.id];
+    const words = m.fields.map((f) => val(f.key).replace(/\*/g, "")).filter(Boolean);
+    const picks = m.picks.map((p) => p.choices.find((c) => c.value === pickVal(p.key)).label.toLowerCase());
+    let txt = words.length ? words.join(" · ") : "no words, the voice carries it";
+    if (picks.length) txt += "  [" + picks.join(", ") + "]";
+    return txt;
+  }
+  function renderPlan() {
+    $("#plan-title").textContent = board.name || "Untitled ad";
+    $("#plan-style").textContent = STYLE.name + " · 9:16";
+    const box = $("#plan-lines"); box.textContent = "";
+    SHOTS.forEach((s) => {
+      const b = document.createElement("button");
+      b.dataset.shot = s.id;
+      const tt = document.createElement("span"); tt.className = "t"; tt.textContent = fmt(s.start);
+      b.append(tt, " · " + META[s.id].title + " — " + shotSummary(s) + (board.vo[s.id] ? "  · voice ✓" : "") + (board.shotNotes[s.id] ? "  · note for Claude" : ""));
+      b.onclick = () => jump(s.id);
+      box.appendChild(b);
+    });
+    const end = document.createElement("div"); end.className = board.status === "approved" || board.status === "rendered" ? "ok" : "end";
+    end.textContent = fmt(TOTAL) + " · " + (board.status === "rendered" ? "rendered ✓" : board.status === "approved" ? "approved ✓ · Claude can build it" : "render plan ready · waiting for your approval");
+    box.appendChild(end);
+    markCurrent();
+  }
+  function markCurrent() {
+    document.querySelectorAll("#plan-lines button").forEach((b) => b.setAttribute("aria-current", String(b.dataset.shot === current)));
+    document.querySelectorAll(".shotcard").forEach((c) => c.setAttribute("aria-current", String(c.dataset.shot === current)));
+  }
+
+  // ---------- the picks, shot by shot ----------
+  let canWrite = true;
+  function renderShots() {
+    const box = $("#shots"); box.textContent = "";
+    SHOTS.forEach((s, i) => {
+      const m = META[s.id];
+      const card = document.createElement("article"); card.className = "panel shotcard"; card.dataset.shot = s.id;
+      const head = document.createElement("div"); head.className = "shot-head";
+      const n = document.createElement("span"); n.className = "n"; n.textContent = String(i + 1).padStart(2, "0");
+      const h = document.createElement("h3"); h.textContent = m.title;
+      const tr = document.createElement("span"); tr.className = "tr"; tr.textContent = s.start.toFixed(1) + "–" + (s.start + s.duration).toFixed(1) + " s";
+      const pb = document.createElement("button"); pb.className = "btn"; pb.textContent = "Play this shot";
+      pb.onclick = () => { $("#loop-shot").checked = true; loopShot = s.id; jump(s.id); setPlaying(true); };
+      head.append(n, h, tr, pb);
+      const job = document.createElement("p"); job.className = "job"; job.textContent = m.job;
+      card.append(head, job);
+      if (m.fields.length) {
+        const fields = document.createElement("div"); fields.className = "fields";
+        m.fields.forEach((f) => {
+          const lab = document.createElement("label"); lab.className = "f";
+          const cap = document.createElement("span"); cap.textContent = f.label;
+          const inp = document.createElement("input"); inp.type = "text"; inp.id = "f-" + f.key.replace(".", "-"); inp.value = val(f.key); inp.disabled = !canWrite;
+          const count = document.createElement("small");
+          const upd = () => { const n = letters(inp.value); count.textContent = n + " / " + f.fit + " letters" + (n > f.fit ? " · will shrink to fit" : ""); count.className = n > f.fit ? "over" : ""; };
+          upd();
+          inp.oninput = () => {
+            if (inp.value === f.default) delete board.text[f.key]; else board.text[f.key] = inp.value;
+            upd(); changed(); remountSoon(s.id); renderPlanSoon();
+          };
+          lab.append(cap, inp, count);
+          if (f.hint) { const hn = document.createElement("small"); hn.textContent = f.hint; lab.appendChild(hn); }
+          fields.appendChild(lab);
+        });
+        card.appendChild(fields);
+      }
+      m.picks.forEach((p) => {
+        const row = document.createElement("div"); row.className = "pickrow";
+        const cap = document.createElement("span"); cap.textContent = p.label;
+        const chips = document.createElement("div"); chips.className = "chips";
+        p.choices.forEach((c) => {
+          const b = document.createElement("button"); b.type = "button"; b.disabled = !canWrite;
+          b.setAttribute("aria-pressed", String(pickVal(p.key) === c.value));
+          b.textContent = c.label;
+          if (c.star) { const st = document.createElement("span"); st.className = "star"; st.textContent = "★"; st.setAttribute("aria-label", "recommended"); b.appendChild(st); }
+          b.onclick = () => {
+            if (c.star) delete board.pick[p.key]; else board.pick[p.key] = c.value;
+            chips.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+            changed(); remountSoon(s.id); renderPlanSoon();
+          };
+          chips.appendChild(b);
+        });
+        row.append(cap, chips); card.appendChild(row);
+      });
+      const more = document.createElement("div"); more.className = "more";
+      const vo = document.createElement("label"); vo.className = "f"; vo.textContent = "Voice line for this shot";
+      const vt = document.createElement("textarea"); vt.id = "vo-" + s.id; vt.rows = 2; vt.value = board.vo[s.id] || ""; vt.disabled = !canWrite;
+      vt.placeholder = "What is said while this shot plays";
+      vt.oninput = () => { if (vt.value.trim()) board.vo[s.id] = vt.value; else delete board.vo[s.id]; changed(); renderPlanSoon(); };
+      vo.appendChild(vt);
+      const nt = document.createElement("label"); nt.className = "f"; nt.textContent = "Changes for Claude";
+      const nx = document.createElement("textarea"); nx.id = "note-" + s.id; nx.rows = 2; nx.value = board.shotNotes[s.id] || ""; nx.disabled = !canWrite;
+      nx.placeholder = "Anything the picks can't do: 'show the app's Daily Challenge screen (kit:app/welcome-3)'";
+      nx.oninput = () => { if (nx.value.trim()) board.shotNotes[s.id] = nx.value; else delete board.shotNotes[s.id]; changed(); renderPlanSoon(); };
+      nt.appendChild(nx);
+      more.append(vo, nt); card.appendChild(more);
+      box.appendChild(card);
+    });
+    markCurrent();
+  }
+  let planTimer; function renderPlanSoon() { clearTimeout(planTimer); planTimer = setTimeout(renderPlan, 250); }
+
+  // ---------- status, approve, renders ----------
+  const STATUS = { script: "Script", draft: "Draft", approved: "Approved", rendered: "Rendered" };
+  function renderStatus() {
+    const st = $("#status"); st.dataset.s = board.status; st.textContent = STATUS[board.status] || board.status;
+    const note = $("#approve-note"), btn = $("#approve-btn");
+    if (board.status === "approved") { note.className = "note ok"; note.textContent = "Approved. In Claude Code, say: render the approved Studio board “" + (board.name || boardId) + "”. Any change from here puts it back to draft."; btn.textContent = "Approved ✓"; btn.disabled = true; }
+    else if (board.status === "rendered") { note.className = "note ok"; note.textContent = "Rendered. Watch it below. Change anything and approve again to make a new version."; btn.textContent = "Approve again"; btn.disabled = !canWrite; }
+    else { note.className = "note"; note.textContent = "When every shot reads right, approve the storyboard. Claude then builds the video from it."; btn.textContent = "Approve storyboard"; btn.disabled = !canWrite || !boardId; }
+    const r = $("#renders"); r.textContent = "";
+    (board.renders || []).forEach((x) => {
+      const fig = document.createElement("figure"); fig.style.margin = "0";
+      const v = document.createElement("video"); v.controls = true; v.preload = "metadata"; v.src = x.url;
+      const cap = document.createElement("figcaption"); cap.className = "muted"; cap.style.fontSize = "13px";
+      cap.textContent = (x.label || "Render") + (x.at ? " · " + new Date(x.at).toLocaleString() : "");
+      fig.append(v, cap); r.appendChild(fig);
+    });
+  }
+  $("#approve-btn").onclick = async () => {
+    board.status = "approved"; board.approvedAt = new Date().toISOString(); board.approvedBy = me;
+    renderStatus(); renderPlan(); await saveNow();
+  };
+
+  // ---------- saving (db) ----------
+  let db = null, me = null, saveTimer = null, saving = Promise.resolve(), lastWritten = null;
+  function setSaveNote(s) { $("#save-note").textContent = s; }
+  function changed() {
+    if (board.status === "approved" || board.status === "rendered") { board.status = "draft"; board.approvedAt = null; board.approvedBy = null; renderStatus(); }
+    if (board.status === "script") { board.status = "draft"; renderStatus(); }
+    clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 900); setSaveNote(db && boardId ? "Saving…" : "Not saved yet");
+  }
+  function saveNow() {
+    clearTimeout(saveTimer);
+    if (!db || !boardId) { setSaveNote(db ? "Start an ad to save" : "Open in Claude to save"); return Promise.resolve(); }
+    board.updatedAt = new Date().toISOString(); board.updatedBy = me; lastWritten = board.updatedAt;
+    const body = JSON.parse(JSON.stringify(board));
+    saving = saving.then(() => db.collection("boards").doc(boardId).set(body))
+      .then(() => setSaveNote("Saved · Claude can read your picks"))
+      .catch((e) => {
+        if (e && e.code === "invalid_argument") { canWrite = false; setSaveNote("View only"); renderShots(); renderStatus(); }
+        else if (e && e.code === "quota_exceeded") setSaveNote("Storage is full: delete old ads");
+        else setSaveNote("Not saved: check the connection");
+      });
+    return saving;
+  }
+
+  // ---------- boards ----------
+  let boards = {};
+  function fillSelect() {
+    const sel = $("#board-select"); sel.textContent = "";
+    const ids = Object.keys(boards).sort((a, b) => String(boards[b].updatedAt || "").localeCompare(String(boards[a].updatedAt || "")));
+    if (!ids.length) { const o = document.createElement("option"); o.textContent = boardId ? (board.name || "New ad") : "No ads yet"; o.value = boardId || ""; sel.appendChild(o); return; }
+    ids.forEach((id) => { const o = document.createElement("option"); o.value = id; o.textContent = boards[id].name || id; sel.appendChild(o); });
+    if (boardId && !boards[boardId]) { const o = document.createElement("option"); o.value = boardId; o.textContent = board.name || "New ad"; sel.prepend(o); }
+    sel.value = boardId || ids[0];
+  }
+  function loadBoard(id, data) {
+    boardId = id; board = Object.assign(blank(), JSON.parse(JSON.stringify(data || {})));
+    ["text", "pick", "vo", "shotNotes"].forEach((k) => { if (!board[k] || typeof board[k] !== "object") board[k] = {}; });
+    // keep only what this style knows
+    Object.keys(board.text).forEach((k) => { if (!FIELD[k]) delete board.text[k]; });
+    Object.keys(board.pick).forEach((k) => { if (!PICK[k] || !PICK[k].choices.some((c) => c.value === board.pick[k])) delete board.pick[k]; });
+    $("#ad-name").value = board.name || ""; $("#script-text").value = board.script || ""; $("#ad-notes").value = board.notes || ""; $("#ad-lang").value = board.lang || "tanglish";
+    renderAll(); remountAll();
+  }
+  $("#board-select").onchange = (e) => { const id = e.target.value; if (id && boards[id]) loadBoard(id, boards[id]); };
+  const slug = (s) => (String(s).toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "ad");
+  $("#new-btn").onclick = () => {
+    const name = $("#ad-name").value.trim() || "New ad";
+    const fresh = blank(); fresh.name = name; fresh.script = $("#script-text").value; fresh.notes = $("#ad-notes").value; fresh.lang = $("#ad-lang").value;
+    loadBoard(slug(name) + "-" + Date.now().toString(36), fresh); fillSelect(); saveNow();
+  };
+  function readScriptForm() { board.name = $("#ad-name").value.trim() || board.name || "Untitled ad"; board.script = $("#script-text").value; board.notes = $("#ad-notes").value; board.lang = $("#ad-lang").value; }
+  $("#save-script-btn").onclick = () => { if (!boardId) { $("#new-btn").click(); return; } readScriptForm(); renderPlan(); saveNow(); };
+  ["#ad-name", "#script-text", "#ad-notes"].forEach((s) => $(s).addEventListener("input", () => { readScriptForm(); clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 1200); }));
+
+  // ---------- step 1 → 2: Claude drafts the storyboard ----------
+  let sample = null, drafting = null;
+  function draftPrompt() {
+    const lines = [];
+    lines.push("You storyboard a 9:16 Instagram Reel ad for Nextstep4u, a TNPSC Group 4 exam-prep website, in a fixed animated style. The style's shots, their order and timing cannot change; you fill in their words and choose their options so the shots tell the script's story.");
+    lines.push("\nSTYLE: " + STYLE.name + ". " + STYLE.about + "\nVoice of the on-screen words: " + STYLE.voice);
+    lines.push("\nON-SCREEN LANGUAGE WANTED: " + ({ tanglish: "Tanglish (Tamil words in English letters, as in the defaults)", tamil: "Tamil script", english: "English" })[board.lang || "tanglish"] + ". Product words (Mock Test, AI report, Practice, Daily Challenge) may stay English.");
+    lines.push("\nSHOTS (in order). For each field: key | what it is | the founder's default (shows tone and length) | most letters that fit");
+    SHOTS.forEach((s) => {
+      const m = META[s.id];
+      lines.push("\n[" + s.id + "] " + m.title + ", " + s.start.toFixed(1) + "–" + (s.start + s.duration).toFixed(1) + " s: " + m.job);
+      m.fields.forEach((f) => lines.push("  " + f.key + " | " + f.label + " | \"" + f.default + "\" | " + f.fit));
+      m.picks.forEach((p) => lines.push("  pick " + p.key + " | " + p.label + " | " + p.choices.map((c) => c.value + (c.star ? " (recommended)" : "")).join(", ")));
+    });
+    lines.push("\nFACTS AND RULES (never break these):\n- " + STYLE.facts.join("\n- "));
+    lines.push("\nSCRIPT FROM THE USER:\n" + (board.script || "").slice(0, 8000));
+    if (board.notes) lines.push("\nUSER NOTES:\n" + board.notes.slice(0, 2000));
+    lines.push("\nTASK:\n1. text: a value for every field key above. Short, punchy, readable in a second, within the letter limit. Mark the one highlighted word with *asterisks* only in report.t1. Keep facts true.\n2. pick: one value for every pick key.\n3. vo: for every shot id, the part of the script spoken while that shot plays, in the script's own language and spelling. Split the script across the shots in order; a shot may get \"\" if nothing is said there.\n4. shotNotes: for a shot id, a short instruction for the video builder only when the script needs something these fields and picks cannot show (otherwise omit).\n5. summary: one sentence on how the storyboard follows the script.");
+    lines.push("\nReply with only this JSON:\n{\"text\":{\"hook.l1\":\"...\"},\"pick\":{\"hook.crowd\":\"grey\"},\"vo\":{\"hook\":\"...\"},\"shotNotes\":{},\"summary\":\"...\"}");
+    return lines.join("\n");
+  }
+  const SAMPLE_ERR = { not_granted: "Claude wasn't allowed for this page. Save the script and ask Claude Code to draft it instead.", sampling_disabled: "Claude isn't available on this account here.", rate_limited: "Claude is busy or a limit was reached. Try again in a minute.", invalid_json: "Claude's answer couldn't be read. Try again.", refused: "Claude declined this script. Change the wording and try again.", prompt_too_large: "The script is too long. Shorten it.", upstream_error: "Something went wrong reaching Claude. Try again.", session_expired: "Sign in to Claude again, then retry." };
+  $("#draft-btn").onclick = async () => {
+    if (drafting) { drafting.abort(); return; }
+    readScriptForm();
+    if (!board.script.trim()) { const o = $("#draft-out"); o.hidden = false; o.className = "note warn"; o.textContent = "Paste the script first."; return; }
+    if (!boardId) $("#new-btn").click();
+    const out = $("#draft-out"); out.hidden = false; out.className = "note"; out.textContent = "Claude is reading the script and drafting nine shots… this takes up to a minute.";
+    const btn = $("#draft-btn"); btn.textContent = "Stop";
+    drafting = new AbortController();
+    try {
+      const res = await sample.json(draftPrompt(), { signal: drafting.signal, cache: false });
+      const n = applyDraft(res);
+      out.className = "note ok"; out.textContent = "Drafted " + n + " lines. " + (res && res.summary ? res.summary : "") + " Opening the storyboard…";
+      board.status = "draft"; renderAll(); remountAll(); saveNow();
+      setTimeout(() => showTab("board"), 700);
+    } catch (e) {
+      if (e && e.code === "cancelled") { out.className = "note"; out.textContent = "Stopped."; }
+      else { out.className = "note warn"; out.textContent = SAMPLE_ERR[e && e.code] || SAMPLE_ERR.upstream_error; if (e && (e.code === "not_granted" || e.code === "sampling_disabled")) $("#draft-btn").hidden = true; }
+    } finally { drafting = null; btn.textContent = "Draft the storyboard"; }
+  };
+  function applyDraft(res) {
+    let n = 0;
+    if (!res || typeof res !== "object") return 0;
+    const tx = res.text || {}, pk = res.pick || {}, vo = res.vo || {}, sn = res.shotNotes || {};
+    Object.keys(tx).forEach((k) => { if (FIELD[k] && typeof tx[k] === "string" && tx[k].trim()) { if (tx[k] === FIELD[k].default) delete board.text[k]; else board.text[k] = tx[k].trim(); n++; } });
+    Object.keys(pk).forEach((k) => { if (PICK[k] && PICK[k].choices.some((c) => c.value === pk[k])) { const star = PICK[k].choices.find((c) => c.star); if (star && star.value === pk[k]) delete board.pick[k]; else board.pick[k] = pk[k]; } });
+    Object.keys(vo).forEach((k) => { if (META[k] && typeof vo[k] === "string") { if (vo[k].trim()) board.vo[k] = vo[k].trim(); else delete board.vo[k]; } });
+    Object.keys(sn).forEach((k) => { if (META[k] && typeof sn[k] === "string" && sn[k].trim()) board.shotNotes[k] = sn[k].trim(); });
+    return n;
+  }
+
+  // ---------- the kit ----------
+  function renderKit() {
+    $("#kit-lede").textContent = "Every screen the editor can use, captured from nextstep4u.in and the final app build on " + new Date(KIT.captured).toLocaleDateString() + ". Copy a reference into a shot's \"Changes for Claude\" to use it. Re-capture after the site or app changes: node scripts/capture-kit.mjs.";
+    const box = $("#kit"); box.textContent = "";
+    const sec = (title, items, kind) => {
+      if (!items.length) return;
+      const s = document.createElement("section"); s.className = "kit-sec";
+      const h = document.createElement("h3"); h.textContent = title + " · " + items.length;
+      const g = document.createElement("div"); g.className = "kit-grid";
+      items.forEach((it) => {
+        const ref = "kit:" + it.file.replace(/\.png$/, "");
+        const d = document.createElement("div"); d.className = "kit-item";
+        const img = document.createElement("img"); img.loading = "lazy"; img.alt = it.title || it.id; img.src = "kit/" + it.file.replace(/\//g, "--").replace(/\.png$/, ".jpg");
+        img.onclick = () => { $("#lightbox-img").src = img.src; $("#lightbox").hidden = false; };
+        const b = document.createElement("b"); b.textContent = it.title || it.screen || it.id;
+        const c = document.createElement("code"); c.textContent = ref;
+        const cp = document.createElement("button"); cp.className = "btn"; cp.textContent = "Copy reference";
+        cp.onclick = () => { navigator.clipboard.writeText(ref).then(() => { cp.textContent = "Copied"; setTimeout(() => (cp.textContent = "Copy reference"), 1200); }, () => { const r = document.createRange(); r.selectNodeContents(c); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); }); };
+        d.append(img, b, c, cp); g.appendChild(d);
+      });
+      s.append(h, g); box.appendChild(s);
+    };
+    sec("Website pages", KIT.website || []);
+    sec("App screens (final build)", KIT.app || []);
+    sec("Components", (KIT.elements || []).map((e) => Object.assign({ title: e.id + " (from " + e.from + ")" }, e)));
+    if ((KIT.pending || []).length) {
+      const s = document.createElement("section"); s.className = "kit-sec";
+      const h = document.createElement("h3"); h.textContent = "Not captured yet · " + KIT.pending.length;
+      const p = document.createElement("p"); p.className = "muted"; p.style.margin = "0"; p.textContent = "These app screens need a signed-in student and data. Capture them from the app's dev sandbox (APP_URL=http://localhost:8970 node scripts/capture-kit.mjs).";
+      const ul = document.createElement("ul"); ul.className = "pending";
+      KIT.pending.forEach((x) => { const li = document.createElement("li"); li.textContent = x.screen; ul.appendChild(li); });
+      s.append(h, p, ul); box.appendChild(s);
+    }
+  }
+  $("#lightbox").onclick = () => { $("#lightbox").hidden = true; };
+
+  // ---------- tabs ----------
+  function showTab(name) {
+    document.querySelectorAll(".tabs button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === name)));
+    ["script", "board", "kit"].forEach((n) => ($("#tab-" + n).hidden = n !== name));
+    if (name !== "board" && playing) setPlaying(false);
+    if (name === "board") seek(t);
+    try { history.replaceState(null, "", "#" + (name === "board" ? "storyboard" : name)); } catch (e) {}
+  }
+  document.querySelectorAll(".tabs button").forEach((b) => (b.onclick = () => showTab(b.dataset.tab)));
+
+  function renderAll() { renderPlan(); renderShots(); renderStatus(); fillSelect(); }
+
+  // ---------- start: a working page first, then the shared store lights it up ----------
+  const styleSel = $("#ad-style"); const o = document.createElement("option"); o.value = STYLE.id; o.textContent = STYLE.name + " ★"; styleSel.appendChild(o);
+  $("#style-about").textContent = STYLE.about;
+  renderAll(); renderKit(); seek(0.6);
+  const h = location.hash.replace("#", ""); if (h === "storyboard") showTab("board"); else if (h === "kit") showTab("kit");
+
+  (async () => {
+    const C = window.claude;
+    if (!C || typeof C.use !== "function") { setSaveNote("Open in Claude to save"); return; }
+    const [dbNs, userNs, sampleNs] = await Promise.all([C.use("db"), C.use("user"), C.use("sample")]).catch(() => [null, null, null]);
+    if (userNs) { me = await userNs.id(); const w = await userNs.can("data.write"); if (w === false) { canWrite = false; renderShots(); renderStatus(); } }
+    if (sampleNs) { sample = sampleNs; $("#draft-btn").hidden = false; }
+    if (!dbNs) { setSaveNote("Open in Claude to save"); return; }
+    db = dbNs;
+    let first = true;
+    const timer = setTimeout(() => { if (first) setSaveNote("Ads can't be reached yet"); }, 10000);
+    db.collection("boards").onSnapshot((snap) => {
+      if (first) { clearTimeout(timer); setSaveNote("Saved · Claude can read your picks"); }
+      boards = {}; snap.docs.forEach((d) => { if (d.exists) boards[d.id] = d.data(); });
+      if (first) {
+        first = false;
+        const ids = Object.keys(boards).sort((a, b) => String(boards[b].updatedAt || "").localeCompare(String(boards[a].updatedAt || "")));
+        if (ids.length && !boardId) loadBoard(ids[0], boards[ids[0]]); else fillSelect();
+        return;
+      }
+      // another person changed the open ad: take their version unless it is our own write coming back
+      if (boardId && boards[boardId] && boards[boardId].updatedAt !== lastWritten && boards[boardId].updatedAt !== board.updatedAt) {
+        const keepTab = document.querySelector(".tabs button[aria-selected=true]").dataset.tab;
+        loadBoard(boardId, boards[boardId]); showTab(keepTab); setSaveNote("Updated by someone else just now");
+      } else fillSelect();
+    }, () => { clearTimeout(timer); setSaveNote("Ads can't be reached right now"); });
+  })();
+})();
+</script>

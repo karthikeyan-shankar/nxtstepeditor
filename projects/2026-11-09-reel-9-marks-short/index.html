@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ta" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #0B1220; }
+      #root { position: relative; width: 100%; height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1080" data-height="1920">
+      <!-- Five scenes, one idea each, cut on the music's beats (0.165 + 0.5333 k s: k = 10, 23, 32, 47) -->
+      <div id="hook" data-composition-id="hook" data-composition-src="compositions/hook.html"
+        data-start="0" data-duration="5.498" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <div id="report" data-composition-id="report" data-composition-src="compositions/report.html"
+        data-start="5.498" data-duration="6.933" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <div id="test" data-composition-id="test" data-composition-src="compositions/test.html"
+        data-start="12.431" data-duration="4.8" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <div id="offer" data-composition-id="offer" data-composition-src="compositions/offer.html"
+        data-start="17.231" data-duration="8.001" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <!-- data-variable-values: {"deadline":true} ends on tonight's 11:59 PM close with a running stopwatch;
+           scripts/make-variants.mjs writes index-no-deadline.html with it set to false. -->
+      <div id="endcard" data-composition-id="endcard" data-composition-src="compositions/endcard.html"
+        data-variable-values='{"deadline":true}'
+        data-start="25.232" data-duration="4.768" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+
+      <!-- Sound: music bed from 2.0 s into the track, held back under the hook, full from the report; effects only on visible actions -->
+      <audio id="bgm" src="assets/audio/bgm.mp3" data-start="0" data-duration="30" data-media-start="2.0" data-track-index="2"
+        data-volume="0.5" data-audio-group="music"
+        data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0.55},{"t":5.3,"v":0.6},{"t":5.6,"v":1},{"t":28.4,"v":1},{"t":30,"v":0}]}]}'></audio>
+      <!-- hook: the stamp slams, the line changes, the whip -->
+      <audio id="sfx-stamp" src="assets/audio/sfx/impact.mp3" data-start="0.93" data-duration="2.6" data-track-index="3" data-volume="0.8" data-fade-out="0.4" data-audio-group="sfx"></audio>
+      <audio id="sfx-q" src="assets/audio/sfx/whoosh-soft.mp3" data-start="2.72" data-duration="1.2" data-track-index="4" data-volume="0.8" data-fade-out="0.1" data-audio-group="sfx"></audio>
+      <!-- report: flood, the card lifts, bars, the line changes, the marker -->
+      <audio id="sfx-flood" src="assets/audio/sfx/deep-whoosh.mp3" data-start="5.42" data-duration="1.6" data-track-index="4" data-volume="0.9" data-fade-out="0.2" data-audio-group="sfx"></audio>
+      <audio id="sfx-lift" src="assets/audio/sfx/whoosh-1.mp3" data-start="6.35" data-duration="0.7" data-track-index="3" data-volume="0.7" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-bar1" src="assets/audio/sfx/tick.mp3" data-start="7.75" data-duration="0.5" data-track-index="5" data-volume="1.8" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-bar2" src="assets/audio/sfx/ui-tick.mp3" data-start="8.02" data-duration="0.4" data-track-index="3" data-volume="0.7" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-bar3" src="assets/audio/sfx/tick.mp3" data-start="8.28" data-duration="0.5" data-track-index="5" data-volume="1.8" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-line2" src="assets/audio/sfx/whoosh-soft.mp3" data-start="8.8" data-duration="1.2" data-track-index="3" data-volume="0.7" data-fade-out="0.1" data-audio-group="sfx"></audio>
+      <audio id="sfx-marker" src="assets/audio/sfx/whoosh-2.mp3" data-start="9.1" data-duration="0.6" data-track-index="4" data-volume="0.45" data-fade-out="0.1" data-audio-group="sfx"></audio>
+      <audio id="sfx-whip2" src="assets/audio/sfx/whip-2.mp3" data-start="12.14" data-duration="0.28" data-track-index="5" data-volume="0.8" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <!-- test: the tap, the whip -->
+      <audio id="sfx-tap" src="assets/audio/sfx/click-1.mp3" data-start="14.6" data-duration="0.34" data-track-index="3" data-volume="1.5" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-whip1" src="assets/audio/sfx/whip-1.mp3" data-start="16.92" data-duration="0.64" data-track-index="4" data-volume="0.9" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <!-- offer: the riser lands as the drag finishes, the tape slaps, the button, the tap and the iris -->
+      <audio id="sfx-riser" src="assets/audio/sfx/riser.mp3" data-start="16.7" data-duration="2.0" data-track-index="5" data-volume="1.1" data-fade-in="0.6" data-fade-out="0.1" data-audio-group="sfx"></audio>
+      <audio id="sfx-strike" src="assets/audio/sfx/whoosh-1.mp3" data-start="17.53" data-duration="0.6" data-track-index="6" data-volume="0.5" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-grab" src="assets/audio/sfx/click-2.mp3" data-start="18.01" data-duration="0.47" data-track-index="3" data-volume="1.1" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-price" src="assets/audio/sfx/impact.mp3" data-start="18.68" data-duration="2.4" data-track-index="4" data-volume="0.65" data-fade-out="0.4" data-audio-group="sfx"></audio>
+      <audio id="sfx-lineA" src="assets/audio/sfx/whoosh-soft.mp3" data-start="19.25" data-duration="1.2" data-track-index="3" data-volume="0.6" data-fade-out="0.1" data-audio-group="sfx"></audio>
+      <audio id="sfx-tape" src="assets/audio/sfx/pop.mp3" data-start="21.54" data-duration="0.6" data-track-index="5" data-volume="1.8" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-btn" src="assets/audio/sfx/ui-tick.mp3" data-start="22.65" data-duration="0.4" data-track-index="3" data-volume="0.7" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-pay" src="assets/audio/sfx/click-2.mp3" data-start="24.29" data-duration="0.47" data-track-index="4" data-volume="1.3" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-iris" src="assets/audio/sfx/whoosh-2.mp3" data-start="24.36" data-duration="1.0" data-track-index="5" data-volume="0.6" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <!-- end card: the mark lands -->
+      <audio id="sfx-logo" src="assets/audio/sfx/success.mp3" data-start="25.45" data-duration="1.04" data-track-index="3" data-volume="1.6" data-fade-out="0.1" data-audio-group="sfx"></audio>
+      <!-- data-variant="deadline" (deadline version only): tiles flip, then the stopwatch ticks on the beat; data-media-start skips each file's lead-in so the click lands on the snap -->
+      <audio data-variant="deadline" id="sfx-flip" src="assets/audio/sfx/tick.mp3" data-start="27.265" data-media-start="0.27" data-duration="0.35" data-track-index="4" data-volume="1.0" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio data-variant="deadline" id="sfx-watch1" src="assets/audio/sfx/ui-tick.mp3" data-start="27.465" data-media-start="0.18" data-duration="0.22" data-track-index="5" data-volume="0.35" data-fade-out="0.06" data-audio-group="sfx"></audio>
+      <audio data-variant="deadline" id="sfx-watch2" src="assets/audio/sfx/tick.mp3" data-start="27.998" data-media-start="0.27" data-duration="0.35" data-track-index="4" data-volume="1.0" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio data-variant="deadline" id="sfx-watch3" src="assets/audio/sfx/ui-tick.mp3" data-start="28.532" data-media-start="0.18" data-duration="0.22" data-track-index="5" data-volume="0.35" data-fade-out="0.06" data-audio-group="sfx"></audio>
+      <audio data-variant="deadline" id="sfx-watch4" src="assets/audio/sfx/tick.mp3" data-start="29.065" data-media-start="0.27" data-duration="0.35" data-track-index="4" data-volume="0.7" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio data-variant="deadline" id="sfx-watch5" src="assets/audio/sfx/ui-tick.mp3" data-start="29.598" data-media-start="0.18" data-duration="0.22" data-track-index="5" data-volume="0.18" data-fade-out="0.06" data-audio-group="sfx"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

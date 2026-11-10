@@ -1,0 +1,79 @@
+<template>
+  <style>
+    @font-face { font-family: "Outfit"; src: url("assets/fonts/Outfit.ttf"); font-weight: 100 900; }
+    @font-face { font-family: "Meera Inimai"; src: url("assets/fonts/MeeraInimai.ttf"); font-weight: 400; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #FFFFFF;
+      font-family: "Outfit", "Meera Inimai", sans-serif; color: #0D1420; }
+    #endcard-logo { position: absolute; left: 270px; top: 340px; width: 540px; }
+    #endcard-line { position: absolute; left: 0; right: 0; top: 680px; text-align: center; font-size: 96px; font-weight: 800; letter-spacing: -.02em; }
+    #endcard-line .w { display: inline-block; }
+    #endcard-btn { position: absolute; left: 190px; top: 850px; width: 700px; height: 150px; border-radius: 999px; background: #FBBC04; color: #0D1420;
+      display: flex; align-items: center; justify-content: center; gap: 22px; font-size: 64px; font-weight: 750;
+      box-shadow: 0 24px 50px rgba(251,188,4,.45); }
+    #endcard-url { position: absolute; left: 0; right: 0; top: 1040px; text-align: center; font-size: 60px; font-weight: 750; color: #0265E0; letter-spacing: -.01em; }
+    /* countdown-flip, after claude-video-effects (MIT): dark flip tiles for tonight's close.
+       The stopwatch's hand keeps running: it shows time passing without claiming how much is left,
+       because a viewer can see this ad at any hour. */
+    #endcard-close { position: absolute; left: 0; right: 0; top: 1168px; display: flex; align-items: center; justify-content: center; gap: 10px;
+      font-size: 42px; font-weight: 700; color: #3D4756; }
+    #endcard-watch { width: 84px; height: 84px; margin-right: 6px; flex: none; }
+    .ec-tile { position: relative; width: 66px; height: 90px; border-radius: 12px; background: #1E2430; color: #fff; display: grid; place-items: center;
+      font-size: 60px; font-weight: 800; font-variant-numeric: tabular-nums; box-shadow: 0 10px 20px rgba(13,20,32,.25); }
+    .ec-tile::after { content: ""; position: absolute; left: 0; right: 0; top: 44px; height: 3px; background: #0D1420; }
+    .ec-colon { font-size: 62px; font-weight: 800; color: #1E2430; margin: 0 -2px; }
+    .ec-pm { font-size: 42px; font-weight: 800; color: #1E2430; margin-left: 4px; }
+  </style>
+  <div id="root" data-composition-id="endcard" data-width="1080" data-height="1920"
+    data-composition-variables='[{"id":"deadline","type":"boolean","label":"Show today&apos;s test closing at 11:59 PM","default":true}]'>
+    <img id="endcard-logo" src="assets/img/logo.png" alt="nextstep4u" />
+    <div id="endcard-line"><span class="w">இன்றே</span> <span class="w">தொடங்குங்க</span></div>
+    <div id="endcard-btn">Try it for ₹9 <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#0D1420" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div id="endcard-url">nextstep4u.in</div>
+    <div id="endcard-close">
+      <svg id="endcard-watch" viewBox="0 0 84 84">
+        <rect x="35" y="2" width="14" height="9" rx="3" fill="#E5484D"/>
+        <rect x="60" y="12" width="9" height="6" rx="2" fill="#E5484D" transform="rotate(45 64 15)"/>
+        <circle cx="42" cy="47" r="32" fill="#fff" stroke="#1E2430" stroke-width="6"/>
+        <g stroke="#1E2430" stroke-width="3" stroke-linecap="round">
+          <path d="M42 20v5M42 69v5M15 47h5M64 47h5"/>
+        </g>
+        <g id="endcard-hand"><path d="M42 47V24" stroke="#E5484D" stroke-width="5" stroke-linecap="round"/></g>
+        <circle cx="42" cy="47" r="5" fill="#1E2430"/>
+      </svg>
+      <span>இன்றைய Test இரவு</span>
+      <div class="ec-tile" id="endcard-d1">1</div><div class="ec-tile" id="endcard-d2">1</div><span class="ec-colon">:</span>
+      <div class="ec-tile" id="endcard-d3">5</div><div class="ec-tile" id="endcard-d4">9</div>
+      <span>வரை</span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const vars = (window.__hyperframes && window.__hyperframes.getVariables) ? window.__hyperframes.getVariables() : {};
+    const deadline = vars.deadline !== false;
+    if (!deadline) {
+      // Without the deadline row the block re-centres in the readable band (168-1330 px).
+      [["endcard-logo", 390], ["endcard-line", 730], ["endcard-btn", 900], ["endcard-url", 1090]]
+        .forEach(([id, top]) => { document.getElementById(id).style.top = top + "px"; });
+      document.getElementById("endcard-close").style.display = "none";
+    }
+    // the mark is carried in on the white the tap opened
+    tl.fromTo("#endcard-logo", { scale: 0.55, y: 140, opacity: 0, filter: "blur(10px)" },
+      { scale: 1, y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7, ease: "expo.out" }, 0.12);
+    tl.fromTo("#endcard-line .w", { color: "#D7DDE6" }, { color: "#0D1420", duration: 0.12, stagger: 0.1, ease: "none" }, 0.7);
+    tl.fromTo("#endcard-btn", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.55, ease: "back.out(1.5)" }, 1.0);
+    tl.fromTo("#endcard-url", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 1.35);
+    if (deadline) {
+      // tonight's close: the tiles flip down into place one after another
+      tl.fromTo("#endcard-close", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, 1.95);
+      ["#endcard-d1", "#endcard-d2", "#endcard-d3", "#endcard-d4"].forEach((id, i) => {
+        tl.fromTo(id, { rotationX: -90, transformPerspective: 600, transformOrigin: "50% 0%" },
+          { rotationX: 0, duration: 0.3, ease: "back.out(1.4)" }, 2.0 + i * 0.09);
+      });
+      // the stopwatch hand ticks on the music's beat (0.533 s), 30 degrees a tick, a quick snap each time
+      tl.set("#endcard-hand", { rotation: 0, svgOrigin: "42 47" }, 0);
+      for (let k = 0; k < 5; k++) {
+        tl.to("#endcard-hand", { rotation: (k + 1) * 30, duration: 0.12, ease: "back.out(2.2)" }, 2.2 + k * 0.5333);
+      }
+    }
+    window.__timelines["endcard"] = tl;
+  </script>
+</template>

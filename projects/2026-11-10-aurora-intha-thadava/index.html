@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ta" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/look.css" />
+    <script src="assets/lib.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #05060B; }
+      #root { position: relative; width: 100%; height: 100%; }
+    </style>
+  </head>
+  <body>
+    <!-- "இந்த தடவ" (This time) - the owner's script, timed to the voice (word times in assets/audio/vo/vo-words.json). -->
+    <div id="root" data-composition-id="main" data-start="0" data-duration="42" data-width="1080" data-height="1920">
+      <!-- 1 Night: Amma's question -->
+      <div id="amma" data-composition-id="amma" data-composition-src="compositions/amma.html"
+        data-start="0" data-duration="4.6" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <!-- 2 Night: Thambi's worry; the light breaks as he finishes -->
+      <div id="worry" data-composition-id="worry" data-composition-src="compositions/worry.html"
+        data-start="4.6" data-duration="8.8" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <!-- 3 Dawn: Amma's answer - nextstep4u.in, Mock Test, AI Report, General Studies -->
+      <div id="clarity" data-composition-id="clarity" data-composition-src="compositions/clarity.html"
+        data-start="13.4" data-duration="12.6" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <!-- 4 The discovery: the report, General Studies in red -->
+      <div id="report" data-composition-id="report" data-composition-src="compositions/report.html"
+        data-start="26" data-duration="5" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <!-- 5 Thambi asks the viewer, the address, Go, and the app's own launch reveal -->
+      <div id="endcard" data-composition-id="endcard" data-composition-src="compositions/endcard.html"
+        data-start="31" data-duration="11" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+
+      <!-- Voices (SCRATCH: Microsoft Edge neural voices; replace with ElevenLabs or a human recording for the paid ad).
+           Amma = ta-IN-PallaviNeural, Thambi = ta-IN-ValluvarNeural. -->
+      <audio id="vo-1" src="assets/audio/vo/line1.mp3" data-start="0.35" data-duration="3.6" data-track-index="7" data-volume="1" data-audio-group="voice"></audio>
+      <audio id="vo-2" src="assets/audio/vo/line2.mp3" data-start="5.0" data-duration="7.48" data-track-index="8" data-volume="1" data-audio-group="voice"></audio>
+      <audio id="vo-3" src="assets/audio/vo/line3.mp3" data-start="13.4" data-duration="11.88" data-track-index="7" data-volume="1" data-audio-group="voice"></audio>
+      <audio id="vo-4" src="assets/audio/vo/line4.mp3" data-start="26.3" data-duration="4.26" data-track-index="8" data-volume="1" data-audio-group="voice"></audio>
+      <audio id="vo-5" src="assets/audio/vo/line5.mp3" data-start="31.3" data-duration="6.64" data-track-index="8" data-volume="1" data-audio-group="voice"></audio>
+
+      <!-- Music goes on track 2 once chosen, about 18 dB under the voices. -->
+      <!-- Sound effects: few and soft, under the voices, only on visible actions. -->
+      <audio id="sfx-ray" src="assets/audio/sfx/whoosh-soft.mp3" data-start="12.0" data-duration="1.2" data-track-index="3" data-volume="0.5" data-fade-out="0.2" data-audio-group="sfx"></audio>
+      <audio id="sfx-dawn" src="assets/audio/sfx/deep-whoosh.mp3" data-start="12.7" data-duration="1.6" data-track-index="4" data-volume="0.45" data-fade-out="0.3" data-audio-group="sfx"></audio>
+      <audio id="sfx-url" src="assets/audio/sfx/pop.mp3" data-start="15.27" data-duration="0.6" data-track-index="3" data-volume="0.4" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-p1" src="assets/audio/sfx/pop.mp3" data-start="17.82" data-duration="0.6" data-track-index="4" data-volume="0.4" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-p2" src="assets/audio/sfx/pop.mp3" data-start="22.27" data-duration="0.6" data-track-index="3" data-volume="0.4" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-p3" src="assets/audio/sfx/pop.mp3" data-start="24.02" data-duration="0.6" data-track-index="4" data-volume="0.45" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-pick" src="assets/audio/sfx/click-1.mp3" data-start="25.02" data-duration="0.34" data-track-index="3" data-volume="0.7" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-focus" src="assets/audio/sfx/whoosh-1.mp3" data-start="26.02" data-duration="0.7" data-track-index="4" data-volume="0.35" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <audio id="sfx-bar" src="assets/audio/sfx/whoosh-2.mp3" data-start="34.5" data-duration="1.0" data-track-index="3" data-volume="0.3" data-fade-out="0.1" data-audio-group="sfx"></audio>
+      <audio id="sfx-go" src="assets/audio/sfx/click-2.mp3" data-start="37.22" data-duration="0.47" data-track-index="4" data-volume="0.8" data-fade-out="0.08" data-audio-group="sfx"></audio>
+      <!-- the app's launch reveal: the iris opens, then the cap lands -->
+      <audio id="sfx-iris" src="assets/audio/sfx/whoosh-soft.mp3" data-start="37.7" data-duration="1.2" data-track-index="3" data-volume="0.5" data-fade-out="0.2" data-audio-group="sfx"></audio>
+      <audio id="sfx-logo" src="assets/audio/sfx/success.mp3" data-start="38.95" data-duration="1.04" data-track-index="4" data-volume="0.8" data-fade-out="0.1" data-audio-group="sfx"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

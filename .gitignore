@@ -1,0 +1,10 @@
+node_modules/
+.hyperframes/
+.thumbnails/
+.waveform-cache/
+renders/
+check.json
+studio/dist/
+app-kit/_old/
+.DS_Store
+Thumbs.db

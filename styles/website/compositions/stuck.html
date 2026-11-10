@@ -1,0 +1,87 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0D1420; font-family: "Outfit", sans-serif; color: #FFFFFF; }
+    #stuck-world { position: absolute; inset: -40px; background: radial-gradient(80% 50% at 50% 40%, #263243 0%, #171F2C 48%, #0D1420 100%); }
+    #stuck-past { position: absolute; left: 0; top: 0; width: 1400px; height: 2000px; }
+    #stuck-scan { position: absolute; top: 0; bottom: 0; left: 0; width: 420px; background: linear-gradient(90deg, transparent, rgba(251,188,4,.09), transparent); }
+    #stuck-stage { position: absolute; inset: 0; }
+    #stuck-chips { position: absolute; left: 0; right: 0; top: 270px; display: flex; justify-content: center; gap: 26px; }
+    .stuck-chip { display: inline-flex; align-items: center; gap: 16px; padding: 12px 30px 12px 12px; border-radius: 20px; background: #FFFFFF; color: #5A6675; font-size: 42px; font-weight: 500; }
+    .stuck-chip i { width: 56px; height: 56px; border-radius: 14px; background: #F8FAFC; display: grid; place-items: center; }
+    .stuck-chip svg { width: 62%; height: 62%; }
+    #stuck-title { position: absolute; left: 60px; right: 60px; top: 410px; text-align: center; }
+    #stuck-l1 { font-size: 118px; line-height: 1.05; font-weight: 600; letter-spacing: -0.04em; }
+    .stuck-big { font-size: 178px; line-height: 0.96; font-weight: 700; letter-spacing: -0.05em; color: #FBBC04; }
+    #stuck-chart { position: absolute; left: 120px; top: 930px; width: 840px; height: 260px; overflow: visible; }
+    #stuck-cap { position: absolute; left: 60px; right: 60px; top: 1218px; text-align: center; font-size: 46px; font-weight: 500; color: rgba(255,255,255,.72); }
+    #stuck-flood { position: absolute; inset: 0; background: #EBF3FE; }
+    .w { display: inline-block; }
+    .stuck-chip b { font-weight: inherit; }
+    /* pick stuck.accent: amber (default) | red */
+    #root[data-accent="red"] .stuck-big { color: #D93843; }
+    #root[data-accent="red"] #stuck-line { stroke: #D93843; }
+    #root[data-accent="red"] #stuck-dot { fill: #D93843; }
+  </style>
+  <div id="root" data-scene="stuck" data-composition-id="stuck" data-width="1080" data-height="1920">
+    <div id="stuck-world">
+      <svg id="stuck-past" viewBox="0 0 1400 2000">
+        <g stroke="rgba(255,255,255,.05)" stroke-width="2">
+          <path d="M60 0V2000M220 0V2000M380 0V2000M540 0V2000M700 0V2000M860 0V2000M1020 0V2000M1180 0V2000"/>
+        </g>
+        <g fill="none" stroke-width="5" stroke-linejoin="round">
+          <path stroke="rgba(255,255,255,.06)" d="M-40 300 L120 292 L260 306 L400 298 L540 310 L680 296 L820 304 L960 300 L1100 306 L1240 298 L1400 302"/>
+          <path stroke="rgba(255,255,255,.09)" d="M-40 480 L120 488 L260 474 L400 486 L540 478 L680 490 L820 476 L960 484 L1100 478 L1240 488 L1400 480"/>
+          <path stroke="rgba(255,255,255,.06)" d="M-40 660 L120 652 L260 668 L400 658 L540 664 L680 650 L820 662 L960 656 L1100 668 L1240 654 L1400 660"/>
+          <path stroke="rgba(255,255,255,.09)" d="M-40 1380 L120 1388 L260 1372 L400 1384 L540 1376 L680 1390 L820 1374 L960 1386 L1100 1378 L1240 1388 L1400 1380"/>
+          <path stroke="rgba(255,255,255,.06)" d="M-40 1560 L120 1552 L260 1566 L400 1556 L540 1562 L680 1550 L820 1562 L960 1554 L1100 1566 L1240 1552 L1400 1560"/>
+          <path stroke="rgba(255,255,255,.08)" d="M-40 1740 L120 1748 L260 1734 L400 1746 L540 1738 L680 1750 L820 1736 L960 1744 L1100 1738 L1240 1748 L1400 1740"/>
+        </g>
+      </svg>
+      <div id="stuck-scan"></div>
+    </div>
+
+    <div id="stuck-stage">
+      <div id="stuck-chips">
+        <span class="stuck-chip" id="stuck-c1"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="8.6" r="3.6" fill="#D7DDE6"/><path d="M5.2 19.4a6.8 6.8 0 0 1 13.6 0Z" fill="#D7DDE6"/></svg></i><b data-edit="stuck.chip1">Guessing</b></span>
+        <span class="stuck-chip" id="stuck-c2"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="8.6" r="3.6" fill="#D7DDE6"/><path d="M5.2 19.4a6.8 6.8 0 0 1 13.6 0Z" fill="#D7DDE6"/></svg></i><b data-edit="stuck.chip2">Unprepared</b></span>
+      </div>
+      <div id="stuck-title">
+        <p id="stuck-l1" data-edit="stuck.l1" data-fit="15" data-split><span class="w">Marks</span> <span class="w">innum</span></p>
+        <p class="stuck-big" data-edit="stuck.big1" data-fit="10" data-split data-wclass="stuck-hit"><span class="w stuck-hit">Improve</span></p>
+        <p class="stuck-big" data-edit="stuck.big2" data-fit="10" data-split data-wclass="stuck-hit"><span class="w stuck-hit">aagalaya?</span></p>
+      </div>
+      <svg id="stuck-chart" viewBox="0 0 840 260">
+        <path d="M0 240 H840" stroke="#263243" stroke-width="4"/>
+        <path d="M0 160 H840 M0 80 H840" stroke="#263243" stroke-width="2" stroke-dasharray="8 14"/>
+        <path id="stuck-line" d="M0 180 C84 176 126 166 210 170 S346 184 420 176 S566 168 630 174 S776 180 840 172" fill="none" stroke="#FBBC04" stroke-width="12" stroke-linecap="butt" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+        <circle id="stuck-dot" cx="840" cy="172" r="20" fill="#FBBC04"/>
+      </svg>
+      <p id="stuck-cap" data-edit="stuck.cap" data-fit="34" data-split><span class="w">Months</span> <span class="w">of</span> <span class="w">study.</span> <span class="w">Same</span> <span class="w">score.</span></p>
+    </div>
+    <div id="stuck-flood"></div>
+  </div>
+  <script>
+    NSPicks.apply("stuck");
+    const tl = gsap.timeline({ paused: true });
+    // Whip in from below, matching the hook's whip up.
+    tl.fromTo("#stuck-stage", { y: 520, filter: "blur(14px)" }, { y: 0, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 0);
+    tl.fromTo("#stuck-world", { y: 300 }, { y: 0, duration: 0.4, ease: "expo.out" }, 0);
+    // World keeps moving: past attempts slide, a lamp sweeps.
+    tl.fromTo("#stuck-past", { x: 0 }, { x: -110, duration: 3.05, ease: "none" }, 0);
+    tl.fromTo("#stuck-scan", { x: -420 }, { x: 1180, duration: 3.05, ease: "none" }, 0);
+    // Chips drift apart, lost.
+    tl.fromTo("#stuck-c1", { x: 0, rotation: 0 }, { x: -40, rotation: -5, duration: 2.8, ease: "power1.inOut" }, 0.2);
+    tl.fromTo("#stuck-c2", { x: 0, rotation: 0 }, { x: 40, rotation: 5, duration: 2.8, ease: "power1.inOut" }, 0.2);
+    // Words blur in; the amber question lands heavy.
+    tl.fromTo("#stuck-l1 .w", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067 }, 1.3);
+    tl.fromTo(".stuck-hit", { opacity: 0, scale: 1.25, filter: "blur(10px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.45, stagger: 0.12, ease: "expo.out" }, 1.85);
+    // The score line draws across and stays flat.
+    tl.fromTo("#stuck-line", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.1, ease: "power2.inOut" }, 0.35);
+    tl.fromTo("#stuck-dot", { opacity: 0, scale: 0, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.4)" }, 1.5);
+    tl.fromTo("#stuck-cap .w", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067 }, 0.45);
+    // Colour flood into the ruled page of shot 3.
+    tl.to("#stuck-stage", { opacity: 0, filter: "blur(8px)", duration: 0.18, ease: "power2.in" }, 2.67);
+    tl.fromTo("#stuck-flood", { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(75% at 50% 50%)", duration: 0.38, ease: "power2.inOut" }, 2.67);
+    window.__timelines["stuck"] = tl;
+  </script>
+</template>

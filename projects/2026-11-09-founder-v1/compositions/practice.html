@@ -1,0 +1,59 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #EBF3FE; font-family: "Outfit", sans-serif; color: #0D1420; }
+    #practice-page { position: absolute; left: 0; right: 0; top: -200px; height: 2400px; background: repeating-linear-gradient(180deg, transparent 0 78px, rgba(2,101,224,.16) 78px 81px); }
+    #practice-margin { position: absolute; top: 0; bottom: 0; left: 120px; width: 4px; background: rgba(251,188,4,.6); }
+    #practice-light { position: absolute; inset: 0; background: radial-gradient(60% 36% at 50% 42%, rgba(255,255,255,.85), rgba(255,255,255,0) 72%); }
+    #practice-stage { position: absolute; inset: 0; }
+    #practice-a { position: absolute; left: 60px; right: 60px; top: 300px; text-align: center; color: #6F7B8B; font-size: 104px; line-height: 1.04; font-weight: 600; letter-spacing: -0.04em; }
+    #practice-b { position: absolute; left: 40px; right: 40px; top: 540px; text-align: center; }
+    #practice-word { font-size: 236px; line-height: 1; font-weight: 700; letter-spacing: -0.055em; color: #0265E0; }
+    #practice-u { display: block; margin: -4px auto 0; width: 760px; height: 44px; overflow: visible; }
+    #practice-must { font-size: 156px; line-height: 1.05; font-weight: 700; letter-spacing: -0.05em; margin-top: 6px; }
+    #practice-icon { position: absolute; left: 410px; top: 1040px; width: 260px; height: 260px; border-radius: 70px; background: #0265E0; display: grid; place-items: center; box-shadow: 0 30px 60px -20px rgba(2,101,224,.55); }
+    #practice-sheet { width: 64%; height: 64%; }
+    .w { display: inline-block; }
+  </style>
+  <div id="root" data-composition-id="practice" data-width="1080" data-height="1920">
+    <div id="practice-page"></div>
+    <div id="practice-margin"></div>
+    <div id="practice-light"></div>
+    <div id="practice-stage">
+      <div id="practice-a">
+        <p><span class="w">Padippu</span> <span class="w">mattum</span></p>
+        <p><span class="w">podhaadhu.</span></p>
+      </div>
+      <div id="practice-b">
+        <p id="practice-word">Practice</p>
+        <svg id="practice-u" viewBox="0 0 760 44"><path id="practice-ul" d="M10 28 C160 10 360 8 520 16 S700 28 750 18" fill="none" stroke="#FBBC04" stroke-width="16" stroke-linecap="butt" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1"/></svg>
+        <p id="practice-must"><span class="w">mukkiyam!</span></p>
+      </div>
+    </div>
+    <div id="practice-icon">
+      <svg id="practice-sheet" viewBox="0 0 24 24">
+        <rect x="4.5" y="3" width="15" height="18" rx="2.5" fill="#FFFFFF"/>
+        <g fill="none" stroke="#C5DAF8" stroke-width="1.3"><circle cx="8.5" cy="8.5" r="1.7"/><circle cx="15.5" cy="8.5" r="1.7"/><circle cx="8.5" cy="13" r="1.7"/><circle cx="12" cy="13" r="1.7"/><circle cx="12" cy="17.5" r="1.7"/><circle cx="15.5" cy="17.5" r="1.7"/></g>
+        <g fill="#0265E0"><circle class="practice-bub" cx="12" cy="8.5" r="1.9"/><circle class="practice-bub" cx="15.5" cy="13" r="1.9"/><circle class="practice-bub" cx="8.5" cy="17.5" r="1.9"/></g>
+      </svg>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#practice-page", { y: 0 }, { y: -120, duration: 2.6, ease: "none" }, 0);
+    // Grey line reads first, then steps back as Practice arrives.
+    tl.fromTo("#practice-a .w", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067 }, 0.12);
+    tl.to("#practice-a", { y: -40, opacity: 0.45, scale: 0.86, duration: 0.4, ease: "power2.inOut" }, 1.3);
+    tl.fromTo("#practice-word", { opacity: 0, filter: "blur(12px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 1.4);
+    tl.fromTo("#practice-word", { scale: 0.8 }, { scale: 1, duration: 0.6, ease: "back.out(1.4)" }, 1.4);
+    tl.fromTo("#practice-ul", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.4, ease: "power2.inOut" }, 1.7);
+    tl.fromTo("#practice-must .w", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.13 }, 1.95);
+    // The site's Mock Test icon lands; its answers fill in.
+    tl.fromTo("#practice-icon", { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, 1.6);
+    tl.fromTo(".practice-bub", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.25, stagger: 0.1, ease: "back.out(1.4)" }, 1.85);
+    // Zoom through the icon: its blue becomes the next world.
+    tl.to("#practice-stage", { opacity: 0, filter: "blur(15px)", duration: 0.25, ease: "power2.in" }, 2.3);
+    tl.to("#practice-sheet", { opacity: 0, duration: 0.12, ease: "power2.in" }, 2.32);
+    tl.to("#practice-icon", { scale: 14, y: -210, borderRadius: 0, duration: 0.3, ease: "power3.in" }, 2.3);
+    window.__timelines["practice"] = tl;
+  </script>
+</template>

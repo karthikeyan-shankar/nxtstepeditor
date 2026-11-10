@@ -1,0 +1,31 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+    #amma-line { top: 690px; font-size: 90px; }
+    #amma-who { top: 960px; font-size: 54px; color: rgba(220, 224, 255, .72); }
+  </style>
+  <div id="root" data-composition-id="amma" data-width="1080" data-height="1920"><div class="sc">
+    <div class="sky night"></div>
+    <div id="amma-aur" class="aur night"></div>
+    <div id="amma-line" class="tw on-night" data-text="“இந்த தடவ வேலை
+கிடைச்சிருமா?”"></div>
+    <div id="amma-who" class="whisper">— அம்மா</div>
+    <svg class="grain" viewBox="0 0 1080 1920" preserveAspectRatio="none"><filter id="amma-n"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/></filter><rect width="1080" height="1920" filter="url(#amma-n)"/></svg>
+  </div></div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // Frame 0 already holds the first half of Amma's question (the thumbnail); the rest types itself.
+    const line = NS.prep(document.getElementById("amma-line"), 11);
+    // Frame 0 already holds the first half of Amma's question (the thumbnail); the caret waits,
+    // and the rest types itself as she says "கிடைச்சிருமாப்பா" (voice line 1 starts at 0.35 s).
+    NS.blink(tl, line, 0.0, 2.6);
+    NS.typeIn(tl, line, 2.65, 0.65);
+    NS.blink(tl, line, 3.35, 4.25);
+    tl.fromTo("#amma-who", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "power2.out" }, 3.4);
+    // the aurora breathes up slowly behind the question
+    tl.fromTo("#amma-aur", { x: -40, y: 80, opacity: 0.75 }, { x: 40, y: 0, opacity: 1, duration: 4.6, ease: "sine.inOut" }, 0);
+    // exit: the line dissolves into blur
+    tl.to(["#amma-line", "#amma-who"], { opacity: 0, filter: "blur(14px)", duration: 0.35, ease: "power2.in" }, 4.25);
+    window.__timelines["amma"] = tl;
+  </script>
+</template>

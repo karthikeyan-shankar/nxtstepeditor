@@ -1,0 +1,70 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+    #report-line { top: 330px; font-size: 78px; white-space: nowrap; }
+    /* the app's AI report card (final build 19f7f86, welcome slide 2), as glass, at about 3.4x */
+    #report-card { position: absolute; left: 120px; top: 520px; width: 840px; padding: 44px 52px 50px; }
+    .rc-kick { font-size: 28px; font-weight: 600; letter-spacing: .08em; color: #5A6675; margin-bottom: 18px; }
+    .rc-top { display: flex; align-items: center; gap: 42px; }
+    .rc-ring { position: relative; width: 230px; height: 230px; flex: none; }
+    .rc-ring svg { width: 230px; height: 230px; transform: rotate(-90deg); }
+    .rc-ring .in { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; line-height: 1; }
+    #report-num { font-size: 76px; font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+    .rc-ring small { display: block; font-size: 32px; color: #5A6675; font-weight: 600; margin-top: 8px; }
+    .rc-meta b { display: block; font-size: 54px; font-weight: 750; letter-spacing: -.02em; }
+    .rc-meta span { display: block; margin-top: 12px; font-size: 34px; color: #5A6675; }
+    .rc-item { padding: 18px 18px 20px; margin: 14px -18px 0; border-radius: 26px; }
+    .rc-row { display: flex; justify-content: space-between; font-size: 44px; font-weight: 650; }
+    .rc-bar { height: 24px; border-radius: 12px; background: #EEF1F6; margin-top: 14px; overflow: hidden; }
+    .rc-bar i { display: block; height: 24px; border-radius: 12px; transform-origin: 0 50%; }
+  </style>
+  <div id="root" data-composition-id="report" data-width="1080" data-height="1920"><div class="sc">
+    <div class="sky dawn"></div>
+    <div id="report-aur" class="aur dawn"></div>
+    <div id="report-card" class="card">
+      <div class="rc-kick">EXAMPLE REPORT</div>
+      <div class="rc-top">
+        <div class="rc-ring">
+          <svg viewBox="0 0 230 230"><circle cx="115" cy="115" r="97" fill="none" stroke="#EEF1F6" stroke-width="22"/>
+            <circle id="report-arc" cx="115" cy="115" r="97" fill="none" stroke="#00947C" stroke-width="22" stroke-linecap="round" stroke-dasharray="609.5" stroke-dashoffset="609.5"/></svg>
+          <div class="in"><div><span id="report-num">0</span><small>of 300</small></div></div>
+        </div>
+        <div class="rc-meta"><b>Mock Test 6</b><span>Tamil passed · 114/150</span></div>
+      </div>
+      <div class="rc-item" id="report-i1"><div class="rc-row"><span>பொதுத் தமிழ்</span><span style="color:#008872">76%</span></div>
+        <div class="rc-bar"><i id="report-b1" style="width:76%;background:#00947C"></i></div></div>
+      <div class="rc-item" id="report-i2"><div class="rc-row"><span>General Studies</span><span style="color:#D63A40">42%</span></div>
+        <div class="rc-bar"><i id="report-b2" style="width:42%;background:#E5484D"></i></div></div>
+      <div class="rc-item" id="report-i3"><div class="rc-row"><span>Aptitude</span><span style="color:#9B7109">64%</span></div>
+        <div class="rc-bar"><i id="report-b3" style="width:64%;background:#FBBC04"></i></div></div>
+    </div>
+    <div id="report-line" class="tw on-dawn" data-text="இங்க தான் மார்க் போகுது!"></div>
+    <svg class="grain" viewBox="0 0 1080 1920" preserveAspectRatio="none"><filter id="report-n"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="19"/></filter><rect width="1080" height="1920" filter="url(#report-n)"/></svg>
+  </div></div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const num = document.getElementById("report-num");
+    const n = { v: 0 };
+    const line = NS.prep(document.getElementById("report-line"), 0);
+    tl.set(line.caret, { opacity: 0 }, 0);
+    // Timed to voice line 4 (Thambi, from 0.3 s here): ஜெனரல் 2.26 · மார்க் 3.5 · ends 4.56
+    tl.fromTo("#report-aur", { x: -30 }, { x: 30, duration: 5, ease: "sine.inOut" }, 0);
+    // rack focus: the real report comes out of the blur, tilted, and settles
+    tl.fromTo("#report-card", { opacity: 0, scale: 1.14, filter: "blur(22px)", rotationX: 14, rotationY: -10, transformPerspective: 2200 },
+      { opacity: 1, scale: 1, filter: "blur(0px)", rotationX: 0, rotationY: 0, duration: 0.6, ease: "power3.out" }, 0);
+    tl.fromTo("#report-arc", { strokeDashoffset: 609.5 }, { strokeDashoffset: 609.5 * (1 - 186 / 300), duration: 0.8, ease: "power2.out" }, 0.35);
+    tl.fromTo(n, { v: 0 }, { v: 186, duration: 0.8, ease: "power2.out", onUpdate: () => { num.textContent = Math.round(n.v); } }, 0.35);
+    tl.fromTo("#report-b1", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "expo.out" }, 0.8);
+    tl.fromTo("#report-b2", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "expo.out" }, 1.0);
+    tl.fromTo("#report-b3", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "expo.out" }, 1.2);
+    // "ஜெனரல் ஸ்டடீஸ்லதான்…": General Studies lights up, the other sections step back
+    tl.to(["#report-i1", "#report-i3"], { opacity: 0.3, duration: 0.35, ease: "power2.inOut" }, 2.25);
+    tl.fromTo("#report-i2", { backgroundColor: "rgba(229,72,77,0)", boxShadow: "0 0 0 0 rgba(229,72,77,0)" },
+      { backgroundColor: "rgba(229,72,77,0.07)", boxShadow: "0 0 0 4px rgba(229,72,77,0.55), 0 18px 50px rgba(229,72,77,0.25)", duration: 0.35, ease: "power2.out" }, 2.25);
+    // "…மார்க் போகுது!"
+    NS.typeIn(tl, line, 2.4, 0.7);
+    NS.blink(tl, line, 3.1, 4.7);
+    tl.to(["#report-line", "#report-card"], { opacity: 0, filter: "blur(16px)", duration: 0.3, ease: "power2.in" }, 4.7);
+    window.__timelines["report"] = tl;
+  </script>
+</template>

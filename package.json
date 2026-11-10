@@ -1,0 +1,12 @@
+{
+  "name": "nextstep4u-studio",
+  "private": true,
+  "type": "module",
+  "description": "Everything for making Nextstep4u ads and videos: the brand and app kit, sound, styles, the Studio interface, and every ad made so far.",
+  "scripts": {
+    "kit": "node scripts/capture-kit.mjs",
+    "studio": "node scripts/build-studio.mjs",
+    "test:studio": "node scripts/test-studio.mjs",
+    "board": "node scripts/apply-board.mjs"
+  }
+}

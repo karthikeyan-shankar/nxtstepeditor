@@ -1,0 +1,79 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #F6F8FB; font-family: "Outfit", sans-serif; color: #0D1420; }
+    #hook-world { position: absolute; inset: -60px; }
+    #hook-wash { position: absolute; inset: 0; background:
+      radial-gradient(48% 30% at 82% 10%, rgba(2,101,224,.13), transparent 70%),
+      radial-gradient(55% 32% at 6% 92%, rgba(251,188,4,.16), transparent 70%),
+      radial-gradient(60% 34% at 50% 44%, #FFFFFF 0%, rgba(255,255,255,0) 70%); }
+    #hook-dots { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .hook-sheet { position: absolute; width: 200px; height: 250px; }
+    #hook-stage { position: absolute; inset: 0; }
+    #hook-title { position: absolute; left: 60px; right: 60px; top: 380px; text-align: center; }
+    #hook-title p { font-size: 196px; line-height: 0.98; font-weight: 700; letter-spacing: -0.05em; }
+    #hook-title .b { color: #0265E0; }
+    #hook-ghosts { position: absolute; left: 0; right: 0; top: 1050px; display: flex; justify-content: center; gap: 30px; }
+    .hook-ghost { width: 140px; height: 140px; border-radius: 50%; background: #E3E7ED; display: grid; place-items: center; }
+    .hook-ghost svg { width: 58%; height: 58%; }
+    .w { display: inline-block; }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
+    <div id="hook-world">
+      <div id="hook-wash"></div>
+      <svg id="hook-dots" viewBox="0 0 1200 2040" preserveAspectRatio="none">
+        <defs>
+          <pattern id="hook-dot" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="2.4" fill="rgba(13,20,32,.09)"/></pattern>
+          <radialGradient id="hook-fade"><stop offset=".35" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="1"/></radialGradient>
+          <mask id="hook-m"><rect width="1200" height="2040" fill="url(#hook-fade)"/></mask>
+          <g id="hook-omr">
+            <rect width="200" height="250" rx="22" fill="#FFFFFF" stroke="#C5DAF8" stroke-width="3"/>
+            <g fill="none" stroke="#C5DAF8" stroke-width="3">
+              <circle cx="52" cy="58" r="14"/><circle cx="148" cy="58" r="14"/><circle cx="100" cy="104" r="14"/><circle cx="148" cy="104" r="14"/>
+              <circle cx="52" cy="150" r="14"/><circle cx="100" cy="150" r="14"/><circle cx="52" cy="196" r="14"/><circle cx="148" cy="196" r="14"/>
+            </g>
+            <g fill="#0265E0"><circle cx="100" cy="58" r="14"/><circle cx="52" cy="104" r="14"/><circle cx="148" cy="150" r="14"/><circle cx="100" cy="196" r="14"/></g>
+          </g>
+        </defs>
+        <rect width="1200" height="2040" fill="url(#hook-dot)" mask="url(#hook-m)"/>
+      </svg>
+      <svg class="hook-sheet" id="hook-s1" style="left:-40px;top:200px" viewBox="0 0 200 250"><use href="#hook-omr"/></svg>
+      <svg class="hook-sheet" id="hook-s2" style="left:930px;top:140px" viewBox="0 0 200 250"><use href="#hook-omr"/></svg>
+      <svg class="hook-sheet" id="hook-s3" style="left:-90px;top:1180px" viewBox="0 0 200 250"><use href="#hook-omr"/></svg>
+      <svg class="hook-sheet" id="hook-s4" style="left:990px;top:1100px" viewBox="0 0 200 250"><use href="#hook-omr"/></svg>
+      <svg class="hook-sheet" id="hook-s5" style="left:160px;top:1560px" viewBox="0 0 200 250"><use href="#hook-omr"/></svg>
+      <svg class="hook-sheet" id="hook-s6" style="left:800px;top:1640px" viewBox="0 0 200 250"><use href="#hook-omr"/></svg>
+    </div>
+
+    <div id="hook-stage">
+      <div id="hook-title">
+        <p class="b"><span class="w">TNPSC</span></p>
+        <p class="b"><span class="w">Group</span> <span class="w">4</span></p>
+        <p><span class="w">prep-ah?</span></p>
+      </div>
+      <div id="hook-ghosts">
+        <span class="hook-ghost"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.6" r="3.6" fill="#C3CBD6"/><path d="M5.2 19.4a6.8 6.8 0 0 1 13.6 0Z" fill="#C3CBD6"/></svg></span>
+        <span class="hook-ghost"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.6" r="3.6" fill="#C3CBD6"/><path d="M5.2 19.4a6.8 6.8 0 0 1 13.6 0Z" fill="#C3CBD6"/></svg></span>
+        <span class="hook-ghost"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.6" r="3.6" fill="#C3CBD6"/><path d="M5.2 19.4a6.8 6.8 0 0 1 13.6 0Z" fill="#C3CBD6"/></svg></span>
+        <span class="hook-ghost"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.6" r="3.6" fill="#C3CBD6"/><path d="M5.2 19.4a6.8 6.8 0 0 1 13.6 0Z" fill="#C3CBD6"/></svg></span>
+        <span class="hook-ghost"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.6" r="3.6" fill="#C3CBD6"/><path d="M5.2 19.4a6.8 6.8 0 0 1 13.6 0Z" fill="#C3CBD6"/></svg></span>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // World: a slow push and drifting answer sheets. The title is on screen at frame 0 and holds still.
+    // Opening punch: the camera lands from a zoom, the title snaps into focus, the sheets fly in from the edges.
+    tl.fromTo("#hook-world", { scale: 1.22 }, { scale: 1.0, duration: 0.7, ease: "expo.out" }, 0);
+    tl.to("#hook-world", { scale: 1.04, duration: 2.15, ease: "none" }, 0.7);
+    tl.fromTo("#hook-title", { scale: 1.16, filter: "blur(3px)" }, { scale: 1, filter: "blur(0px)", duration: 0.55, ease: "expo.out" }, 0);
+    tl.fromTo(".hook-sheet", { x: (i) => (i % 2 ? 420 : -420) }, { x: 0, duration: 0.75, stagger: 0.05, ease: "expo.out" }, 0);
+    const drift = [[-18, -6], [14, 5], [10, 4], [-12, -5], [16, 6], [-14, -4]];
+    drift.forEach((d, i) => tl.fromTo("#hook-s" + (i + 1), { y: 0, rotation: d[1] }, { y: d[0] * 2, rotation: d[1] * 0.4, duration: 3.1, ease: "none" }, 0));
+    // The aspirants arrive one by one: scale springs, opacity never bounces.
+    tl.fromTo(".hook-ghost", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.55, stagger: 0.09, ease: "back.out(1.4)" }, 0.35);
+    // Whip up into shot 2.
+    tl.to("#hook-stage", { y: -520, filter: "blur(14px)", duration: 0.24, ease: "power3.in" }, 2.86);
+    tl.to("#hook-world", { y: -380, duration: 0.24, ease: "power3.in" }, 2.86);
+    window.__timelines["hook"] = tl;
+  </script>
+</template>

@@ -1,0 +1,93 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #FFFFFF; font-family: "Outfit", sans-serif; color: #0D1420; }
+    #mock-world { position: absolute; inset: 0; }
+    #mock-tiles { position: absolute; left: -330px; top: -300px; width: 1750px; height: 2600px; transform-origin: 50% 50%; }
+    #mock-veil { position: absolute; inset: 0; background: radial-gradient(62% 44% at 50% 50%, rgba(255,255,255,.92), rgba(255,255,255,.35)); }
+    #mock-stage { position: absolute; inset: 0; }
+    #mock-title { position: absolute; left: 60px; right: 60px; top: 250px; text-align: center; font-size: 150px; line-height: 1; font-weight: 700; letter-spacing: -0.05em; }
+    #mock-title .b { color: #0265E0; }
+    .mock-card { position: absolute; left: 80px; right: 80px; background: #FFFFFF; border-radius: 44px; box-shadow: 0 2px 6px rgba(13,20,32,.06), 0 40px 80px -36px rgba(13,20,32,.38); }
+    #mock-pal { top: 600px; padding: 40px 46px; }
+    .mock-top { display: flex; justify-content: space-between; align-items: center; font-size: 40px; font-weight: 500; color: #5A6675; }
+    #mock-clock { font-size: 56px; font-weight: 700; color: #0D1420; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+    #mock-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 30px; }
+    .mock-t { height: 104px; border-radius: 24px; display: grid; place-items: center; font-size: 46px; font-weight: 600; background: #F8FAFC; color: #5A6675; box-shadow: inset 0 0 0 3px #D7DDE6; }
+    #mock-feed { top: 1028px; padding: 8px 46px; }
+    .mock-row { display: flex; align-items: center; gap: 26px; padding: 24px 0; }
+    .mock-row + .mock-row { border-top: 2px solid #E4E8EE; }
+    .mock-doc { width: 84px; height: 84px; border-radius: 22px; background: #EBF3FE; flex: none; display: grid; place-items: center; }
+    .mock-doc i { width: 34px; height: 44px; border-radius: 6px; background: #FFFFFF; box-shadow: inset 0 0 0 4px #0265E0; }
+    .mock-row span { flex: 1; display: flex; flex-direction: column; }
+    .mock-row b { font-size: 44px; font-weight: 600; }
+    .mock-row small { font-size: 34px; color: #5A6675; }
+    .mock-row em { font-style: normal; font-size: 44px; font-weight: 700; color: #0265E0; }
+    #mock-dip { position: absolute; inset: 0; background: #0D1420; opacity: 0; }
+    .w { display: inline-block; }
+  </style>
+  <div id="root" data-composition-id="mock" data-width="1080" data-height="1920">
+    <div id="mock-world">
+      <svg id="mock-tiles" viewBox="0 0 1750 2600">
+        <defs>
+          <g id="mock-row9">
+            <rect x="0" width="126" height="126" rx="26" fill="#DDEAFB"/><rect x="150" width="126" height="126" rx="26" fill="#F3F5F8"/><rect x="300" width="126" height="126" rx="26" fill="#DDEAFB"/>
+            <rect x="450" width="126" height="126" rx="26" fill="#FDF0C7"/><rect x="600" width="126" height="126" rx="26" fill="#DDEAFB"/><rect x="750" width="126" height="126" rx="26" fill="#F3F5F8"/>
+            <rect x="900" width="126" height="126" rx="26" fill="#DDEAFB"/><rect x="1050" width="126" height="126" rx="26" fill="#DDEAFB"/><rect x="1200" width="126" height="126" rx="26" fill="#F3F5F8"/>
+            <rect x="1350" width="126" height="126" rx="26" fill="#DDEAFB"/><rect x="1500" width="126" height="126" rx="26" fill="#FDF0C7"/><rect x="1650" width="126" height="126" rx="26" fill="#F3F5F8"/>
+          </g>
+        </defs>
+        <g transform="rotate(-12 875 1300)">
+          <use href="#mock-row9" y="0"/><use href="#mock-row9" y="150" x="-150"/><use href="#mock-row9" y="300" x="-300"/><use href="#mock-row9" y="450"/>
+          <use href="#mock-row9" y="600" x="-150"/><use href="#mock-row9" y="750" x="-300"/><use href="#mock-row9" y="900"/><use href="#mock-row9" y="1050" x="-150"/>
+          <use href="#mock-row9" y="1200" x="-300"/><use href="#mock-row9" y="1350"/><use href="#mock-row9" y="1500" x="-150"/><use href="#mock-row9" y="1650" x="-300"/>
+          <use href="#mock-row9" y="1800"/><use href="#mock-row9" y="1950" x="-150"/><use href="#mock-row9" y="2100" x="-300"/><use href="#mock-row9" y="2250"/><use href="#mock-row9" y="2400" x="-150"/>
+        </g>
+      </svg>
+      <div id="mock-veil"></div>
+    </div>
+    <div id="mock-stage">
+      <div id="mock-title">
+        <p class="b"><span class="w">Real</span> <span class="w">exam</span></p>
+        <p><span class="w">pattern</span></p>
+      </div>
+      <div class="mock-card" id="mock-pal">
+        <div class="mock-top"><span>Question palette</span><b id="mock-clock">02:41:18</b></div>
+        <div id="mock-grid">
+          <i class="mock-t" id="mock-t1">17</i><i class="mock-t" id="mock-t2">18</i><i class="mock-t" id="mock-t3">19</i><i class="mock-t" id="mock-t4">20</i>
+          <i class="mock-t" id="mock-t5">21</i><i class="mock-t" id="mock-t6">22</i><i class="mock-t" id="mock-t7">23</i><i class="mock-t" id="mock-t8">24</i>
+        </div>
+      </div>
+      <div class="mock-card" id="mock-feed">
+        <div class="mock-row" id="mock-r1"><div class="mock-doc"><i></i></div><span><b>Group 4 Full Mock</b><small>200 questions · Tamil &amp; English</small></span><em>3 h</em></div>
+        <div class="mock-row" id="mock-r2"><div class="mock-doc"><i></i></div><span><b>Mini Mock</b><small>20 questions</small></span><em>30 min</em></div>
+      </div>
+    </div>
+    <div id="mock-dip"></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // From the white card: the palette world fades up and scrolls.
+    tl.fromTo("#mock-world", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, 0);
+    tl.fromTo("#mock-tiles", { y: 0 }, { y: -110, duration: 2.6, ease: "none" }, 0);
+    tl.fromTo("#mock-title .w", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067 }, 0.1);
+    tl.fromTo("#mock-pal", { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, 0.3);
+    // The 3-hour clock counts down while answers fill the palette.
+    const clock = { s: 9678 };
+    tl.fromTo(clock, { s: 9678 }, { s: 9674, duration: 2.2, ease: "none", onUpdate: () => {
+      const s = Math.round(clock.s), h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
+      document.querySelector("#mock-clock").textContent = String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0") + ":" + String(x).padStart(2, "0");
+    } }, 0.3);
+    const marked = [3, 7];
+    for (let i = 1; i <= 8; i++) {
+      const m = marked.includes(i);
+      tl.fromTo("#mock-t" + i, { backgroundColor: "#F8FAFC", color: "#5A6675", boxShadow: "inset 0 0 0 3px #D7DDE6" },
+        { backgroundColor: m ? "#FBBC04" : "#0265E0", color: m ? "#0D1420" : "#FFFFFF", boxShadow: "inset 0 0 0 0px #D7DDE6", duration: 0.15, ease: "power2.out" }, 0.6 + (i - 1) * 0.14);
+      tl.fromTo("#mock-t" + i, { scale: 0.9 }, { scale: 1, duration: 0.35, ease: "back.out(1.4)" }, 0.6 + (i - 1) * 0.14);
+    }
+    tl.fromTo("#mock-feed", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, 0.95);
+    tl.fromTo(["#mock-r1", "#mock-r2"], { opacity: 0 }, { opacity: 1, duration: 0.25, stagger: 0.12, ease: "power2.out" }, 1.1);
+    // Dip cut into the report.
+    tl.to("#mock-dip", { opacity: 0.4, duration: 0.1, ease: "none" }, 2.5);
+    window.__timelines["mock"] = tl;
+  </script>
+</template>

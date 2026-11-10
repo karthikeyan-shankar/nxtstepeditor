@@ -1,0 +1,91 @@
+<template>
+  <style>
+    @font-face { font-family: "Outfit"; src: url("assets/fonts/Outfit.ttf"); font-weight: 100 900; }
+    @font-face { font-family: "Meera Inimai"; src: url("assets/fonts/MeeraInimai.ttf"); font-weight: 400; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0B1220;
+      font-family: "Outfit", "Meera Inimai", sans-serif; color: #fff; }
+    #hook-shake { position: absolute; inset: 0; }
+    #hook-field { position: absolute; inset: 0;
+      background: radial-gradient(65% 42% at 50% 64%, rgba(229,72,77,.55), rgba(229,72,77,0) 72%); }
+    /* one line on screen at a time: the loss, then the question */
+    .hk-t { position: absolute; left: 0; right: 0; top: 190px; text-align: center; }
+    #hook-pre { font-size: 72px; font-weight: 700; color: #C9D1DC; line-height: 1.1; }
+    #hook-line { font-size: 132px; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; margin-top: 6px; }
+    #hook-line .nine { color: #FBBC04; }
+    #hook-t2 { top: 230px; font-size: 160px; font-weight: 800; letter-spacing: -.02em; }
+    /* the phone; on its screen only the piece of the website's sample report this beat needs, at about 2x */
+    #hook-wrap { position: absolute; left: 210px; top: 520px; width: 660px; height: 1440px; }
+    #hook-phone { position: absolute; inset: 0; border-radius: 100px; background: #07090d; padding: 18px;
+      box-shadow: 0 60px 120px rgba(0,0,0,.55), inset 0 0 0 3px #2a303b; }
+    .hk-screen { position: relative; width: 100%; height: 100%; border-radius: 84px; overflow: hidden; background: #F4F6FA; }
+    .hk-island { position: absolute; top: 24px; left: 50%; margin-left: -64px; width: 128px; height: 38px; border-radius: 19px; background: #07090d; }
+    .hk-logo { position: absolute; left: 40px; top: 84px; height: 62px; }
+    .hk-card { position: absolute; left: 24px; right: 24px; top: 180px; background: #0D1420; border-radius: 48px; padding: 40px 36px 44px; }
+    .hk-lab { font-size: 28px; white-space: nowrap; letter-spacing: .08em; color: #9AA4B2; font-weight: 600; }
+    .hk-score { display: flex; align-items: baseline; gap: 14px; margin-top: 26px; }
+    .hk-score b { font-size: 170px; font-weight: 800; color: #FBBC04; letter-spacing: -.04em; line-height: 1; }
+    .hk-score span { font-size: 46px; color: #C9D1DC; font-weight: 600; }
+    .hk-bar { position: relative; height: 24px; border-radius: 12px; background: #263243; margin-top: 34px; }
+    .hk-fill { position: absolute; left: 0; top: 0; height: 24px; width: 56%; border-radius: 12px; background: linear-gradient(90deg, #FBBC04, #00B696); }
+    #hook-gap { position: absolute; left: 56%; top: 0; width: 3%; height: 24px; background: #E5484D; transform-origin: 0 50%; }
+    .hk-mark { position: absolute; left: 59%; top: -12px; width: 5px; height: 48px; margin-left: -2px; background: #fff; border-radius: 3px; }
+    .hk-cut { position: relative; height: 50px; margin-top: 16px; }
+    .hk-cut span { position: absolute; left: 59%; transform: translateX(-50%); font-size: 36px; color: #fff; font-weight: 600; white-space: nowrap; }
+    /* reject-stamp, after Vibha Ramprakash's claude-video-effects (MIT): red rounded border, distressed ink */
+    #hook-stamp { position: absolute; left: 220px; top: 1156px; width: 640px; height: 150px; }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
+    <div id="hook-shake">
+      <div id="hook-field"></div>
+      <div id="hook-wrap" data-layout-allow-overflow><div id="hook-phone">
+        <div class="hk-screen">
+          <div class="hk-island"></div>
+          <img class="hk-logo" src="assets/img/logo.png" alt="nextstep4u" />
+          <div class="hk-card">
+            <div class="hk-lab">EXAMPLE REPORT</div>
+            <div class="hk-score"><b>168</b><span>/ 300</span></div>
+            <div class="hk-bar"><div class="hk-fill"></div><div id="hook-gap"></div><div class="hk-mark"></div></div>
+            <div class="hk-cut"><span>Cut-off 177</span></div>
+          </div>
+        </div>
+      </div></div>
+      <svg id="hook-stamp" viewBox="0 0 640 150" data-layout-allow-overlap>
+        <defs>
+          <filter id="hook-ink" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="n"/>
+            <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.9" result="m"/>
+            <feComposite in="SourceGraphic" in2="m" operator="in"/>
+          </filter>
+        </defs>
+        <g filter="url(#hook-ink)" fill="none" stroke="#D62828">
+          <rect x="8" y="8" width="624" height="134" rx="22" stroke-width="11"/>
+          <text x="320" y="101" text-anchor="middle" fill="#D62828" stroke="none" font-family="Outfit" font-weight="800" font-size="72" letter-spacing="1">9 MARKS SHORT</text>
+        </g>
+      </svg>
+      <div id="hook-t1" class="hk-t">
+        <div id="hook-pre">Cut-off-க்கு</div>
+        <div id="hook-line"><span class="nine">9</span> மார்க் குறைவு</div>
+      </div>
+      <div id="hook-t2" class="hk-t">எங்க போச்சு?</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // Frame 0 is the thumbnail: the loss line and the score are already there.
+    tl.fromTo("#hook-phone", { rotationY: -14, rotationX: 8, rotationZ: -4, transformPerspective: 2200, y: 40 },
+      { rotationY: -9, rotationX: 6, rotationZ: -3, y: 0, duration: 5.2, ease: "power1.out" }, 0);
+    tl.fromTo("#hook-gap", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "expo.out" }, 0.3);
+    // the stamp slams: 2.3x to 1x in 0.16 s, then the frame shakes for 0.3 s
+    tl.fromTo("#hook-stamp", { scale: 2.3, rotation: -6, opacity: 0 }, { scale: 1, rotation: -6, opacity: 1, duration: 0.16, ease: "power2.in" }, 0.9);
+    [[-14, 9], [11, -7], [-8, 6], [6, -4], [-3, 2], [0, 0]].forEach(([x, y], i) => {
+      tl.to("#hook-shake", { x, y, duration: 0.05, ease: "none" }, 1.06 + i * 0.05);
+    });
+    // the line changes: the loss becomes the question
+    tl.to("#hook-t1", { opacity: 0, filter: "blur(10px)", duration: 0.18, ease: "power3.in" }, 2.7);
+    tl.fromTo("#hook-t2", { opacity: 0, filter: "blur(10px)", scale: 1.08 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.3, ease: "power4.out" }, 2.85);
+    // exit: a whip up, cut at its fastest frame
+    tl.to("#hook-t2", { y: -220, opacity: 0, filter: "blur(10px)", duration: 0.28, ease: "power3.in" }, 5.22);
+    tl.to(["#hook-wrap", "#hook-stamp"], { y: -360, filter: "blur(12px)", duration: 0.28, ease: "power3.in" }, 5.22);
+    window.__timelines["hook"] = tl;
+  </script>
+</template>

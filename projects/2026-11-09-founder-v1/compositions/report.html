@@ -1,0 +1,77 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0D1420; font-family: "Outfit", sans-serif; color: #FFFFFF; }
+    #report-world { position: absolute; inset: 0; background: radial-gradient(90% 60% at 50% 30%, #263243, #0D1420 72%); }
+    .report-beam { position: absolute; top: -400px; height: 2800px; transform-origin: 50% 0; background: linear-gradient(180deg, rgba(2,101,224,.32), rgba(2,101,224,0) 70%); }
+    #report-stage { position: absolute; inset: 0; }
+    #report-tags { position: absolute; left: 60px; right: 60px; top: 250px; display: flex; justify-content: center; gap: 18px; }
+    .report-tag { font-size: 42px; font-weight: 600; padding: 14px 30px; border-radius: 999px; background: #263243; color: rgba(255,255,255,.6); }
+    #report-card { position: absolute; left: 80px; right: 80px; top: 380px; background: #FFFFFF; color: #0D1420; border-radius: 44px; padding: 38px 52px 40px; box-shadow: 0 60px 120px -40px rgba(0,0,0,.6); }
+    .report-kick { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 16px; }
+    .report-kick b { font-size: 48px; font-weight: 700; }
+    .report-kick span { font-size: 32px; font-weight: 500; color: #5A6675; }
+    .report-row { display: flex; justify-content: space-between; align-items: baseline; padding: 24px 0 14px; border-top: 2px solid #E4E8EE; font-size: 42px; color: #3D4756; }
+    .report-row b { font-size: 54px; font-weight: 700; color: #0D1420; font-variant-numeric: tabular-nums; }
+    .report-row b small { font-size: 36px; color: #6F7B8B; font-weight: 500; }
+    .report-bar { height: 14px; border-radius: 7px; background: #F2F5F9; margin-bottom: 8px; overflow: hidden; }
+    .report-fill { height: 100%; border-radius: 7px; transform-origin: 0 50%; }
+    #report-weak { display: flex; justify-content: space-between; align-items: baseline; margin-top: 14px; background: #FDECED; border-radius: 26px; padding: 24px 28px; font-size: 42px; color: #D93843; }
+    #report-weak b { font-size: 48px; font-weight: 700; }
+    #report-title { position: absolute; left: 60px; right: 60px; top: 1100px; text-align: center; font-size: 98px; line-height: 1.04; font-weight: 700; letter-spacing: -0.045em; }
+    #report-title .a { color: #FBBC04; }
+    #report-flood { position: absolute; inset: 0; background: #FDF3D6; }
+    .w { display: inline-block; }
+  </style>
+  <div id="root" data-composition-id="report" data-width="1080" data-height="1920">
+    <div id="report-world">
+      <div class="report-beam" data-layout-ignore id="report-b1" style="left:80px;width:120px"></div>
+      <div class="report-beam" data-layout-ignore id="report-b2" style="left:340px;width:150px"></div>
+      <div class="report-beam" data-layout-ignore id="report-b3" style="left:600px;width:180px"></div>
+      <div class="report-beam" data-layout-ignore id="report-b4" style="left:860px;width:210px"></div>
+    </div>
+    <div id="report-stage">
+      <div id="report-tags">
+        <span class="report-tag" id="report-g1">Score</span><span class="report-tag" id="report-g2">Mistakes</span><span class="report-tag" id="report-g3">Weak areas</span>
+      </div>
+      <div id="report-card">
+        <div class="report-kick"><b>Your AI report</b><span>Example report</span></div>
+        <div class="report-row"><span>General Tamil</span><b><span id="report-n1">78</span><small> / 100</small></b></div>
+        <div class="report-bar"><div class="report-fill" id="report-f1" style="background:#0265E0"></div></div>
+        <div class="report-row"><span>General Studies</span><b><span id="report-n2">49</span><small> / 75</small></b></div>
+        <div class="report-bar"><div class="report-fill" id="report-f2" style="background:#00B696"></div></div>
+        <div class="report-row"><span>Aptitude</span><b><span id="report-n3">18</span><small> / 25</small></b></div>
+        <div class="report-bar"><div class="report-fill" id="report-f3" style="background:#FBBC04"></div></div>
+        <div id="report-weak"><span>Weakest topic</span><b>Indian Polity</b></div>
+      </div>
+      <div id="report-title">
+        <p><span class="w">Ellam</span> <span class="w a">easy-ah</span></p>
+        <p><span class="w">analyse</span></p>
+      </div>
+    </div>
+    <div id="report-flood"></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // Out of the dip: lamp beams sway slowly over the desk.
+    [18, 22, 16, 20].forEach((r, i) => tl.fromTo("#report-b" + (i + 1), { rotation: r }, { rotation: r - 6, duration: 4.6, ease: "power1.inOut" }, 0));
+    tl.fromTo("#report-card", { y: 110, opacity: 0 }, { y: 0, opacity: 1, duration: 0.65, ease: "expo.out" }, 0);
+    tl.fromTo(".report-tag", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067 }, 0.05);
+    // Marks count up from half; bars fill.
+    const rows = [[78, 100], [49, 75], [18, 25]];
+    rows.forEach((d, i) => {
+      const o = { v: Math.round(d[0] / 2) };
+      tl.fromTo(o, { v: Math.round(d[0] / 2) }, { v: d[0], duration: 0.9, ease: "power2.out", onUpdate: () => { document.querySelector("#report-n" + (i + 1)).textContent = Math.round(o.v); } }, 0.3 + i * 0.25);
+      tl.fromTo("#report-f" + (i + 1), { scaleX: 0 }, { scaleX: d[0] / d[1], duration: 0.9, ease: "power2.out" }, 0.3 + i * 0.25);
+    });
+    tl.fromTo("#report-weak", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power2.out" }, 1.7);
+    tl.fromTo("#report-weak", { scale: 0.92 }, { scale: 1, duration: 0.5, ease: "back.out(1.4)" }, 1.7);
+    // The three tags light up on the voice-over's words.
+    [["#report-g1", "#0265E0"], ["#report-g2", "#0265E0"], ["#report-g3", "#D93843"]].forEach((g, i) =>
+      tl.fromTo(g[0], { backgroundColor: "#263243", color: "rgba(255,255,255,0.6)" }, { backgroundColor: g[1], color: "#FFFFFF", duration: 0.18, ease: "power2.out" }, [0.3, 0.95, 1.65][i]));
+    tl.fromTo("#report-title .w", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067 }, 2.5);
+    // Colour flood into the warm morning of shot 7.
+    tl.to("#report-stage", { opacity: 0, filter: "blur(8px)", duration: 0.18, ease: "power2.in" }, 4.22);
+    tl.fromTo("#report-flood", { clipPath: "circle(0% at 50% 100%)" }, { clipPath: "circle(130% at 50% 100%)", duration: 0.38, ease: "power2.inOut" }, 4.22);
+    window.__timelines["report"] = tl;
+  </script>
+</template>

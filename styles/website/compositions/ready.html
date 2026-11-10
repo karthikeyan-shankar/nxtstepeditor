@@ -1,0 +1,72 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #FDF3D6; font-family: "Outfit", sans-serif; color: #0D1420; }
+    #ready-world { position: absolute; inset: 0; background: linear-gradient(180deg, #FDF3D6 0%, #F6F8FB 55%, #E4F7F3 100%); }
+    #ready-chart { position: absolute; inset: 0; width: 100%; height: 100%; }
+    #ready-veil { position: absolute; inset: 0; background: radial-gradient(64% 40% at 50% 47%, rgba(246,248,251,.94), rgba(246,248,251,0)); }
+    #ready-stage { position: absolute; inset: 0; }
+    #ready-faces { position: absolute; left: 0; right: 0; top: 250px; display: flex; justify-content: center; }
+    .ready-face { position: relative; width: 184px; height: 184px; border-radius: 50%; border: 6px solid #FFFFFF; box-shadow: 0 0 0 3px #0265E0, 0 14px 30px -10px rgba(13,20,32,.35); margin-left: -30px; }
+    .ready-face img { border-radius: 50%; }
+    .ready-ok { position: absolute; right: -6px; top: -6px; width: 54px; height: 54px; border-radius: 50%; background: #00B696 url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Cpath d=%27m6 12.5 4 4 8-9%27 fill=%27none%27 stroke=%27white%27 stroke-width=%273%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E") center/62% no-repeat; border: 4px solid #FFFFFF; }
+    .ready-face:first-child { margin-left: 0; }
+    .ready-face img { width: 100%; height: 100%; display: block; }
+    #ready-tags { position: absolute; left: 0; right: 0; top: 470px; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+    .ready-tag { display: inline-flex; align-items: center; gap: 16px; padding: 12px 34px 12px 12px; border-radius: 22px; background: #FFFFFF; font-size: 44px; font-weight: 500; color: #3D4756; box-shadow: 0 2px 6px rgba(13,20,32,.08), 0 0 0 2px rgba(13,20,32,.05); }
+    .ready-tag i { width: 58px; height: 58px; border-radius: 16px; background: #00B696; display: grid; place-items: center; }
+    .ready-tag svg { width: 62%; height: 62%; }
+    #ready-final { font-weight: 700; }
+    #ready-title { position: absolute; left: 60px; right: 60px; top: 1040px; text-align: center; letter-spacing: -0.045em; font-weight: 700; }
+    #ready-t1 { font-size: 96px; line-height: 1.05; }
+    #ready-t2 { font-size: 150px; line-height: 1; color: #0265E0; }
+    .w { display: inline-block; }
+    .ready-tag b { font-weight: inherit; }
+  </style>
+  <div id="root" data-scene="ready" data-composition-id="ready" data-width="1080" data-height="1920">
+    <div id="ready-world">
+      <svg id="ready-chart" viewBox="0 0 1080 1920" preserveAspectRatio="none">
+        <g transform="translate(0 802) scale(1 0.6)"><path d="M0 1640H1080M0 1360H1080M0 1080H1080M0 800H1080M0 520H1080" stroke="rgba(13,20,32,.06)" stroke-width="3"/>
+        <path class="ready-ln" d="M0 1760L180 1730L360 1720L540 1700L720 1680L900 1480L1080 1410" fill="none" stroke="rgba(251,188,4,.6)" stroke-width="12" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1"/>
+        <path class="ready-ln" d="M0 1660L180 1590L360 1430L540 1380L720 1470L900 1200L1080 1130" fill="none" stroke="rgba(0,182,150,.55)" stroke-width="12" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1"/>
+        <path class="ready-ln" d="M0 1450L180 1290L360 1340L540 1540L720 1180L900 1090L1080 880" fill="none" stroke="rgba(2,101,224,.5)" stroke-width="12" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1"/></g>
+      </svg>
+      <div id="ready-veil"></div>
+    </div>
+    <div id="ready-stage">
+      <div id="ready-faces">
+        <span class="ready-face"><img src="assets/students/student-1.webp" alt=""/><i class="ready-ok"></i></span>
+        <span class="ready-face"><img src="assets/students/student-4.webp" alt=""/><i class="ready-ok"></i></span>
+        <span class="ready-face"><img src="assets/students/student-7.webp" alt=""/><i class="ready-ok"></i></span>
+        <span class="ready-face"><img src="assets/students/student-2.webp" alt=""/><i class="ready-ok"></i></span>
+      </div>
+      <div id="ready-tags">
+        <span class="ready-tag"><i><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></i><b data-edit="ready.tag1">First test done</b></span>
+        <span class="ready-tag"><i><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></i><b data-edit="ready.tag2">Weak topic found</b></span>
+        <span class="ready-tag"><i><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></i><b data-edit="ready.tag3">Revision done</b></span>
+        <span class="ready-tag"><i><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></i><b data-edit="ready.tag4">Accuracy up</b></span>
+        <span class="ready-tag" id="ready-final"><i><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></i><b data-edit="ready.tag5">Exam Ready</b></span>
+      </div>
+      <div id="ready-title">
+        <p id="ready-t1" data-edit="ready.t1" data-fit="18" data-split><span class="w">Ovvoru</span> <span class="w">test-um</span></p>
+        <p id="ready-t2" data-edit="ready.t2" data-fit="11" data-split><span class="w">improvement</span></p>
+      </div>
+    </div>
+  </div>
+  <script>
+    NSPicks.apply("ready");
+    const tl = gsap.timeline({ paused: true });
+    // The world: three section scores climb across the whole page.
+    tl.fromTo(".ready-ln", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 2.6, stagger: 0.15, ease: "power2.inOut" }, 0);
+    tl.fromTo(".ready-face", { opacity: 0 }, { opacity: 1, duration: 0.18, stagger: 0.08, ease: "power2.out" }, 0.05);
+    tl.fromTo(".ready-face", { y: 60, scale: 0.8 }, { y: 0, scale: 1, duration: 0.55, stagger: 0.08, ease: "back.out(1.4)" }, 0.05);
+    // The site's progress tags tick off one after another.
+    tl.fromTo(".ready-tag", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.25, ease: "expo.out" }, 0.25);
+    tl.fromTo("#ready-final", { backgroundColor: "#FFFFFF", color: "#3D4756" }, { backgroundColor: "#00947C", color: "#FFFFFF", duration: 0.2, ease: "power2.out" }, 2.1);
+    tl.fromTo("#ready-final", { scale: 1 }, { scale: 1.12, duration: 0.45, ease: "back.out(1.4)" }, 2.1);
+    tl.fromTo("#ready-title .w", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067 }, 0.4);
+    // Whip sideways into the offer.
+    tl.to("#ready-stage", { x: -760, filter: "blur(16px)", duration: 0.22, ease: "power3.in" }, 2.83);
+    tl.to("#ready-world", { x: -400, duration: 0.22, ease: "power3.in" }, 2.83);
+    window.__timelines["ready"] = tl;
+  </script>
+</template>

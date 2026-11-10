@@ -1,0 +1,78 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0D1420; font-family: "Outfit", sans-serif; color: #FFFFFF; }
+    #offer-world { position: absolute; inset: 0; background: radial-gradient(90% 55% at 50% 32%, #263243, #0D1420 75%); }
+    #offer-cal { position: absolute; left: -120px; top: 700px; width: 1320px; height: 1100px; transform-origin: 50% 50%; }
+    #offer-warm { position: absolute; left: 90px; top: 160px; width: 900px; height: 700px; background: radial-gradient(closest-side, rgba(251,188,4,.22), rgba(251,188,4,0)); }
+    #offer-stage { position: absolute; inset: 0; }
+    #offer-kick { position: absolute; left: 60px; right: 60px; top: 262px; text-align: center; font-size: 48px; font-weight: 500; color: rgba(255,255,255,.78); }
+    #offer-price { position: absolute; left: 60px; right: 60px; top: 300px; text-align: center; font-size: 380px; line-height: 1; font-weight: 800; letter-spacing: -0.06em; color: #FBBC04; }
+    #offer-only { position: absolute; left: 60px; right: 60px; top: 690px; text-align: center; font-size: 96px; font-weight: 700; letter-spacing: -0.04em; }
+    #offer-card { position: absolute; left: 80px; right: 80px; top: 840px; background: rgba(38,50,67,.82); border: 2px solid rgba(255,255,255,.12); border-radius: 44px; padding: 36px 44px 40px; }
+    #offer-card h3 { font-size: 52px; font-weight: 700; letter-spacing: -0.02em; }
+    #offer-days { display: flex; gap: 14px; margin-top: 26px; }
+    .offer-d { flex: 1; height: 96px; border-radius: 22px; display: grid; place-items: center; font-size: 40px; font-weight: 600; background: rgba(255,255,255,.08); color: rgba(255,255,255,.55); }
+    #offer-btnwrap { position: absolute; left: 0; right: 0; top: 1160px; display: flex; justify-content: center; }
+    #offer-btn { display: inline-flex; align-items: center; gap: 22px; height: 124px; padding: 0 48px 0 56px; border-radius: 999px; background: #FFFFFF; color: #0D1420; font-size: 50px; font-weight: 600; box-shadow: 0 24px 50px -16px rgba(0,0,0,.5); }
+    #offer-btn svg { width: 46px; height: 46px; }
+    #offer-btntext { display: inline-flex; align-items: center; gap: 22px; }
+    #offer-btntext b { font-weight: inherit; }
+  </style>
+  <div id="root" data-scene="offer" data-composition-id="offer" data-width="1080" data-height="1920">
+    <div id="offer-world">
+      <svg id="offer-cal" viewBox="0 0 1320 1100">
+        <g transform="rotate(-8 660 550)">
+          <g fill="rgba(255,255,255,0.05)">
+            <rect x="0" y="0" width="160" height="160" rx="34"/><rect x="190" y="0" width="160" height="160" rx="34"/><rect x="380" y="0" width="160" height="160" rx="34"/><rect x="570" y="0" width="160" height="160" rx="34"/><rect x="760" y="0" width="160" height="160" rx="34"/><rect x="950" y="0" width="160" height="160" rx="34"/><rect x="1140" y="0" width="160" height="160" rx="34"/>
+            <rect x="0" y="190" width="160" height="160" rx="34"/><rect x="190" y="190" width="160" height="160" rx="34"/><rect x="380" y="190" width="160" height="160" rx="34"/><rect x="570" y="190" width="160" height="160" rx="34"/><rect x="760" y="190" width="160" height="160" rx="34"/><rect x="950" y="190" width="160" height="160" rx="34"/><rect x="1140" y="190" width="160" height="160" rx="34"/>
+            <rect x="0" y="380" width="160" height="160" rx="34"/><rect x="190" y="380" width="160" height="160" rx="34"/><rect x="380" y="380" width="160" height="160" rx="34"/><rect x="570" y="380" width="160" height="160" rx="34"/><rect x="760" y="380" width="160" height="160" rx="34"/><rect x="950" y="380" width="160" height="160" rx="34"/><rect x="1140" y="380" width="160" height="160" rx="34"/>
+            <rect x="0" y="570" width="160" height="160" rx="34"/><rect x="190" y="570" width="160" height="160" rx="34"/><rect x="380" y="570" width="160" height="160" rx="34"/><rect x="570" y="570" width="160" height="160" rx="34"/><rect x="760" y="570" width="160" height="160" rx="34"/><rect x="950" y="570" width="160" height="160" rx="34"/><rect x="1140" y="570" width="160" height="160" rx="34"/>
+            <rect x="0" y="760" width="160" height="160" rx="34"/><rect x="190" y="760" width="160" height="160" rx="34"/><rect x="380" y="760" width="160" height="160" rx="34"/><rect x="570" y="760" width="160" height="160" rx="34"/><rect x="760" y="760" width="160" height="160" rx="34"/><rect x="950" y="760" width="160" height="160" rx="34"/><rect x="1140" y="760" width="160" height="160" rx="34"/>
+          </g>
+          <g fill="rgba(251,188,4,0.16)">
+            <rect class="offer-lit" x="0" y="0" width="160" height="160" rx="34"/><rect class="offer-lit" x="190" y="0" width="160" height="160" rx="34"/><rect class="offer-lit" x="380" y="0" width="160" height="160" rx="34"/><rect class="offer-lit" x="570" y="0" width="160" height="160" rx="34"/><rect class="offer-lit" x="760" y="0" width="160" height="160" rx="34"/><rect class="offer-lit" x="950" y="0" width="160" height="160" rx="34"/><rect class="offer-lit" x="1140" y="0" width="160" height="160" rx="34"/>
+            <rect class="offer-lit" x="0" y="190" width="160" height="160" rx="34"/><rect class="offer-lit" x="190" y="190" width="160" height="160" rx="34"/><rect class="offer-lit" x="380" y="190" width="160" height="160" rx="34"/><rect class="offer-lit" x="570" y="190" width="160" height="160" rx="34"/><rect class="offer-lit" x="760" y="190" width="160" height="160" rx="34"/><rect class="offer-lit" x="950" y="190" width="160" height="160" rx="34"/><rect class="offer-lit" x="1140" y="190" width="160" height="160" rx="34"/>
+            <rect class="offer-lit" x="0" y="380" width="160" height="160" rx="34"/><rect class="offer-lit" x="190" y="380" width="160" height="160" rx="34"/><rect class="offer-lit" x="380" y="380" width="160" height="160" rx="34"/><rect class="offer-lit" x="570" y="380" width="160" height="160" rx="34"/>
+          </g>
+        </g>
+      </svg>
+      <div id="offer-warm"></div>
+    </div>
+    <div id="offer-stage">
+      <p id="offer-kick" data-edit="offer.kick" data-fit="30">Today’s Daily Challenge</p>
+      <p id="offer-price" data-edit="offer.price" data-fit="3">₹9</p>
+      <p id="offer-only" data-edit="offer.only" data-fit="16">mattum!</p>
+      <div id="offer-card">
+        <h3 data-edit="offer.card" data-fit="24">A timed test every day</h3>
+        <div id="offer-days"><i class="offer-d">M</i><i class="offer-d">T</i><i class="offer-d">W</i><i class="offer-d">T</i><i class="offer-d">F</i><i class="offer-d">S</i><i class="offer-d">S</i></div>
+      </div>
+    </div>
+    <div id="offer-btnwrap">
+      <span id="offer-btn"><span id="offer-btntext"><b data-edit="offer.button" data-fit="16">Try it for ₹9</b><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="#0D1420" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+    </div>
+  </div>
+  <script>
+    NSPicks.apply("offer");
+    const tl = gsap.timeline({ paused: true });
+    // Whip in from the right, matching the outgoing whip.
+    tl.fromTo("#offer-stage", { x: 760, filter: "blur(16px)" }, { x: 0, filter: "blur(0px)", duration: 0.3, ease: "expo.out" }, 0);
+    tl.fromTo("#offer-world", { x: 400 }, { x: 0, duration: 0.4, ease: "expo.out" }, 0);
+    tl.fromTo("#offer-cal", { y: 0 }, { y: -90, duration: 3.3, ease: "none" }, 0);
+    // A streak builds behind: days light up one by one.
+    tl.fromTo(".offer-lit", { opacity: 0 }, { opacity: 1, duration: 0.12, stagger: 0.1, ease: "power2.out" }, 0.3);
+    // The price lands heavy.
+    tl.fromTo("#offer-price", { opacity: 0, scale: 1.35, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, 0.4);
+    tl.fromTo("#offer-only", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.13 }, 0.8);
+    tl.fromTo("#offer-card", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, 1.3);
+    tl.fromTo(".offer-d", { backgroundColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.55)" }, { backgroundColor: "#FBBC04", color: "#0D1420", duration: 0.12, stagger: 0.1, ease: "power2.out" }, 1.75);
+    // The site's button rises, then is pressed.
+    tl.fromTo("#offer-btn", { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, 1.6);
+    tl.to("#offer-btn", { scale: 0.94, duration: 0.1, ease: "power2.in" }, 2.45);
+    tl.to("#offer-btn", { scale: 1, duration: 0.2, ease: "power2.out" }, 2.55);
+    // Zoom through the button: its white is the end card.
+    tl.to("#offer-stage", { opacity: 0, filter: "blur(15px)", duration: 0.25, ease: "power2.in" }, 2.92);
+    tl.to("#offer-btntext", { opacity: 0, duration: 0.1, ease: "power2.in" }, 2.92);
+    tl.to("#offer-btn", { y: -250, scale: 16, duration: 0.36, ease: "power3.in" }, 2.92);
+    window.__timelines["offer"] = tl;
+  </script>
+</template>
