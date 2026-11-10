@@ -1,5 +1,5 @@
 // Builds the Studio page (studio/dist/index.html) from every style and the kit, ready to publish as a Claude artifact.
-//   node scripts/build-studio.mjs
+//   node scripts/build-studio.mjs [styleId ...]   (no ids: every style)
 // For each style in styles/ (not _base): its own scene files (so the preview runs exactly what renders), its
 // style.json (+ the shared facts), anything its root index.html loads from assets/ (a stylesheet, a helper
 // script), and every asset its scenes load. Assets are published once by content (a/<hash>-<name>), large
@@ -18,6 +18,7 @@ const rel = (p) => path.relative(ROOT, p).split(path.sep).join("/");
 const json = (v) => JSON.stringify(v).replace(/<\//g, "<\\/"); // safe inside <script>
 const ASSET_RE = /assets\/[\w./-]+?\.(?:png|webp|jpe?g|gif|svg|ttf|otf|woff2?|mp3|wav|m4a)/g;
 const BIG = 250 * 1024; // images above this are published at preview size
+const ONLY = process.argv.slice(2); // build with only these styles (e.g. to publish the finished ones)
 
 for (const d of ["kit", "a"]) { fs.rmSync(path.join(DIST, d), { recursive: true, force: true }); fs.mkdirSync(path.join(DIST, d), { recursive: true }); }
 const files = {};
@@ -90,7 +91,8 @@ function loadStyle(id) {
 
 const ids = fs.readdirSync(STYLES_DIR, { withFileTypes: true })
   .filter((e) => e.isDirectory() && !/^[._]/.test(e.name) && fs.existsSync(path.join(STYLES_DIR, e.name, "style.json")))
-  .map((e) => e.name);
+  .map((e) => e.name)
+  .filter((id) => !ONLY.length || ONLY.includes(id));
 const styles = [];
 for (const id of ids) {
   try { styles.push(loadStyle(id)); }
