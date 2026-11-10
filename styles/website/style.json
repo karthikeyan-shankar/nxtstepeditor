@@ -1,106 +1,413 @@
 {
-  "id": "website",
-  "name": "Website style",
-  "by": "the founder's first ad (9 Nov 2026), made editable",
-  "about": "The website's own look: white, blue and night grounds, big Outfit headlines in Tanglish with one highlighted word, real site cards, the drawn students, and an end card with the logo and the address. Nine shots, 28.6 s.",
-  "voice": "Short Tanglish lines (Tamil words in English letters, e.g. 'prep-ah?', 'Improve aagalaya?', 'Ellam easy-ah analyse'), a few English product words (Mock Test, AI report, Practice). Tamil script only on the end card.",
-  "shots": [
-    { "id": "hook", "title": "Hook", "job": "Stop the scroll and name who this is for. Three stacked headline lines; aspirants pop in below.",
-      "fields": [
-        { "key": "hook.l1", "label": "Line 1 (blue)", "default": "TNPSC", "fit": 9 },
-        { "key": "hook.l2", "label": "Line 2 (blue)", "default": "Group 4", "fit": 9 },
-        { "key": "hook.l3", "label": "Line 3 (the question)", "default": "prep-ah?", "fit": 9 }
-      ],
-      "picks": [
-        { "key": "hook.crowd", "label": "Who appears under the headline", "choices": [
-          { "value": "grey", "label": "Grey aspirants", "star": true },
-          { "value": "students", "label": "The drawn students" },
-          { "value": "none", "label": "Nobody" } ] }
-      ] },
-    { "id": "stuck", "title": "The problem", "job": "The aspirant is stuck: chips for the bad habits, a flat score line, the painful question in big amber.",
-      "fields": [
-        { "key": "stuck.chip1", "label": "Chip 1", "default": "Guessing", "fit": 14 },
-        { "key": "stuck.chip2", "label": "Chip 2", "default": "Unprepared", "fit": 14 },
-        { "key": "stuck.l1", "label": "Lead-in line", "default": "Marks innum", "fit": 15 },
-        { "key": "stuck.big1", "label": "Big line 1", "default": "Improve", "fit": 10 },
-        { "key": "stuck.big2", "label": "Big line 2", "default": "aagalaya?", "fit": 10 },
-        { "key": "stuck.cap", "label": "Caption under the chart", "default": "Months of study. Same score.", "fit": 34 }
-      ],
-      "picks": [
-        { "key": "stuck.accent", "label": "Colour of the big question", "choices": [
-          { "value": "amber", "label": "Amber", "star": true },
-          { "value": "red", "label": "Red" } ] }
-      ] },
-    { "id": "practice", "title": "The shift", "job": "The old belief in grey steps back; one big blue word with an underline replaces it; the Mock Test icon fills in.",
-      "fields": [
-        { "key": "practice.a1", "label": "Grey line, part 1", "default": "Padippu mattum", "fit": 16 },
-        { "key": "practice.a2", "label": "Grey line, part 2", "default": "podhaadhu.", "fit": 16 },
-        { "key": "practice.word", "label": "The big blue word", "default": "Practice", "fit": 8 },
-        { "key": "practice.must", "label": "Line under it", "default": "mukkiyam!", "fit": 10 }
-      ],
-      "picks": [] },
-    { "id": "reveal", "title": "Brand reveal", "job": "Blue ribbons and the logo on a white card. No words: the voice carries it.",
-      "fields": [], "picks": [] },
-    { "id": "mock", "title": "Real exam pattern", "job": "The product: a question palette filling in with a 3-hour clock, and the test list.",
-      "fields": [
-        { "key": "mock.t1", "label": "Title line 1 (blue)", "default": "Real exam", "fit": 11 },
-        { "key": "mock.t2", "label": "Title line 2", "default": "pattern", "fit": 11 },
-        { "key": "mock.r1name", "label": "Row 1 name", "default": "Group 4 Full Mock", "fit": 20 },
-        { "key": "mock.r1sub", "label": "Row 1 detail", "default": "200 questions · Tamil & English", "fit": 34 },
-        { "key": "mock.r1time", "label": "Row 1 time", "default": "3 h", "fit": 6 },
-        { "key": "mock.r2name", "label": "Row 2 name", "default": "Mini Mock", "fit": 20 },
-        { "key": "mock.r2sub", "label": "Row 2 detail", "default": "20 questions", "fit": 34 },
-        { "key": "mock.r2time", "label": "Row 2 time", "default": "30 min", "fit": 6 }
-      ],
-      "picks": [] },
-    { "id": "report", "title": "AI report", "job": "The example AI report: section scores count up, the weakest topic lands in red, a one-line verdict below. The scores are the site's example figures and stay labelled 'Example report'.",
-      "fields": [
-        { "key": "report.tag1", "label": "Tag 1", "default": "Score", "fit": 12 },
-        { "key": "report.tag2", "label": "Tag 2", "default": "Mistakes", "fit": 12 },
-        { "key": "report.tag3", "label": "Tag 3 (red)", "default": "Weak areas", "fit": 12 },
-        { "key": "report.weak", "label": "Weakest topic", "default": "Indian Polity", "fit": 16 },
-        { "key": "report.t1", "label": "Verdict line 1 (*word* = amber)", "default": "Ellam *easy-ah*", "fit": 17 },
-        { "key": "report.t2", "label": "Verdict line 2", "default": "analyse", "fit": 17 }
-      ],
-      "picks": [] },
-    { "id": "ready", "title": "Progress", "job": "Four students tick off steps to Exam Ready while three score lines climb.",
-      "fields": [
-        { "key": "ready.tag1", "label": "Step 1", "default": "First test done", "fit": 20 },
-        { "key": "ready.tag2", "label": "Step 2", "default": "Weak topic found", "fit": 20 },
-        { "key": "ready.tag3", "label": "Step 3", "default": "Revision done", "fit": 20 },
-        { "key": "ready.tag4", "label": "Step 4", "default": "Accuracy up", "fit": 20 },
-        { "key": "ready.tag5", "label": "Step 5 (green)", "default": "Exam Ready", "fit": 20 },
-        { "key": "ready.t1", "label": "Title line 1", "default": "Ovvoru test-um", "fit": 18 },
-        { "key": "ready.t2", "label": "Title line 2 (blue)", "default": "improvement", "fit": 11 }
-      ],
-      "picks": [] },
-    { "id": "offer", "title": "Offer", "job": "Today's Daily Challenge: the price lands in amber, a week of days lights up, the button is pressed.",
-      "fields": [
-        { "key": "offer.kick", "label": "Kicker", "default": "Today’s Daily Challenge", "fit": 30 },
-        { "key": "offer.price", "label": "Price", "default": "₹9", "fit": 3, "hint": "₹9 is a sale price (normal ₹15). Check the live price at nextstep4u.in before approving." },
-        { "key": "offer.only", "label": "Under the price", "default": "mattum!", "fit": 16 },
-        { "key": "offer.card", "label": "Card heading", "default": "A timed test every day", "fit": 24 },
-        { "key": "offer.button", "label": "Button", "default": "Try it for ₹9", "fit": 16 }
-      ],
-      "picks": [] },
-    { "id": "end", "title": "End card", "job": "The logo, the address, a Tamil tagline and the button, with faces and subject chips orbiting.",
-      "fields": [
-        { "key": "end.url", "label": "Address", "default": "nextstep4u.in", "fit": 16 },
-        { "key": "end.tag1", "label": "Tagline line 1 (Tamil)", "default": "உங்க வெற்றிக்கான", "fit": 18 },
-        { "key": "end.tag2", "label": "Tagline line 2 (blue)", "default": "அடுத்த step", "fit": 18 },
-        { "key": "end.button", "label": "Button", "default": "Try it for ₹9", "fit": 16 }
-      ],
-      "picks": [
-        { "key": "end.orbit", "label": "Orbit of faces and chips", "choices": [
-          { "value": "on", "label": "On", "star": true },
-          { "value": "off", "label": "Off (logo, address, button)" } ] }
-      ] }
-  ],
-  "facts": [
-    "Nextstep4u: TNPSC Group 4 mock tests in Tamil and English, with an AI report after every test (marks by section, weak topics).",
-    "Group 4 paper: General Tamil, General Studies and Aptitude; 200 questions, 300 marks, 3 hours.",
-    "Daily Challenge: 25 questions in 23 minutes, one scored attempt, the full AI report; nothing renews; each day's closes at 11:59 PM IST. ₹9 is a sale price; the normal price is ₹15.",
-    "Website: nextstep4u.in (the ad's landing page is nextstep4u.in/try.html). The Android app is not on Google Play yet: never say 'download the app'.",
-    "Never say 'free'. Never promise a job, a rank, marks or a pass. No invented numbers, testimonials, buyer counts or countdowns. Example figures stay labelled as examples."
-  ]
+ "id": "website",
+ "name": "Website style",
+ "by": "the founder's first ad (9 Nov 2026), made editable",
+ "about": "The website's own look: white, blue and night grounds, big Outfit headlines in Tanglish with one highlighted word, real site cards, the drawn students, and an end card with the logo and the address. Nine shots, 28.6 s.",
+ "voice": "Short Tanglish lines (Tamil words in English letters, e.g. 'prep-ah?', 'Improve aagalaya?', 'Ellam easy-ah analyse'), a few English product words (Mock Test, AI report, Practice). Tamil script only on the end card.",
+ "music": "assets/music/jersey_bgm.mp3",
+ "poster": 15.2,
+ "inspired": [
+  "the founder’s storyboard (9 Nov 2026)"
+ ],
+ "goodFor": [
+  "The whole story in one ad: stuck → practice → mock → AI report → ready",
+  "Launch-week ads in the founder’s own look",
+  "An ad with a price beat (the offer shot), when a sale is live"
+ ],
+ "kit": [
+  "website/sample-report",
+  "elements/sample-report-card",
+  "website/index"
+ ],
+ "shots": [
+  {
+   "id": "hook",
+   "title": "Hook",
+   "job": "Stop the scroll and name who this is for. Three stacked headline lines; aspirants pop in below.",
+   "fields": [
+    {
+     "key": "hook.l1",
+     "label": "Line 1 (blue)",
+     "default": "TNPSC",
+     "fit": 9
+    },
+    {
+     "key": "hook.l2",
+     "label": "Line 2 (blue)",
+     "default": "Group 4",
+     "fit": 9
+    },
+    {
+     "key": "hook.l3",
+     "label": "Line 3 (the question)",
+     "default": "prep-ah?",
+     "fit": 9
+    }
+   ],
+   "picks": [
+    {
+     "key": "hook.crowd",
+     "label": "Who appears under the headline",
+     "choices": [
+      {
+       "value": "grey",
+       "label": "Grey aspirants",
+       "star": true
+      },
+      {
+       "value": "students",
+       "label": "The drawn students"
+      },
+      {
+       "value": "none",
+       "label": "Nobody"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stuck",
+   "title": "The problem",
+   "job": "The aspirant is stuck: chips for the bad habits, a flat score line, the painful question in big amber.",
+   "fields": [
+    {
+     "key": "stuck.chip1",
+     "label": "Chip 1",
+     "default": "Guessing",
+     "fit": 14
+    },
+    {
+     "key": "stuck.chip2",
+     "label": "Chip 2",
+     "default": "Unprepared",
+     "fit": 14
+    },
+    {
+     "key": "stuck.l1",
+     "label": "Lead-in line",
+     "default": "Marks innum",
+     "fit": 15
+    },
+    {
+     "key": "stuck.big1",
+     "label": "Big line 1",
+     "default": "Improve",
+     "fit": 10
+    },
+    {
+     "key": "stuck.big2",
+     "label": "Big line 2",
+     "default": "aagalaya?",
+     "fit": 10
+    },
+    {
+     "key": "stuck.cap",
+     "label": "Caption under the chart",
+     "default": "Months of study. Same score.",
+     "fit": 34
+    }
+   ],
+   "picks": [
+    {
+     "key": "stuck.accent",
+     "label": "Colour of the big question",
+     "choices": [
+      {
+       "value": "amber",
+       "label": "Amber",
+       "star": true
+      },
+      {
+       "value": "red",
+       "label": "Red"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "practice",
+   "title": "The shift",
+   "job": "The old belief in grey steps back; one big blue word with an underline replaces it; the Mock Test icon fills in.",
+   "fields": [
+    {
+     "key": "practice.a1",
+     "label": "Grey line, part 1",
+     "default": "Padippu mattum",
+     "fit": 16
+    },
+    {
+     "key": "practice.a2",
+     "label": "Grey line, part 2",
+     "default": "podhaadhu.",
+     "fit": 16
+    },
+    {
+     "key": "practice.word",
+     "label": "The big blue word",
+     "default": "Practice",
+     "fit": 8
+    },
+    {
+     "key": "practice.must",
+     "label": "Line under it",
+     "default": "mukkiyam!",
+     "fit": 10
+    }
+   ],
+   "picks": []
+  },
+  {
+   "id": "reveal",
+   "title": "Brand reveal",
+   "job": "Blue ribbons and the logo on a white card. No words: the voice carries it.",
+   "fields": [],
+   "picks": []
+  },
+  {
+   "id": "mock",
+   "title": "Real exam pattern",
+   "job": "The product: a question palette filling in with a 3-hour clock, and the test list.",
+   "fields": [
+    {
+     "key": "mock.t1",
+     "label": "Title line 1 (blue)",
+     "default": "Real exam",
+     "fit": 11
+    },
+    {
+     "key": "mock.t2",
+     "label": "Title line 2",
+     "default": "pattern",
+     "fit": 11
+    },
+    {
+     "key": "mock.r1name",
+     "label": "Row 1 name",
+     "default": "Group 4 Full Mock",
+     "fit": 20
+    },
+    {
+     "key": "mock.r1sub",
+     "label": "Row 1 detail",
+     "default": "200 questions · Tamil & English",
+     "fit": 34
+    },
+    {
+     "key": "mock.r1time",
+     "label": "Row 1 time",
+     "default": "3 h",
+     "fit": 6
+    },
+    {
+     "key": "mock.r2name",
+     "label": "Row 2 name",
+     "default": "Mini Mock",
+     "fit": 20
+    },
+    {
+     "key": "mock.r2sub",
+     "label": "Row 2 detail",
+     "default": "20 questions",
+     "fit": 34
+    },
+    {
+     "key": "mock.r2time",
+     "label": "Row 2 time",
+     "default": "30 min",
+     "fit": 6
+    }
+   ],
+   "picks": []
+  },
+  {
+   "id": "report",
+   "title": "AI report",
+   "job": "The example AI report: section scores count up, the weakest topic lands in red, a one-line verdict below. The scores are the site's example figures and stay labelled 'Example report'.",
+   "fields": [
+    {
+     "key": "report.tag1",
+     "label": "Tag 1",
+     "default": "Score",
+     "fit": 12
+    },
+    {
+     "key": "report.tag2",
+     "label": "Tag 2",
+     "default": "Mistakes",
+     "fit": 12
+    },
+    {
+     "key": "report.tag3",
+     "label": "Tag 3 (red)",
+     "default": "Weak areas",
+     "fit": 12
+    },
+    {
+     "key": "report.weak",
+     "label": "Weakest topic",
+     "default": "Indian Polity",
+     "fit": 16
+    },
+    {
+     "key": "report.t1",
+     "label": "Verdict line 1 (*word* = amber)",
+     "default": "Ellam *easy-ah*",
+     "fit": 17
+    },
+    {
+     "key": "report.t2",
+     "label": "Verdict line 2",
+     "default": "analyse",
+     "fit": 17
+    }
+   ],
+   "picks": []
+  },
+  {
+   "id": "ready",
+   "title": "Progress",
+   "job": "Four students tick off steps to Exam Ready while three score lines climb.",
+   "fields": [
+    {
+     "key": "ready.tag1",
+     "label": "Step 1",
+     "default": "First test done",
+     "fit": 20
+    },
+    {
+     "key": "ready.tag2",
+     "label": "Step 2",
+     "default": "Weak topic found",
+     "fit": 20
+    },
+    {
+     "key": "ready.tag3",
+     "label": "Step 3",
+     "default": "Revision done",
+     "fit": 20
+    },
+    {
+     "key": "ready.tag4",
+     "label": "Step 4",
+     "default": "Accuracy up",
+     "fit": 20
+    },
+    {
+     "key": "ready.tag5",
+     "label": "Step 5 (green)",
+     "default": "Exam Ready",
+     "fit": 20
+    },
+    {
+     "key": "ready.t1",
+     "label": "Title line 1",
+     "default": "Ovvoru test-um",
+     "fit": 18
+    },
+    {
+     "key": "ready.t2",
+     "label": "Title line 2 (blue)",
+     "default": "improvement",
+     "fit": 11
+    }
+   ],
+   "picks": []
+  },
+  {
+   "id": "offer",
+   "title": "Offer",
+   "job": "Today's Daily Challenge: the price lands in amber, a week of days lights up, the button is pressed.",
+   "fields": [
+    {
+     "key": "offer.kick",
+     "label": "Kicker",
+     "default": "Today’s Daily Challenge",
+     "fit": 30
+    },
+    {
+     "key": "offer.price",
+     "label": "Price",
+     "default": "₹9",
+     "fit": 3,
+     "hint": "₹9 is a sale price (normal ₹15). Check the live price at nextstep4u.in before approving."
+    },
+    {
+     "key": "offer.only",
+     "label": "Under the price",
+     "default": "mattum!",
+     "fit": 16
+    },
+    {
+     "key": "offer.card",
+     "label": "Card heading",
+     "default": "A timed test every day",
+     "fit": 24
+    },
+    {
+     "key": "offer.button",
+     "label": "Button",
+     "default": "Try it for ₹9",
+     "fit": 16
+    }
+   ],
+   "picks": []
+  },
+  {
+   "id": "end",
+   "title": "End card",
+   "job": "The logo, the address, a Tamil tagline and the button, with faces and subject chips orbiting.",
+   "fields": [
+    {
+     "key": "end.url",
+     "label": "Address",
+     "default": "nextstep4u.in",
+     "fit": 16
+    },
+    {
+     "key": "end.tag1",
+     "label": "Tagline line 1 (Tamil)",
+     "default": "உங்க வெற்றிக்கான",
+     "fit": 18
+    },
+    {
+     "key": "end.tag2",
+     "label": "Tagline line 2 (blue)",
+     "default": "அடுத்த step",
+     "fit": 18
+    },
+    {
+     "key": "end.button",
+     "label": "Button",
+     "default": "Try it for ₹9",
+     "fit": 16
+    }
+   ],
+   "picks": [
+    {
+     "key": "end.orbit",
+     "label": "Orbit of faces and chips",
+     "choices": [
+      {
+       "value": "on",
+       "label": "On",
+       "star": true
+      },
+      {
+       "value": "off",
+       "label": "Off (logo, address, button)"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "facts": [
+  "Nextstep4u: TNPSC Group 4 mock tests in Tamil and English, with an AI report after every test (marks by section, weak topics).",
+  "Group 4 paper: General Tamil, General Studies and Aptitude; 200 questions, 300 marks, 3 hours.",
+  "Daily Challenge: 25 questions in 23 minutes, one scored attempt, the full AI report; nothing renews; each day's closes at 11:59 PM IST. ₹9 is a sale price; the normal price is ₹15.",
+  "Website: nextstep4u.in (the ad's landing page is nextstep4u.in/try.html). The Android app is not on Google Play yet: never say 'download the app'.",
+  "Never say 'free'. Never promise a job, a rank, marks or a pass. No invented numbers, testimonials, buyer counts or countdowns. Example figures stay labelled as examples."
+ ]
 }

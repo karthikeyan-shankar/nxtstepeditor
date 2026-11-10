@@ -1,6 +1,7 @@
 // Applies a storyboard's picks to a scene, the same way in the Studio preview and in the HyperFrames render.
 // A board is { text: { "hook.l3": "prep-ah?" , ... }, pick: { "hook.crowd": "students", ... } }.
-// The scene's own HTML holds the defaults; a board only overrides what it names.
+// The scene's own HTML holds the defaults; a board only overrides what it names. A default written as plain
+// text (no child elements) goes through the same splitting and fitting, so "*word*" works in defaults too.
 //   data-edit="scene.key"        text that can be changed
 //   data-split                   rebuild as one <span class="w"> per word (for word-by-word animation)
 //   data-wclass="x"              extra class on every word span
@@ -43,10 +44,13 @@
     var scope = root || document;
     scope.querySelectorAll('[data-edit^="' + scene + '."]').forEach(function (el) {
       var key = el.getAttribute("data-edit");
-      if (!Object.prototype.hasOwnProperty.call(text, key)) return;
-      if (el.hasAttribute("data-split")) words(el, text[key]);
-      else el.textContent = text[key];
-      fit(el, text[key]);
+      var t;
+      if (Object.prototype.hasOwnProperty.call(text, key)) t = text[key];
+      else if (!el.children.length) t = el.textContent; // the default, written as plain text in the scene
+      else return; // the default, already built by hand in the scene
+      if (el.hasAttribute("data-split")) words(el, t);
+      else el.textContent = String(t).replace(/\*/g, "");
+      fit(el, t);
     });
     if (root) Object.keys(pick).forEach(function (key) {
       if (key.indexOf(scene + ".") === 0) root.setAttribute("data-" + key.slice(scene.length + 1), pick[key]);

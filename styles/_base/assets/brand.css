@@ -1,0 +1,42 @@
+/* Nextstep4u brand, shared by every style. Do not edit per style: the Studio loads ONE copy of this file for
+   all styles. Style-specific CSS belongs in the style's scenes. Colours are the website's own tokens
+   (frontend/assets/app.css); nothing outside this palette goes on screen. */
+@font-face { font-family: "Outfit"; src: url("fonts/Outfit.ttf") format("truetype"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "Meera Inimai"; src: url("fonts/MeeraInimai.ttf") format("truetype"); font-weight: 400; font-display: block; }
+
+:root {
+  --ns-blue: #0265E0; --ns-blue-deep: #0150B4; --ns-blue-bg: #EBF3FE; --ns-blue-line: #C5DAF8; --ns-blue-tint: #F7FBFF;
+  --ns-green: #00B696; --ns-green-ink: #00947C; --ns-green-deep: #00695C; --ns-green-bg: #E4F7F3;
+  --ns-gold: #FBBC04; --ns-gold-ink: #B8860B; --ns-gold-deep: #7A5A00; --ns-gold-bg: #FFF7E0;
+  --ns-red: #D93843; --ns-red-bg: #FDECED; --ns-pink: #E0287A; --ns-pink-bg: #FDE8F1;
+  --ns-ink: #0D1420; --ns-ink-2: #3D4756; --ns-ink-3: #5A6675; --ns-ink-4: #9AA4B2;
+  --ns-line: #E4E8EE; --ns-chip: #F2F5F9; --ns-shell: #F6F8FB; --ns-white: #FFFFFF;
+  --ns-night: #0D1420; --ns-night-2: #171F2C; --ns-night-3: #263243;
+  --ns-latin: "Outfit", "Meera Inimai", sans-serif;
+  --ns-tamil: "Meera Inimai", "Outfit", sans-serif;
+}
+
+/* Tamil script lines: Meera Inimai, a little more line height than Latin needs. */
+.ns-ta { font-family: var(--ns-tamil); line-height: 1.32; }
+
+/* A generic phone (no maker's shape or logo). Size it with width/height on the element; the screen fills it.
+   <div class="ns-phone" style="width:640px;height:1300px"><img class="ns-screen" src="assets/kit/home.jpg"></div> */
+.ns-phone { position: absolute; border-radius: 92px; background: var(--ns-night); padding: 20px;
+  box-shadow: 0 60px 120px -40px rgba(13, 20, 32, .55), inset 0 0 0 3px #263243; }
+.ns-phone::after { content: ""; position: absolute; left: 50%; top: 38px; width: 120px; height: 34px; margin-left: -60px;
+  border-radius: 20px; background: var(--ns-night); z-index: 3; }
+.ns-phone > .ns-screen, .ns-phone > .ns-view { position: relative; display: block; width: 100%; height: 100%;
+  border-radius: 74px; overflow: hidden; background: var(--ns-white); }
+.ns-phone > img.ns-screen { object-fit: cover; object-position: top center; }
+
+/* "Example report" style label: every illustrative number on screen carries one. */
+.ns-example { display: inline-flex; align-items: center; gap: 12px; padding: 12px 26px; border-radius: 999px;
+  background: var(--ns-green-bg); color: var(--ns-green-ink); font: 700 30px/1 var(--ns-latin); letter-spacing: .08em; text-transform: uppercase; }
+
+/* The address, as a pill. */
+.ns-url { display: inline-flex; align-items: center; gap: 18px; padding: 26px 48px; border-radius: 999px;
+  background: var(--ns-blue); color: #FFFFFF; font: 700 58px/1 var(--ns-latin); letter-spacing: -.01em;
+  box-shadow: 0 24px 50px -20px rgba(2, 101, 224, .7); }
+
+/* Split lines: picks.js wraps each word in .w; *starred* words also get the class in data-hl. */
+.w { display: inline-block; }

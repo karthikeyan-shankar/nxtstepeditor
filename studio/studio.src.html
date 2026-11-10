@@ -3,6 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400..800&family=Meera+Inimai&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style id="brand-css">/*BRAND_CSS*/</style>
 <style>
 /* Layout: a working studio. Sticky bar; Script, Storyboard and Kit as tabs; on the storyboard a 9:16 player
    on the left and the render plan plus the picks on the right, stacking on a phone. Product palette only. */
@@ -133,6 +134,22 @@ input[type=text]:focus, textarea:focus { border-color: var(--accent); outline: n
 .pending { margin: 0; padding-left: 18px; color: var(--ink-3); columns: 2 180px; }
 .lightbox { position: fixed; inset: 0; z-index: 20; background: rgba(13,20,32,.82); display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
 .lightbox img { max-height: 92vh; max-width: 100%; border-radius: 12px; }
+
+/* the style gallery (step 1) */
+.gallery-sec { margin-top: 26px; display: grid; gap: 10px; }
+.gallery-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 14px; }
+.gallery-filter { display: flex; flex-wrap: wrap; gap: 8px; }
+.gallery { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); }
+.scard { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 14px; padding: 12px; align-items: start; }
+.scard[aria-current="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow); }
+.scard .poster { width: 112px; aspect-ratio: 9 / 16; border-radius: 12px; object-fit: cover; background: linear-gradient(160deg, #0150B4, #0265E0 55%, #00B696); display: grid; place-items: center; color: #FFFFFF; font-family: var(--display); font-weight: 750; font-size: 28px; overflow: hidden; }
+.scard .body { display: grid; gap: 6px; min-width: 0; }
+.scard h3 { margin: 0; font-family: var(--display); font-size: 17px; font-weight: 720; letter-spacing: -.01em; }
+.scard .meta { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+.scard p { margin: 0; font-size: 13.5px; color: var(--ink-2); }
+.scard ul { margin: 0; padding-left: 18px; font-size: 13px; color: var(--ink-3); display: grid; gap: 2px; }
+.scard .row { margin-top: 2px; }
+.scard .btn { padding: 6px 12px; font-size: 13px; }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
 </style>
 
@@ -186,6 +203,14 @@ input[type=text]:focus, textarea:focus { border-color: var(--accent); outline: n
         </ol>
       </div>
     </div>
+    <div class="gallery-sec">
+      <div class="gallery-head">
+        <h2>Choose a style</h2>
+        <span class="muted" id="style-count"></span>
+      </div>
+      <p class="lede" style="margin:0">Every style uses the same brand, the app's real screens and the same close. The script decides the words; the style decides how they move. Pick one, then draft the storyboard.</p>
+      <div class="gallery" id="gallery"></div>
+    </div>
   </section>
 
   <!-- 2 · Storyboard -->
@@ -207,12 +232,17 @@ input[type=text]:focus, textarea:focus { border-color: var(--accent); outline: n
         </div>
       </div>
       <div class="side">
+        <div class="panel approve" id="preview-bar" hidden>
+          <h2 style="font-size:19px" id="preview-title">Previewing a style</h2>
+          <div class="note">This is the style with its own sample words. Your ad keeps its style until you choose this one; your lines and picks come along where the shots match.</div>
+          <div class="row"><button class="btn primary" id="preview-use">Use this style for this ad</button><button class="btn" id="preview-back">Back to this ad</button></div>
+        </div>
         <div class="plan" aria-label="Render plan">
           <div class="plan-head"><span id="plan-title">Storyboard</span><span id="plan-style"></span></div>
           <div id="plan-lines"></div>
         </div>
         <div class="shots" id="shots"></div>
-        <div class="panel approve">
+        <div class="panel approve" id="approve-panel">
           <h2 style="font-size:19px">Approve</h2>
           <div id="approve-note" class="note">When every shot reads right, approve the storyboard. Claude then builds the video from it.</div>
           <div class="row"><button class="btn ok" id="approve-btn">Approve storyboard</button></div>
@@ -230,35 +260,43 @@ input[type=text]:focus, textarea:focus { border-color: var(--accent); outline: n
   </section>
 </main>
 <div class="lightbox" id="lightbox" hidden><img id="lightbox-img" alt=""></div>
-<audio id="music" src="assets/music/jersey_bgm.mp3" preload="none"></audio>
+<audio id="music" preload="none"></audio>
 
 <!--PICKS_JS-->
-<script type="application/json" id="style-json">/*STYLE_JSON*/</script>
-<script type="application/json" id="shots-json">/*SHOTS_JSON*/</script>
-<script type="application/json" id="scenes-json">/*SCENES_JSON*/</script>
+<script type="application/json" id="styles-json">/*STYLES_JSON*/</script>
 <script type="application/json" id="kit-json">/*KIT_JSON*/</script>
 <script>
 (function () {
   "use strict";
   const $ = (s) => document.querySelector(s);
-  const STYLE = JSON.parse($("#style-json").textContent);
-  const SHOTS = JSON.parse($("#shots-json").textContent);
-  const SCENES = JSON.parse($("#scenes-json").textContent);
+  const STYLES = JSON.parse($("#styles-json").textContent);
+  const BY_ID = Object.fromEntries(STYLES.map((s) => [s.id, s]));
   const KIT = JSON.parse($("#kit-json").textContent);
-  const META = Object.fromEntries(STYLE.shots.map((s) => [s.id, s]));
-  const FIELD = {}; STYLE.shots.forEach((s) => s.fields.forEach((f) => (FIELD[f.key] = f)));
-  const PICK = {}; STYLE.shots.forEach((s) => s.picks.forEach((p) => (PICK[p.key] = p)));
-  const TOTAL = SHOTS.reduce((a, s) => Math.max(a, s.start + s.duration), 0);
+  // The current style: every ad has one; choosing another remounts the player with that style's scenes.
+  let S = null, STYLE = null, SHOTS = [], META = {}, FIELD = {}, PICK = {}, TOTAL = 1, PARTS = {};
+  const ASSET_RE = /assets\/[\w./-]+?\.(?:png|webp|jpe?g|gif|svg|ttf|otf|woff2?|mp3|wav|m4a)/g;
+  const remap = (src) => String(src).replace(ASSET_RE, (a) => S.map[a] || a);
+  const styleLength = (st) => st.shots.reduce((a, s) => Math.max(a, s.start + s.duration), 0);
+  function setStyleData(id) {
+    S = BY_ID[id] || BY_ID.website || STYLES[0];
+    STYLE = S.style; SHOTS = S.shots;
+    META = Object.fromEntries(STYLE.shots.map((s) => [s.id, s]));
+    FIELD = {}; STYLE.shots.forEach((s) => s.fields.forEach((f) => (FIELD[f.key] = f)));
+    PICK = {}; STYLE.shots.forEach((s) => s.picks.forEach((p) => (PICK[p.key] = p)));
+    TOTAL = styleLength(S);
+  }
   const fmt = (t) => { const m = Math.floor(t / 60), s = t - m * 60; return m + ":" + (s < 10 ? "0" : "") + s.toFixed(1); };
   const seg = window.Intl && Intl.Segmenter ? new Intl.Segmenter("ta", { granularity: "grapheme" }) : null;
   const letters = (t) => { t = String(t).replace(/\*/g, ""); return seg ? Array.from(seg.segment(t)).length : Array.from(t).length; };
 
   // ---------- the board (one ad) ----------
-  const blank = () => ({ name: "", style: STYLE.id, lang: "tanglish", script: "", notes: "", status: "script",
+  const blank = () => ({ name: "", style: S ? S.id : "website", lang: "tanglish", script: "", notes: "", status: "script",
     text: {}, pick: {}, vo: {}, shotNotes: {}, renders: [], updatedAt: null, updatedBy: null, approvedAt: null, approvedBy: null });
   let board = blank(), boardId = null;
-  const val = (key) => (Object.prototype.hasOwnProperty.call(board.text, key) ? board.text[key] : FIELD[key].default);
-  const pickVal = (key) => board.pick[key] || (PICK[key].choices.find((c) => c.star) || PICK[key].choices[0]).value;
+  // While another style is being previewed, the player shows that style with its own default words.
+  let previewing = null;
+  const val = (key) => (!previewing && Object.prototype.hasOwnProperty.call(board.text, key) ? board.text[key] : FIELD[key].default);
+  const pickVal = (key) => (!previewing && board.pick[key]) || (PICK[key].choices.find((c) => c.star) || PICK[key].choices[0]).value;
 
   // ---------- the player: the style's own scenes, run here ----------
   const stage = $("#stage"), mounted = {};
@@ -270,10 +308,57 @@ input[type=text]:focus, textarea:focus { border-color: var(--accent); outline: n
     inner = inner.replace(/<script>([\s\S]*?)<\/script>/g, (m, c) => { code += c + "\n"; return ""; });
     return { css: css.join("\n"), markup: inner, code };
   }
-  const PARTS = Object.fromEntries(Object.keys(SCENES).map((id) => [id, split(SCENES[id])]));
+  // A style's root stylesheet (if it has one) applies inside the stage only.
+  const KEEP_ROOT = /^\s*(font|color|background|letter-spacing|line-height|-webkit-font-smoothing|text-rendering|--)/;
+  function scopeSel(sel) {
+    return sel.split(",").map((x) => {
+      x = x.trim();
+      if (/^(html|body)\b/.test(x)) return null;
+      if (/^(:root|#root)\b/.test(x)) return x.replace(/^(:root|#root)\b/, "#stage");
+      return "#stage " + x;
+    }).filter(Boolean).join(", ");
+  }
+  function scopeCss(css) {
+    css = String(css).replace(/\/\*[\s\S]*?\*\//g, "");
+    let out = "", i = 0;
+    while (i < css.length) {
+      const open = css.indexOf("{", i); if (open < 0) break;
+      let depth = 1, j = open + 1;
+      while (j < css.length && depth) { if (css[j] === "{") depth++; else if (css[j] === "}") depth--; j++; }
+      const head = css.slice(i, open).trim(); let body = css.slice(open + 1, j - 1);
+      if (/^@(media|supports)/.test(head)) out += head + "{" + scopeCss(body) + "}\n";
+      else if (head.startsWith("@")) out += head + "{" + body + "}\n";
+      else {
+        const sel = scopeSel(head);
+        if (/^(:root|#root)\b/.test(head)) body = body.split(";").filter((d) => KEEP_ROOT.test(d)).join(";");
+        if (sel) out += sel + "{" + body + "}\n";
+      }
+      i = j;
+    }
+    return out;
+  }
+  let rootStyleEl = null; const ranRootJs = new Set();
+  function unmountAll() {
+    for (const k of Object.keys(mounted)) { const m = mounted[k]; m.host.remove(); m.styleEl.remove(); if (m.tl) m.tl.kill(); delete window.__timelines[k]; delete mounted[k]; }
+    if (rootStyleEl) { rootStyleEl.remove(); rootStyleEl = null; }
+  }
+  function mountStyle() {
+    if (playing) setPlaying(false);
+    unmountAll();
+    PARTS = Object.fromEntries(Object.keys(S.scenes).map((id) => [id, split(remap(S.scenes[id]))]));
+    if (S.rootCss) { rootStyleEl = document.createElement("style"); rootStyleEl.textContent = scopeCss(remap(S.rootCss)); document.head.appendChild(rootStyleEl); }
+    if (S.rootJs && !ranRootJs.has(S.id)) { // a helper library the scenes call: a classic script, once
+      ranRootJs.add(S.id); const sc = document.createElement("script"); sc.textContent = remap(S.rootJs); document.head.appendChild(sc);
+    }
+    music.pause(); music.removeAttribute("src");
+    if (STYLE.music && S.map[STYLE.music]) music.src = S.map[STYLE.music];
+    current = null; loopShot = null; $("#loop-shot").checked = false;
+    SHOTS.forEach((s) => mount(s.id));
+  }
   function mount(id) {
     const old = mounted[id];
     const p = PARTS[id], sid = "sc-" + id;
+    if (!p) return;
     const styleEl = document.createElement("style");
     styleEl.textContent = p.css.replace(/#root\b/g, "#" + sid);
     document.head.appendChild(styleEl);
@@ -282,11 +367,10 @@ input[type=text]:focus, textarea:focus { border-color: var(--accent); outline: n
     host.innerHTML = p.markup.replace(/id="root"/, 'id="' + sid + '"');
     if (old) { stage.replaceChild(host, old.host); old.styleEl.remove(); if (old.tl) old.tl.kill(); }
     else stage.appendChild(host);
-    window.NS_PICKS = { text: Object.assign({}, board.text), pick: Object.assign({}, board.pick) };
+    window.NS_PICKS = previewing ? {} : { text: Object.assign({}, board.text), pick: Object.assign({}, board.pick) };
     try { new Function(p.code)(); } catch (e) { console.error("scene " + id, e); }
     mounted[id] = { host, styleEl, tl: window.__timelines[id] };
   }
-  SHOTS.forEach((s) => mount(s.id));
   const remountTimers = {};
   function remountSoon(id) { clearTimeout(remountTimers[id]); remountTimers[id] = setTimeout(() => { mount(id); seek(t); }, 180); }
   function remountAll() { SHOTS.forEach((s) => mount(s.id)); seek(t); }
@@ -339,7 +423,7 @@ input[type=text]:focus, textarea:focus { border-color: var(--accent); outline: n
     return txt;
   }
   function renderPlan() {
-    $("#plan-title").textContent = board.name || "Untitled ad";
+    $("#plan-title").textContent = previewing ? "Style preview" : (board.name || "Untitled ad");
     $("#plan-style").textContent = STYLE.name + " · 9:16";
     const box = $("#plan-lines"); box.textContent = "";
     SHOTS.forEach((s) => {
@@ -487,14 +571,42 @@ input[type=text]:focus, textarea:focus { border-color: var(--accent); outline: n
     sel.value = boardId || ids[0];
   }
   function loadBoard(id, data) {
+    previewing = null;
     boardId = id; board = Object.assign(blank(), JSON.parse(JSON.stringify(data || {})));
     ["text", "pick", "vo", "shotNotes"].forEach((k) => { if (!board[k] || typeof board[k] !== "object") board[k] = {}; });
-    // keep only what this style knows
-    Object.keys(board.text).forEach((k) => { if (!FIELD[k]) delete board.text[k]; });
-    Object.keys(board.pick).forEach((k) => { if (!PICK[k] || !PICK[k].choices.some((c) => c.value === board.pick[k])) delete board.pick[k]; });
+    const want = BY_ID[board.style] ? board.style : "website";
+    const switching = S.id !== want;
+    setStyleData(want); board.style = S.id;
+    keepKnown();
     $("#ad-name").value = board.name || ""; $("#script-text").value = board.script || ""; $("#ad-notes").value = board.notes || ""; $("#ad-lang").value = board.lang || "tanglish";
-    renderAll(); remountAll();
+    if (switching) { mountStyle(); renderAll(); seek(Math.min(t, TOTAL - 0.001)); } else { renderAll(); remountAll(); }
   }
+  // A pick whose value this style doesn't offer is dropped. Lines and picks of other styles stay in the board
+  // (the render only takes the board style's own), so switching back brings them back.
+  function keepKnown() {
+    Object.keys(board.pick).forEach((k) => { if (PICK[k] && !PICK[k].choices.some((c) => c.value === board.pick[k])) delete board.pick[k]; });
+  }
+  function chooseStyle(id) {
+    if (!BY_ID[id]) return;
+    if (previewing) { previewing = null; if (S.id !== id) setStyleData(id); }
+    else if (S.id === id) return;
+    else setStyleData(id);
+    board.style = S.id; keepKnown();
+    mountStyle(); renderAll(); seek(0.6);
+    if (boardId && canWrite) changed();
+  }
+  function previewStyle(id) {
+    if (!BY_ID[id]) return;
+    if (id === board.style) { if (previewing) endPreview(); }
+    else { previewing = id; setStyleData(id); mountStyle(); renderAll(); }
+    showTab("board"); seek(0); setPlaying(true);
+  }
+  function endPreview() {
+    if (!previewing) return;
+    previewing = null; setStyleData(board.style); mountStyle(); renderAll(); seek(0.6);
+  }
+  $("#preview-use").onclick = () => chooseStyle(previewing);
+  $("#preview-back").onclick = () => endPreview();
   $("#board-select").onchange = (e) => { const id = e.target.value; if (id && boards[id]) loadBoard(id, boards[id]); };
   const slug = (s) => (String(s).toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "ad");
   $("#new-btn").onclick = () => {
@@ -510,10 +622,10 @@ input[type=text]:focus, textarea:focus { border-color: var(--accent); outline: n
   let sample = null, drafting = null;
   function draftPrompt() {
     const lines = [];
-    lines.push("You storyboard a 9:16 Instagram Reel ad for Nextstep4u, a TNPSC Group 4 exam-prep website, in a fixed animated style. The style's shots, their order and timing cannot change; you fill in their words and choose their options so the shots tell the script's story.");
+    lines.push("You storyboard a 9:16 Instagram Reel ad for Nextstep4u, a TNPSC Group 4 exam-prep website, in a fixed animated style. The style's shots, their order and timing cannot change; you fill in their words and choose their options so the shots tell the script's story. Every screen in the style is the real product.");
     lines.push("\nSTYLE: " + STYLE.name + ". " + STYLE.about + "\nVoice of the on-screen words: " + STYLE.voice);
     lines.push("\nON-SCREEN LANGUAGE WANTED: " + ({ tanglish: "Tanglish (Tamil words in English letters, as in the defaults)", tamil: "Tamil script", english: "English" })[board.lang || "tanglish"] + ". Product words (Mock Test, AI report, Practice, Daily Challenge) may stay English.");
-    lines.push("\nSHOTS (in order). For each field: key | what it is | the founder's default (shows tone and length) | most letters that fit");
+    lines.push("\nSHOTS (in order). For each field: key | what it is | the style's default (shows tone and length) | most letters that fit");
     SHOTS.forEach((s) => {
       const m = META[s.id];
       lines.push("\n[" + s.id + "] " + m.title + ", " + s.start.toFixed(1) + "–" + (s.start + s.duration).toFixed(1) + " s: " + m.job);
@@ -523,8 +635,10 @@ input[type=text]:focus, textarea:focus { border-color: var(--accent); outline: n
     lines.push("\nFACTS AND RULES (never break these):\n- " + STYLE.facts.join("\n- "));
     lines.push("\nSCRIPT FROM THE USER:\n" + (board.script || "").slice(0, 8000));
     if (board.notes) lines.push("\nUSER NOTES:\n" + board.notes.slice(0, 2000));
-    lines.push("\nTASK:\n1. text: a value for every field key above. Short, punchy, readable in a second, within the letter limit. Mark the one highlighted word with *asterisks* only in report.t1. Keep facts true.\n2. pick: one value for every pick key.\n3. vo: for every shot id, the part of the script spoken while that shot plays, in the script's own language and spelling. Split the script across the shots in order; a shot may get \"\" if nothing is said there.\n4. shotNotes: for a shot id, a short instruction for the video builder only when the script needs something these fields and picks cannot show (otherwise omit).\n5. summary: one sentence on how the storyboard follows the script.");
-    lines.push("\nReply with only this JSON:\n{\"text\":{\"hook.l1\":\"...\"},\"pick\":{\"hook.crowd\":\"grey\"},\"vo\":{\"hook\":\"...\"},\"shotNotes\":{},\"summary\":\"...\"}");
+    const hlKeys = Object.keys(FIELD).filter((k) => /\*/.test(FIELD[k].default));
+    lines.push("\nTASK:\n1. text: a value for every field key above. Short, punchy, readable in a second, within the letter limit. " + (hlKeys.length ? "Mark the one highlighted word with *asterisks* only in " + hlKeys.join(", ") + " (as their defaults do). " : "Never use asterisks. ") + "A field whose default is empty may stay empty. Keep facts true.\n2. pick: one value for every pick key.\n3. vo: for every shot id, the part of the script spoken while that shot plays, in the script's own language and spelling. Split the script across the shots in order; a shot may get \"\" if nothing is said there.\n4. shotNotes: for a shot id, a short instruction for the video builder only when the script needs something these fields and picks cannot show (otherwise omit).\n5. summary: one sentence on how the storyboard follows the script.");
+    const f0 = Object.keys(FIELD)[0] || SHOTS[0].id + ".line", p0 = Object.keys(PICK)[0];
+    lines.push("\nReply with only this JSON:\n{\"text\":{\"" + f0 + "\":\"...\"},\"pick\":{" + (p0 ? "\"" + p0 + "\":\"" + PICK[p0].choices[0].value + "\"" : "") + "},\"vo\":{\"" + SHOTS[0].id + "\":\"...\"},\"shotNotes\":{},\"summary\":\"...\"}");
     return lines.join("\n");
   }
   const SAMPLE_ERR = { not_granted: "Claude wasn't allowed for this page. Save the script and ask Claude Code to draft it instead.", sampling_disabled: "Claude isn't available on this account here.", rate_limited: "Claude is busy or a limit was reached. Try again in a minute.", invalid_json: "Claude's answer couldn't be read. Try again.", refused: "Claude declined this script. Change the wording and try again.", prompt_too_large: "The script is too long. Shorten it.", upstream_error: "Something went wrong reaching Claude. Try again.", session_expired: "Sign in to Claude again, then retry." };
@@ -533,7 +647,7 @@ input[type=text]:focus, textarea:focus { border-color: var(--accent); outline: n
     readScriptForm();
     if (!board.script.trim()) { const o = $("#draft-out"); o.hidden = false; o.className = "note warn"; o.textContent = "Paste the script first."; return; }
     if (!boardId) $("#new-btn").click();
-    const out = $("#draft-out"); out.hidden = false; out.className = "note"; out.textContent = "Claude is reading the script and drafting nine shots… this takes up to a minute.";
+    const out = $("#draft-out"); out.hidden = false; out.className = "note"; out.textContent = "Claude is reading the script and drafting " + SHOTS.length + " shots in the " + STYLE.name + " style… this takes up to a minute.";
     const btn = $("#draft-btn"); btn.textContent = "Stop";
     drafting = new AbortController();
     try {
@@ -599,17 +713,62 @@ input[type=text]:focus, textarea:focus { border-color: var(--accent); outline: n
     document.querySelectorAll(".tabs button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === name)));
     ["script", "board", "kit"].forEach((n) => ($("#tab-" + n).hidden = n !== name));
     if (name !== "board" && playing) setPlaying(false);
+    if (name !== "board" && previewing) endPreview();
     if (name === "board") seek(t);
     try { history.replaceState(null, "", "#" + (name === "board" ? "storyboard" : name)); } catch (e) {}
   }
   document.querySelectorAll(".tabs button").forEach((b) => (b.onclick = () => showTab(b.dataset.tab)));
 
-  function renderAll() { renderPlan(); renderShots(); renderStatus(); fillSelect(); }
+  // ---------- the styles ----------
+  const styleSel = $("#ad-style");
+  STYLES.forEach((st) => { const o = document.createElement("option"); o.value = st.id; o.textContent = st.style.name + " · " + styleLength(st).toFixed(0) + " s"; styleSel.appendChild(o); });
+  styleSel.onchange = () => chooseStyle(styleSel.value);
+  function renderStyles() {
+    styleSel.value = board.style; styleSel.disabled = !canWrite;
+    $("#style-about").textContent = (BY_ID[board.style] || S).style.about;
+    $("#style-count").textContent = STYLES.length + " styles";
+    const box = $("#gallery"); box.textContent = "";
+    STYLES.forEach((st) => {
+      const card = document.createElement("article"); card.className = "panel scard"; card.setAttribute("aria-current", String(st.id === board.style));
+      let poster;
+      if (st.poster) { poster = document.createElement("img"); poster.src = st.poster; poster.alt = ""; poster.loading = "lazy"; }
+      else { poster = document.createElement("div"); poster.textContent = st.style.name.slice(0, 1); }
+      poster.className = "poster";
+      const body = document.createElement("div"); body.className = "body";
+      const h = document.createElement("h3"); h.textContent = st.style.name;
+      const meta = document.createElement("div"); meta.className = "meta"; meta.textContent = styleLength(st).toFixed(1) + " s · " + st.shots.length + " shots · " + Object.keys(st.style.shots.reduce((a, s) => (s.fields.forEach((f) => (a[f.key] = 1)), a), {})).length + " lines";
+      const p = document.createElement("p"); p.textContent = st.style.about;
+      body.append(h, meta, p);
+      if ((st.style.goodFor || []).length) {
+        const ul = document.createElement("ul");
+        st.style.goodFor.slice(0, 3).forEach((g) => { const li = document.createElement("li"); li.textContent = g; ul.appendChild(li); });
+        body.appendChild(ul);
+      }
+      const row = document.createElement("div"); row.className = "row";
+      const mine = st.id === board.style;
+      const use = document.createElement("button"); use.type = "button"; use.className = "btn" + (mine ? "" : " primary");
+      use.textContent = mine ? "This ad's style ✓" : "Use this style"; use.disabled = mine || !canWrite;
+      use.onclick = () => chooseStyle(st.id);
+      const look = document.createElement("button"); look.type = "button"; look.className = "btn"; look.textContent = "Watch it";
+      look.onclick = () => previewStyle(st.id);
+      row.append(use, look); body.appendChild(row);
+      card.append(poster, body); box.appendChild(card);
+    });
+  }
+
+  function renderAll() {
+    renderPlan(); renderShots(); renderStatus(); fillSelect(); renderStyles();
+    $("#preview-bar").hidden = !previewing; $("#shots").hidden = !!previewing; $("#approve-panel").hidden = !!previewing;
+    if (previewing) { $("#preview-title").textContent = "Previewing: " + STYLE.name; $("#preview-use").disabled = !canWrite; }
+  }
 
   // ---------- start: a working page first, then the shared store lights it up ----------
-  const styleSel = $("#ad-style"); const o = document.createElement("option"); o.value = STYLE.id; o.textContent = STYLE.name + " ★"; styleSel.appendChild(o);
-  $("#style-about").textContent = STYLE.about;
+  setStyleData("website"); board.style = S.id; mountStyle();
   renderAll(); renderKit(); seek(0.6);
+  // for scripts/test-studio.mjs
+  window.__studio = { seek: (x) => seek(x), total: () => TOTAL, style: () => S.id, styles: () => STYLES.map((x) => x.id),
+    choose: (id) => chooseStyle(id), preview: (id) => previewStyle(id), pause: () => setPlaying(false),
+    timelines: () => SHOTS.map((s) => [s.id, !!(mounted[s.id] && mounted[s.id].tl)]) };
   const h = location.hash.replace("#", ""); if (h === "storyboard") showTab("board"); else if (h === "kit") showTab("kit");
 
   (async () => {

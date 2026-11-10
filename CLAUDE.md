@@ -31,15 +31,17 @@ you build and render what they approve. Read README.md first.
 
 ## Changing the Studio or a style
 
-- Page source: `studio/studio.src.html`. Build: `npm run studio` (writes `studio/dist/`), check locally with
-  `npm run test:studio`, then republish to the SAME URL: stage `studio/dist/index.html` plus every file in
-  `studio/dist/files.json` (published path -> source) in the scratchpad and publish with `url` set to the
-  artifact URL, `root` the staging folder. Never publish a new artifact for the Studio.
-- A style is a HyperFrames project under `styles/<id>/` with `style.json` (shots, fields, picks, facts) and
-  `assets/picks.js`. In the scenes: `data-edit="shot.key"` marks editable text (`data-split` for word-by-word
-  lines, `data-hl` for the *highlighted* word, `data-fit="N"` to shrink past N letters), the scene root carries
-  `data-scene="<id>"` and receives `data-<pick>="<value>"`, and each scene script starts with
-  `NSPicks.apply("<id>")`. The style's defaults stay in its HTML; with no board it renders exactly as designed.
+- Page source: `studio/studio.src.html`. Build: `npm run studio` (packs EVERY style in `styles/` except `_base`
+  into `studio/dist/`, assets published once by content), check locally with `npm run test:studio` (every style
+  previewed, strips in `studio/dist/_test/`), then republish to the SAME URL: stage `studio/dist/index.html` plus
+  every file in `studio/dist/files.json` (published path -> source) in the scratchpad and publish with `url` set
+  to the artifact URL, `root` the staging folder. Never publish a new artifact for the Studio.
+- Styles: `styles/README.md` is the guide (rules, scene conventions, style.json, the kit, checking). New style:
+  `npm run new-style -- <id> "<Name>"` (copies `styles/_base`: shared brand.css + picks.js, the brand close).
+  After changing a style's look, `npm run posters -- <id>` (the gallery still), then rebuild and republish.
+- Each board has a `style`; the Studio's Script tab has the style gallery ("Use this style", "Watch it" previews a
+  style with its own words without changing the ad). A board keeps lines of other styles it used before; the
+  render only takes its own style's (`apply-board.mjs` filters).
 - Re-capture the kit after site/app changes: `npm run kit`.
 
 ## Never

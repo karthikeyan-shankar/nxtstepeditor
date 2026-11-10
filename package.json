@@ -7,6 +7,8 @@
     "kit": "node scripts/capture-kit.mjs",
     "studio": "node scripts/build-studio.mjs",
     "test:studio": "node scripts/test-studio.mjs",
+    "posters": "node scripts/posters.mjs",
+    "new-style": "node scripts/new-style.mjs",
     "board": "node scripts/apply-board.mjs"
   }
 }

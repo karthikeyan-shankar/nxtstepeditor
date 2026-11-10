@@ -8,3 +8,4 @@ studio/dist/
 app-kit/_old/
 .DS_Store
 Thumbs.db
+.registry/

@@ -1,0 +1,87 @@
+{
+ "id": "_base",
+ "name": "Starter",
+ "by": "the starter every style is copied from",
+ "hidden": true,
+ "about": "Starter: one headline shot and the brand close (the app launch reveal and the address).",
+ "voice": "Short Tanglish or Tamil-script lines; product words (Mock Test, AI report, Daily Challenge) stay English.",
+ "music": "assets/music/bed-a.mp3",
+ "poster": 3.2,
+ "inspired": [],
+ "goodFor": [],
+ "kit": [],
+ "shots": [
+  {
+   "id": "hook",
+   "title": "Hook",
+   "job": "Stop the scroll: who this is for, in one line.",
+   "fields": [
+    {
+     "key": "hook.line",
+     "label": "Headline (*one word* is blue)",
+     "default": "TNPSC Group 4 *prep-ah?*",
+     "fit": 18
+    },
+    {
+     "key": "hook.sub",
+     "label": "Line under it",
+     "default": "ஒரு நாளுக்கு ஒரு Test.",
+     "fit": 30
+    }
+   ],
+   "picks": [
+    {
+     "key": "hook.ground",
+     "label": "Ground",
+     "choices": [
+      {
+       "value": "light",
+       "label": "Light",
+       "star": true
+      },
+      {
+       "value": "night",
+       "label": "Night"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "end",
+   "title": "Brand close",
+   "job": "The app launch reveal, then the address. The same close in every style.",
+   "fields": [
+    {
+     "key": "end.url",
+     "label": "Address on the pill",
+     "default": "nextstep4u.in",
+     "fit": 16
+    },
+    {
+     "key": "end.tag",
+     "label": "Line under the address (optional)",
+     "default": "",
+     "fit": 28
+    }
+   ],
+   "picks": [
+    {
+     "key": "end.pill",
+     "label": "Address pill",
+     "choices": [
+      {
+       "value": "on",
+       "label": "On",
+       "star": true
+      },
+      {
+       "value": "off",
+       "label": "Off (logo only)"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
