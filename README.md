@@ -47,4 +47,4 @@ Then `npm run studio` and republish, so the Studio's Kit tab shows the new scree
 - Never "free". Never promise a job, rank, marks or a pass. No invented numbers, testimonials or countdowns;
   example figures stay labelled "Example report".
 - ₹9 is a sale price (normal ₹15): check the live price before a priced ad goes out, or keep the ad evergreen.
-- The app is not on Google Play yet: the call to action is nextstep4u.in.
+- The Android app is live on Google Play (12 Nov 2026, "Nextstep4u", com.nextstep.user): the call to action is Google Play or nextstep4u.in.

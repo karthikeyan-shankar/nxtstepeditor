@@ -46,7 +46,7 @@ you build and render what they approve. Read README.md first.
 
 ## Never
 
-- "free", job/rank/marks promises, invented numbers or countdowns, a real person's face or name, "download the
-  app" (not on Play yet). Example figures stay labelled. Check the live price before a priced ad ships
+- "free", job/rank/marks promises, invented numbers or countdowns, a real person's face or name, claiming the app is on
+  the App Store (Android only: live on Google Play since 12 Nov 2026, com.nextstep.user). Example figures stay labelled. Check the live price before a priced ad ships
   (₹9 is a sale; normal ₹15).
 - Push to the Nextstep4u product repos from here, or touch their servers or databases.
