@@ -22,3 +22,16 @@ Website: nextstep4u.in
 
 - Put the Play Store link in the bio: https://play.google.com/store/apps/details?id=com.nextstep.user
 - The report card on slide 2 is the sample report and is labelled "Example report".
+
+## The single milestone poster (the one to post)
+
+nextstep4u-live-on-google-play.png (1080 × 1350), from milestone.html; re-render: `node shoot-milestone.cjs`.
+
+Caption:
+
+🎉 Milestone unlocked! Nextstep4u இப்போ Google Play-ல LIVE!
+
+TNPSC Group 4 mock tests, Daily Challenge, AI report: எல்லாம் இப்போ உங்க phone-லயே.
+Play Store-ல "Nextstep4u" search பண்ணுங்க 📲 (link in bio)
+
+#TNPSC #TNPSCGroup4 #Group4 #Nextstep4u #GooglePlay #Milestone
