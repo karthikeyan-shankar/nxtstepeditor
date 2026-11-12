@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ta"><head><meta charset="utf-8">
+<!-- Instagram carousel, 1080x1350 each, in the look of the founder's "Now on Google Play" video (12 Nov 2026):
+     light ground, blue/gold/green shapes, bold Outfit, Test. Analyse. Improve. Real app screens only. -->
+<style>
+@font-face { font-family: Outfit; src: url(img/Outfit.ttf); font-weight: 100 900; }
+@font-face { font-family: Meera; src: url(img/MeeraInimai.ttf); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #222; }
+.slide { width: 1080px; height: 1350px; position: relative; overflow: hidden; font-family: Outfit, Meera, sans-serif; color: #0D1420; margin-bottom: 20px;
+  background: radial-gradient(70% 45% at 85% 100%, #FFF7E0 0%, transparent 70%), radial-gradient(60% 40% at 0% 0%, #EBF3FE 0%, transparent 70%), #FFFFFF; }
+.ta { font-family: Meera, Outfit, sans-serif; }
+/* the founder's shapes */
+.dot { position: absolute; border-radius: 50%; }
+.ring { position: absolute; border-radius: 50%; border-style: solid; }
+.pill { position: absolute; border-radius: 999px; }
+.phone { position: absolute; border-radius: 64px; background: #0D1420; padding: 14px; box-shadow: 0 50px 90px -35px rgba(13,20,32,.5); }
+.phone img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 52px; }
+.kicker { font-size: 26px; font-weight: 600; letter-spacing: .32em; color: #3D4756; }
+.dots { position: absolute; bottom: 40px; left: 0; right: 0; display: flex; justify-content: center; gap: 12px; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; background: #D7DDE6; }
+.dots i.on { background: #0265E0; width: 34px; border-radius: 6px; }
+
+/* 1: the news */
+#s1 .logo { position: absolute; left: 80px; top: 120px; width: 470px; }
+#s1 h1 { position: absolute; left: 80px; top: 360px; font-size: 84px; line-height: 1.02; font-weight: 800; letter-spacing: -.035em; }
+#s1 h1 span { color: #0265E0; }
+#s1 .kicker { position: absolute; left: 84px; top: 610px; }
+#s1 .ta-line { position: absolute; left: 80px; top: 680px; width: 470px; font-size: 44px; line-height: 1.35; color: #0D1420; }
+#s1 .ta-line b { color: #0265E0; font-family: Outfit; font-weight: 750; }
+#s1 .search { position: absolute; left: 80px; top: 900px; width: 470px; display: flex; align-items: center; gap: 22px; padding: 22px 26px; border-radius: 28px; background: #fff; border: 2px solid #E4E8EE; box-shadow: 0 24px 50px -30px rgba(13,20,32,.35); }
+#s1 .search img { width: 96px; height: 96px; border-radius: 22px; }
+#s1 .search b { display: block; font-size: 40px; font-weight: 750; }
+#s1 .search span { display: block; font-size: 24px; color: #5A6675; margin-top: 2px; }
+#s1 .web { position: absolute; left: 84px; top: 1080px; font-size: 24px; letter-spacing: .2em; color: #5A6675; font-weight: 600; }
+#s1 .web b { display: block; margin-top: 10px; letter-spacing: 0; font-size: 44px; color: #0265E0; font-weight: 750; }
+#s1 .phone { width: 400px; height: 800px; right: 60px; top: 330px; transform: rotate(4deg); }
+
+/* 2: Test. Analyse. Improve. */
+#s2 h2 { position: absolute; left: 80px; top: 92px; font-size: 64px; line-height: 1.1; font-weight: 800; letter-spacing: -.025em; }
+#s2 h2 span { background: #0265E0; color: #fff; padding: 0 16px; border-radius: 14px; }
+#s2 .row { position: absolute; left: 80px; width: 920px; height: 318px; display: flex; gap: 36px; align-items: center; }
+#s2 .tag { flex: none; width: 300px; }
+#s2 .tag b { display: inline-block; font-size: 64px; font-weight: 800; letter-spacing: -.03em; padding: 6px 22px; border-radius: 16px; }
+#s2 .tag p { font-size: 30px; line-height: 1.32; color: #3D4756; margin-top: 16px; }
+#s2 .card { flex: 1; height: 300px; border-radius: 32px; background: #fff center top / cover no-repeat; border: 2px solid #E4E8EE; box-shadow: 0 24px 50px -32px rgba(13,20,32,.35); position: relative; }
+#s2 .ex { position: absolute; right: 18px; bottom: 16px; font-size: 20px; font-weight: 700; letter-spacing: .08em; color: #00947C; background: #E4F7F3; padding: 6px 14px; border-radius: 999px; }
+
+/* 3: how */
+#s3 h2 { position: absolute; left: 80px; top: 120px; font-size: 92px; line-height: 1.15; font-weight: 400; }
+#s3 h2 b { font-family: Outfit; font-weight: 800; color: #0265E0; }
+#s3 ol { position: absolute; left: 80px; top: 450px; width: 500px; list-style: none; display: grid; gap: 40px; }
+#s3 li { display: flex; gap: 24px; align-items: flex-start; font-size: 35px; line-height: 1.32; color: #0D1420; }
+#s3 li i { flex: none; width: 64px; height: 64px; border-radius: 50%; background: #0265E0; color: #fff; display: grid; place-items: center; font-style: normal; font-family: Outfit; font-weight: 800; font-size: 32px; }
+#s3 li:nth-child(2) i { background: #00B696; } #s3 li:nth-child(3) i { background: #FBBC04; color: #0D1420; }
+#s3 li b { font-family: Outfit; font-weight: 750; color: #0265E0; }
+#s3 .web { position: absolute; left: 84px; top: 1080px; font-size: 24px; letter-spacing: .2em; color: #5A6675; font-weight: 600; }
+#s3 .web b { display: block; margin-top: 10px; letter-spacing: 0; font-size: 44px; color: #0265E0; font-weight: 750; }
+#s3 .phone { width: 370px; height: 740px; right: 50px; top: 430px; transform: rotate(-4deg); }
+</style></head><body>
+
+<section class="slide" id="s1">
+  <i class="dot" style="width:150px;height:150px;left:-70px;top:-40px;background:#0265E0"></i>
+  <i class="ring" style="width:96px;height:96px;right:70px;top:120px;border-width:13px;border-color:#FBBC04"></i>
+  <i class="pill" style="width:150px;height:56px;right:-40px;top:1170px;background:#00B696"></i>
+  <img class="logo" src="img/logo.png" alt="nextstep4u">
+  <h1>Now on<br><span>Google Play.</span></h1>
+  <p class="kicker">THE ANDROID APP IS LIVE</p>
+  <p class="ta-line ta">TNPSC Group 4 mock tests, இப்போ உங்க <b>phone</b>-ல!</p>
+  <div class="search"><img src="img/icon.png" alt=""><div><span>Play Store-ல search</span><b>Nextstep4u</b></div></div>
+  <p class="web">OR VISIT THE WEBSITE<b>nextstep4u.in</b></p>
+  <div class="phone"><img src="img/4-home.jpg" alt=""></div>
+  <div class="dots"><i class="on"></i><i></i><i></i></div>
+</section>
+
+<section class="slide" id="s2">
+  <i class="ring" style="width:110px;height:110px;right:-30px;top:60px;border-width:14px;border-color:#0265E0"></i>
+  <i class="dot" style="width:60px;height:60px;right:60px;bottom:70px;background:#00B696"></i>
+  <h2>Built for <span>TNPSC</span> aspirants.</h2>
+  <div class="row" style="top:250px"><div class="tag"><b style="color:#0265E0">Test.</b><p>Full mocks in the real Group 4 pattern. Tamil &amp; English.</p></div><div class="card" style="background-image:url(img/question.png);background-position:center 22%"></div></div>
+  <div class="row" style="top:600px"><div class="tag"><b style="background:#FBBC04">Analyse.</b><p>An AI report after every test: score, cut-off, weak topics.</p></div><div class="card" style="background-image:url(img/report.png);background-position:center 6%"><span class="ex">EXAMPLE REPORT</span></div></div>
+  <div class="row" style="top:950px"><div class="tag"><b style="background:#00B696;color:#fff">Improve.</b><p>Know what to study next. A Daily Challenge every day.</p></div><div class="card" style="background-image:url(img/daily.png);background-position:center 30%"></div></div>
+  <div class="dots"><i></i><i class="on"></i><i></i></div>
+</section>
+
+<section class="slide" id="s3">
+  <i class="dot" style="width:130px;height:130px;right:-50px;top:-30px;background:#FBBC04"></i>
+  <i class="ring" style="width:80px;height:80px;left:-24px;bottom:60px;border-width:11px;border-color:#0265E0"></i>
+  <h2 class="ta">இன்னைக்கே<br><b>start</b> பண்ணுங்க</h2>
+  <ol class="ta">
+    <li><i>1</i><span>Play Store-ல <b>Nextstep4u</b> search பண்ணுங்க</span></li>
+    <li><i>2</i><span><b>Google</b> அல்லது <b>mobile number</b>-ல sign in</span></li>
+    <li><i>3</i><span><b>TNPSC Group 4</b> choose பண்ணி, முதல் test எழுதுங்க</span></li>
+  </ol>
+  <p class="web">OR VISIT THE WEBSITE<b>nextstep4u.in</b></p>
+  <div class="phone"><img src="img/3-choose-exam.jpg" alt=""></div>
+  <div class="dots"><i></i><i></i><i class="on"></i></div>
+</section>
+</body></html>
